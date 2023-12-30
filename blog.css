@@ -1,0 +1,9 @@
+/* Add this content to your blog.css file */
+
+.blog {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Add additional styling for the Blog page as needed */
