@@ -1,132 +1,499 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-    <title>Home</title>
-<link rel="stylesheet" href="main.css">
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adarsh Nanjaiya Latha | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+    <style>
+      :root {
+        --scrollbar-track: #e2e8f0; /* slate-200 */
+        --scrollbar-thumb: #94a3b8; /* slate-400 */
+        --scrollbar-thumb-hover: #64748b; /* slate-500 */
+      }
+      html.dark {
+        --scrollbar-track: #111827; /* gray-900 */
+        --scrollbar-thumb: #4b5563; /* gray-600 */
+        --scrollbar-thumb-hover: #6b7280; /* gray-500 */
+      }
+      /* For Webkit browsers like Chrome, Safari */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-thumb);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-hover);
+      }
+      .nav-indicator.active {
+          width: 4rem; /* w-16 */
+          background-color: #0f172a; /* bg-slate-800 */
+      }
+      .dark .nav-indicator.active {
+          background-color: #e2e8f0; /* dark:bg-slate-200 */
+      }
+      .nav-text.active {
+          color: #0f172a; /* text-slate-800 */
+      }
+      .dark .nav-text.active {
+          color: #e2e8f0; /* dark:text-slate-200 */
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/"
+  }
+}
+</script>
 </head>
-<body>
-  <div class="splash-screen">
-    <div class="splash-ripple"></div>
-    <!-- Your Logo or Loading Message Goes Here -->
-  </div>
-<div class="container">
+<body class="bg-slate-50 text-slate-500 dark:bg-gray-900 dark:text-slate-400 leading-relaxed antialiased selection:bg-cyan-300 selection:text-cyan-900">
+    <div id="root">
+        <div class="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
+            <div class="lg:flex lg:justify-between lg:gap-4">
+                <!-- Left Column -->
+                <header class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+                    <div>
+                        <img
+                          src="Resources\IMG_1132.jpg"
+                          alt="Adarsh Nanjaiya Latha"
+                          class="rounded-full h-36 w-36 mb-8 border-2 border-slate-400 dark:border-slate-600 object-cover"
+                        />
+                        <h1 class="text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-200 sm:text-5xl">
+                          <a href="/">Adarsh Nanjaiya Latha</a>
+                        </h1>
+                        <h2 class="mt-3 text-lg font-medium tracking-tight text-slate-800 dark:text-slate-200 sm:text-xl">
+                          PhD Candidate in Computer Science
+                        </h2>
+                        <p class="mt-4 max-w-xs leading-normal">
+                          I conduct research on Multimodal AI and Information Fusion.
+                        </p>
+                        <nav class="nav hidden lg:block" aria-label="In-page jump links">
+                            <ul class="mt-16 w-max">
+                                <li>
+                                    <a class="group flex items-center py-3" href="#about">
+                                        <span class="nav-indicator mr-4 h-px w-8 bg-slate-500 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-800 dark:group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-800 dark:group-focus-visible:bg-slate-200"></span>
+                                        <span class="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-focus-visible:text-slate-800 dark:group-focus-visible:text-slate-200">About</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="group flex items-center py-3" href="#experience">
+                                        <span class="nav-indicator mr-4 h-px w-8 bg-slate-500 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-800 dark:group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-800 dark:group-focus-visible:bg-slate-200"></span>
+                                        <span class="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-focus-visible:text-slate-800 dark:group-focus-visible:text-slate-200">Experience</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="group flex items-center py-3" href="#projects">
+                                        <span class="nav-indicator mr-4 h-px w-8 bg-slate-500 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-800 dark:group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-800 dark:group-focus-visible:bg-slate-200"></span>
+                                        <span class="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-focus-visible:text-slate-800 dark:group-focus-visible:text-slate-200">Projects</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="group flex items-center py-3" href="#publications">
+                                        <span class="nav-indicator mr-4 h-px w-8 bg-slate-500 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-800 dark:group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-800 dark:group-focus-visible:bg-slate-200"></span>
+                                        <span class="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-focus-visible:text-slate-800 dark:group-focus-visible:text-slate-200">Publications</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="group flex items-center py-3" href="#education">
+                                        <span class="nav-indicator mr-4 h-px w-8 bg-slate-500 dark:bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-800 dark:group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-800 dark:group-focus-visible:bg-slate-200"></span>
+                                        <span class="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-focus-visible:text-slate-800 dark:group-focus-visible:text-slate-200">Education</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <ul class="ml-1 mt-8 flex items-center" aria-label="Social media">
+                        <li class="mr-5 shrink-0">
+                            <a class="block text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" href="https://github.com/adarsh-nl" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+                                <span class="sr-only">GitHub</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6" aria-hidden="true">
+                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="mr-5 shrink-0">
+                            <a class="block text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" href="https://scholar.google.com/citations?user=u5_ZYXoAAAAJ&hl=en" target="_blank" rel="noreferrer noopener" aria-label="Google Scholar">
+                                <span class="sr-only">Google Scholar</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                                    <path d="M5.242 13.769L0 9.5L12 0l12 9.5l-5.242 4.269C17.548 11.249 14.978 9 12 9s-5.548 2.249-6.758 4.769zM12 10a8 8 0 0 0-8 8h16a8 8 0 0 0-8-8z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="mr-5 shrink-0">
+                            <a class="block text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" href="mailto:adarshnanjaiya@gmail.com" target="_blank" rel="noreferrer noopener" aria-label="Email">
+                                <span class="sr-only">Email</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="shrink-0">
+                            <button id="theme-toggle" class="block text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" aria-label="Switch to light or dark mode">
+                                <span class="sr-only">Switch theme</span>
+                                <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                                </svg>
+                                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.95-4.243-1.591 1.591M5.25 12H3m4.243-4.95L5.636 5.636M12 12a4.5 4.5 0 0 0 0 9h.008c.026 0 .051.01.076.011M12 12a4.5 4.5 0 1 1 0-9h-.008a4.507 4.507 0 0 0-.076.011" />
+                                </svg>
+                            </button>
+                        </li>
+                    </ul>
+                </header>
 
-  <header class="intro">
-    <h1>Adarsh N L</h1>
-    <p>adarshnanjaiya [at] gmail [dot] com | adarsh [dot] nl [at] iiits [dot] in</p>
-    <!--<p class="magic-text">Student Intern @ABB | Post Graduate student @IIIT-S</p>-->
-    <p>Student Intern at ABB | Post Graduate student at IIIT-S</p>
-  </header>
+                <!-- Right Column -->
+                <main id="content" class="pt-24 lg:w-1/2 lg:py-24">
+                    <!-- About Section -->
+                    <section id="about" class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="About me">
+                        <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-gray-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                          <h2 class="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200 lg:sr-only">About</h2>
+                        </div>
+                        <div>
+                          <p class="mb-4">PhD candidate at the University of Twente with a strong foundation in AI and Machine Learning. My research focuses on Multimodal AI and Information Fusion, developing robust and interpretable models for complex, real-world applications. With a background in federated learning, computer vision, and data analysis, I am passionate about pushing the boundaries of technology to create transparent and reliable intelligent systems.</p>
+                        </div>
+                        <div class="mt-8">
+                            <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4">Skills</h3>
+                            <ul class="flex flex-wrap gap-2">
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Multimodal AI</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Information Fusion</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Explainable AI (XAI)</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Machine Learning</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Deep Learning</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Computer Vision</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Reinforcement Learning</div></li>
+                                <li><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Federated Learning</div></li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <!-- Experience Section -->
+                    <section id="experience" class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Work experience">
+                        <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-gray-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                          <h2 class="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200 lg:sr-only">Experience</h2>
+                        </div>
+                        <div>
+                          <ol class="group/list">
+                            <li class="mb-12">
+                              <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                <header class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2" aria-label="Sep 2024 - Present">Sep 2024 - Present</header>
+                                <div class="z-10 sm:col-span-6">
+                                  <h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200">
+                                    <div>
+                                      <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://www.utwente.nl/en/" target="_blank" rel="noreferrer noopener" aria-label="PhD Candidate at University of Twente, Netherlands">
+                                        <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                        <span>PhD Candidate · <span class="inline-block">University of Twente, Netherlands</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                        </span>
+                                      </a>
+                                    </div>
+                                  </h3>
+                                  <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                      <li class="mb-2">Conducting doctoral research on Multimodal AI and Information Fusion.</li>
+                                      <li class="mb-2">Developing novel algorithms to facilitate information fusion in Multi-Source and Multi-Agent scenarios.</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="mb-12">
+                                <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                  <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                  <header class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2" aria-label="Jul 2023 - Jul 2024">Jul 2023 - Jul 2024</header>
+                                  <div class="z-10 sm:col-span-6">
+                                    <h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200">
+                                      <div>
+                                        <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://global.abb/group/en" target="_blank" rel="noreferrer noopener" aria-label="Student Intern at ABB Corporate Research Center">
+                                          <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                          <span>Student Intern · <span class="inline-block">ABB Corporate Research Center</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                          </span>
+                                        </a>
+                                      </div>
+                                    </h3>
+                                    <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                        <li class="mb-2">Researched collaborative learning techniques for model adaptation under distribution change scenarios.</li>
+                                        <li class="mb-2">Created a novel algorithm for efficient drift detection and target model adaptation, reducing communication and computational costs.</li>
+                                        <li class="mb-2">Collaborated with the team to analyze and implement Federated Learning algorithms.</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </li>
+                            <li class="mb-12">
+                                <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                  <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                  <header class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2" aria-label="Jun 2021 - Jul 2022">Jun 2021 - Jul 2022</header>
+                                  <div class="z-10 sm:col-span-6">
+                                    <h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200">
+                                      <div>
+                                        <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://www.urjanet.com/" target="_blank" rel="noreferrer noopener" aria-label="Data Analyst Intern at Urjanet Energy Solutions">
+                                          <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                          <span>Data Analyst Intern · <span class="inline-block">Urjanet Energy Solutions</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                          </span>
+                                        </a>
+                                      </div>
+                                    </h3>
+                                    <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                        <li class="mb-2">Validated user-centric scenarios by extracting, loading, and reconciling large amounts of data from various platforms.</li>
+                                        <li class="mb-2">Maintained utility data for multinational companies, including analyzing and storing data.</li>
+                                        <li class="mb-2">Addressed various incident reports by drafting and providing solutions to developers.</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </li>
+                          </ol>
+                        </div>
+                    </section>
+                    
+                    <!-- Projects Section -->
+                    <section id="projects" class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Selected projects">
+                        <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-gray-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                          <h2 class="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200 lg:sr-only">Projects</h2>
+                        </div>
+                        <div>
+                          <ul class="group/list">
+                            <li class="mb-12">
+                              <div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                <div class="z-10 sm:order-2 sm:col-span-6">
+                                  <h3>
+                                    <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://github.com/AdarshNL/RLHF-based-Image-Caption-Generation" target="_blank" rel="noreferrer noopener" aria-label="RLHF-based Image Caption Generation">
+                                      <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                      <span>RLHF-based Image Caption Generation
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                      </span>
+                                    </a>
+                                  </h3>
+                                  <p class="mt-2 text-sm leading-normal">Guide: Prof. Dr Arun P V</p>
+                                  <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                      <li>Developed a deep learning model for generating image captions using the Flickr 8K dataset.</li>
+                                      <li>Introduced a novel loss function to optimize the model based on human feedback.</li>
+                                      <li>Implemented an actor-critic-based approach to improve model performance.</li>
+                                  </ul>
+                                </div>
+                                <div class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">Jan 2023 - July 2023</div>
+                              </div>
+                            </li>
+                             <li class="mb-12">
+                              <div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                <div class="z-10 sm:order-2 sm:col-span-6">
+                                  <h3>
+                                    <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="#" target="_blank" rel="noreferrer noopener" aria-label="Collaborative Learning for Model Adaptation">
+                                      <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                      <span>Collaborative Learning for Model Adaptation
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                      </span>
+                                    </a>
+                                  </h3>
+                                  <p class="mt-2 text-sm leading-normal">Guide: Dr Madapu Amarlingam & Prof. Dr Pavan Kumar B N</p>
+                                  <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                      <li>Addressed limitations of state-of-the-art methods in Federated Learning with non-IID data and concept drift.</li>
+                                      <li>Created a novel algorithm performing on par with state-of-the-art methods with less communication and computation costs.</li>
+                                  </ul>
+                                </div>
+                                <div class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">Jul 2023 - Apr 2024</div>
+                              </div>
+                            </li>
+                             <li class="mb-12">
+                              <div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                <div class="z-10 sm:order-2 sm:col-span-6">
+                                  <h3>
+                                    <a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://github.com/AdarshNL/Image-Compression-using-Artificial-Bee-Colony-Algorithm" target="_blank" rel="noreferrer noopener" aria-label="Image Compression using Artificial Bee Colony">
+                                      <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span>
+                                      <span>Image Compression using Artificial Bee Colony
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg>
+                                      </span>
+                                    </a>
+                                  </h3>
+                                  <p class="mt-2 text-sm leading-normal">Guide: Prof. Dr Subu Kandaswamy & Prof. Dr Piyush Joshi</p>
+                                  <ul class="mt-2 list-disc list-inside text-sm text-slate-600 dark:text-slate-400">
+                                      <li>Implemented image compression using the ABC algorithm with minimal data loss.</li>
+                                      <li>Introduced an objective and fitness function to facilitate the three phases of the ABC algorithm.</li>
+                                  </ul>
+                                </div>
+                                <div class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">Sep 2022 - Dec 2022</div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                    </section>
+                    
+                    <!-- Publications Section -->
+                    <section id="publications" class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Publications">
+                        <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-gray-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                          <h2 class="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200 lg:sr-only">Publications</h2>
+                        </div>
+                         <div>
+                          <ul class="group/list">
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://dl.acm.org/doi/full/10.1145/3703323.3703341" target="_blank" rel="noreferrer noopener" aria-label="Collaborative Drift Compensation"> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Collaborative Drift Compensation<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Adarsh NL, Madapu Amarlingam, and Divyasheel Sharma.</p><p class="mt-1 text-sm text-slate-500">CODS-COMAD 2024: Proceedings of the 6th Joint International Conference on Data Science & Management of Data.</p></div></div></li>
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://link.springer.com/chapter/10.1007/978-3-031-93691-3_18" target="_blank" rel="noreferrer noopener" aria-label="Leveraging Internal Representations of Model for Magnetic Image Classification."> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Leveraging Internal Representations of Model for Magnetic Image Classification.<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Adarsh N L, Arun P V.</p><p class="mt-1 text-sm text-slate-500">Computer Vision and Image Processing 2024.</p></div></div></li>
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://arxiv.org/abs/2407.17999" target="_blank" rel="noreferrer noopener" aria-label="Lightweight Industrial Cohorted Federated Learning for Heterogeneous Assets."> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Lightweight Industrial Cohorted Federated Learning for Heterogeneous Assets.<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Amarlingam, Madapu, Abhishek Wani, and Adarsh NL.</p><p class="mt-1 text-sm text-slate-500">Submitted to Knowledge-Based Systems.</p></div></div></li>
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://arxiv.org/abs/2403.06735" target="_blank" rel="noreferrer noopener" aria-label="Enhancing Image Caption Generation Using Reinforcement Learning with Human Feedback."> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Enhancing Image Caption Generation Using Reinforcement Learning with Human Feedback.<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Adarsh N L, Arun P V, and Aravindh N L.</p><p class="mt-1 text-sm text-slate-500">arXiv preprint arXiv:2403.06735 (2024).</p></div></div></li>
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="https://doi.org/10.1109/ICCMC56507.2023.10083656" target="_blank" rel="noreferrer noopener" aria-label="Person Re-Identification using Deep Learning."> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Person Re-Identification using Deep Learning.<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">N, Ananthi, L, Adarsh N, M, Anish, and G, Arunraj.</p><p class="mt-1 text-sm text-slate-500">2023 7th International Conference on Computing Methodologies and Communication (ICCMC), pp. 127-132.</p></div></div></li>
+                            <li class="mb-12"><div class="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"><div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div><div class="z-10 sm:col-span-8"><h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200"><a class="inline-flex items-baseline font-medium leading-tight text-slate-800 dark:text-slate-200 hover:text-cyan-500 dark:hover:text-cyan-300 focus-visible:text-cyan-500 dark:focus-visible:text-cyan-300 group/link text-base" href="#" target="_blank" rel="noreferrer noopener" aria-label="Evaluation of the effectiveness of DAD-APP in managing dentally anxious children: A Pilot Study."> <span class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:block"></span> <span>Evaluation of the effectiveness of DAD-APP in managing dentally anxious children: A Pilot Study.<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 ml-1 translate-y-px" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0V4.75a.75.75 0 0 0-.75-.75H9.25a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path></svg> </span></a></h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Hemalatha, R., Nirmala, S., Viswaja, K., Adarsh, N., Catherine, Annie, and Rajaram, Priyatharshini.</p><p class="mt-1 text-sm text-slate-500">Zeichen Journal, vol. 6, 2020, pp. 119-126.</p></div></div></li>
+                          </ul>
+                        </div>
+                    </section>
+                    
+                    <!-- Education Section -->
+                    <section id="education" class="scroll-mt-16 lg:scroll-mt-24" aria-label="Education">
+                        <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-50/75 dark:bg-gray-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+                          <h2 class="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200 lg:sr-only">Education</h2>
+                        </div>
+                        <div>
+                          <ol class="group/list">
+                            <li class="mb-12">
+                                <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                  <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                  <header class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2" aria-label="Sep 2022 - Jun 2024">Sep 2022 - Jun 2024</header>
+                                  <div class="z-10 sm:col-span-6">
+                                    <h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200">
+                                        <div class="text-base font-medium text-slate-800 dark:text-slate-200">Indian Institute of Information Technology, Sri City, India</div>
+                                    </h3>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Master of Technology - Artificial Intelligence & Machine Learning</p>
+                                    <p class="text-sm text-slate-500">CGPA - 9.55/10</p>
+                                     <ul class="mt-2 flex flex-wrap" aria-label="Selected coursework">
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Artificial Intelligence & Knowledge Representation</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Machine Learning</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Deep Learning</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Computer Vision</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Reinforcement Learning</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Data Mining</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Data Analytics & Visualization</div></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </li>
+                            <li class="mb-12">
+                                <div class="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                                  <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:block lg:group-hover:bg-slate-200/50 dark:lg:group-hover:bg-gray-800/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+                                  <header class="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2" aria-label="Sep 2018 - Apr 2022">Sep 2018 - Apr 2022</header>
+                                  <div class="z-10 sm:col-span-6">
+                                    <h3 class="font-medium leading-snug text-slate-800 dark:text-slate-200">
+                                        <div class="text-base font-medium text-slate-800 dark:text-slate-200">Anna University, Easwari Engineering College, Chennai, India</div>
+                                    </h3>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Bachelor of Technology - Information Technology</p>
+                                    <p class="text-sm text-slate-500">CGPA - 8.64/10</p>
+                                     <ul class="mt-2 flex flex-wrap" aria-label="Selected coursework">
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Data Structures</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Design & Analysis of Algorithms</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Object Oriented Programming</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Computer Networks</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Database Systems</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Big Data Analytics</div></li>
+                                        <li class="mr-1.5 mt-2"><div class="flex items-center rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium leading-5 text-cyan-500 dark:text-cyan-300">Human-Computer Interaction</div></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </li>
+                          </ol>
+                        </div>
+                    </section>
+        
 
-  <nav class="navigation">
-    <ul>
-      <li><a href="#" class="nav-link" data-target="home">Home</a></li>
-      <li><a href="blog.html" class="nav-link" data-target="blog">Blog</a></li>
-      <li><a href="contact.html" class="nav-link" data-target="contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <section class="academic">
-    <h2>🎓 Academic Background</h2>
-    <div class="job">
-    <ul>
-      <li>
-        <h3>📚 Master of Technology - Artificial Intelligence & Machine Learning</h3>
-        <p>Indian Institue of Information Technology - Sri City | Sep '22 - May '24</p>
-      </li>
-      <li>
-        <h3>🧙‍♂️ Bachelor of Technology - Information Technology</h3>
-        <p>Easwari Engineering College | Graduated: June '22</p>
-      </li>
-    </ul>
-  </section>
-
-  <section class="experience">
-    <h2>💼 Work Experience</h2>
-    
-    <div class="job">
-      <div class="job-header">
-        <h3>🌟 Student Intern - ABB Global Industries & Services Private Limited, Bengaluru</h3>
-      </div>
-      <div class="job-content">
-        <p>Conducted research on Federated Learning (FL) techniques for model adaptation.</p>
-        <p>Collaborated with the team to analyze and implement collaborative learning approaches.</p>
-        <p>Contributed to collecting and analyzing data, designing and implementing experiments, and presenting findings to the team.</p>
-        <p>Award: 2nd runner up in ABB Global hackathon 2023.</p>
-      </div>
+                </main>
+            </div>
+        </div>
     </div>
-  
-    <div class="job">
-      <div class="job-header">
-        <h3>🌠 Data Analyst Intern - Urjanet Energy Solutions Private Limited, Chennai</h3>
-      </div>
-      <div class="job-content">
-        <p>Validated user-centric scenarios by extracting, loading, and reconciling large amounts of data from various platforms and sources.</p>
-        <p>Maintained utility data for multinational companies, including analyzing and storing data.</p>
-        <p>Addressed various incident reports by drafting and providing solutions to developers.</p>
-      </div>
-    </div>
-  
-    <div class="job">
-      <div class="job-header">
-        <h3>🖥️ Web Developer Intern - Xtracut Systems Private Limited, Chennai</h3>
-      </div>
-      <div class="job-content">
-        <p>Managed and maintained eCommerce websites for clients.</p>
-        <p>Collaborated with project managers, testers, and end-users to ensure successful project completion.</p>
-        <p>Utilized scripting languages, content creation tools, and digital media to design and develop websites.</p>
-      </div>
-    </div>
-  
-  </section>
-  
-  <section class="projects">
-    <h2>🔮 Projects</h2>
-    
-    <div class="job">
-        <h3>🚀 Leveraging Internal Representations of Model for Magnetic Image Classification.</h3>
-        <p>Guide: Prof. <a href="https://www.iiits.ac.in/people/regular-faculty/dr-arun-pv/">Arun P V</a> | Apr '23 - present</p>
-        <p>Introduced a paradigm for training models with very scarce magnetic image data.</p>
-        <p>Augmented data using internal representations of Auto-encoder model.</p>
-        <p>Achieved an 80% accuracy for pixel and patch-wise classification to identify mineral deposits.</p>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
 
-    <div class="job">
-        <h3>🌐 RLHF based Image Caption Generation.</h3>
-        <p><i><a href="https://github.com/adarsh-nl/RLHF-based-ImgaeCaptionGeneration">(GitHub Repository)</a></i></p>
-        <p>Guide: Prof. <a href="https://www.iiits.ac.in/people/regular-faculty/dr-arun-pv/">Arun P V</a> | Jan '23 - July '23</p>
-        <p>Developed a deep learning model capable of generating captions for images using the Flickr 8K dataset.</p>
-        <p>Introduced a novel loss function to optimize the model based on Human Feedback to produce human-preferred captions.</p>
-        <p>Also, an actor-critic-based approach to improve the model's performance.</p>
-    </div>
+            function updateThemeIcons() {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            }
+            
+            updateThemeIcons();
 
-    <!-- Add more projects as needed -->
+            if(themeToggleButton) {
+                themeToggleButton.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.theme = 'dark';
+                    } else {
+                        localStorage.theme = 'light';
+                    }
+                    updateThemeIcons();
+                });
+            }
 
-</section>
-  
-  <section class="publications">
-    <h2>📚 Publications</h2>
-    <div class="job">
-    <ul>
-      <li>
-        <p>📖 Evaluation of the effectiveness of DAD- APP in managing dentally anxious children: “A Pilot Study”  journal, Volume 6, Issue 11, 2020. ISSN No: 0932- 4747. (11/2020).</p>
-      </li>
-      <li>
-        <p>🔖 Ananthi N, Adarsh N L, Anish M and Arunraj G, "Person Re-Identification using Deep Learning," 2023 7th International Conference on Computing Methodologies and Communication (ICCMC), Erode, India, 2023, pp. 127-132, doi: 10.1109/ICCMC56507.2023.10083656.</p>
-      </li>
-      <li>
-        <p>🌌 A Journey Within: Unraveling Model Internal Representations for Magnetic Image Classification. I was accepted for presentation at the American Geophysical Union Conference 2023.</p>
-      </li>
-    </ul>
-    </div>
-  </section>
+            const sections = document.querySelectorAll('main section[id]');
+            const navLinks = document.querySelectorAll('.nav a');
 
-</div>
+            const observer = new IntersectionObserver((entries) => {
+                let currentActiveId = null;
+                // Find the section that is currently intersecting
+                for(const entry of entries) {
+                    if (entry.isIntersecting) {
+                        currentActiveId = entry.target.id;
+                        break;
+                    }
+                }
 
-<footer class="magic-footer">
-  <p>&copy; 2023 ANL✨</p>
-</footer>
+                // If no section is intersecting, find the closest one at the top of the viewport.
+                if (currentActiveId === null) {
+                    let minDistance = Infinity;
+                    for (const section of sections) {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top >= 0 && rect.top < minDistance) {
+                            minDistance = rect.top;
+                            currentActiveId = section.id;
+                        }
+                    }
+                }
 
+                navLinks.forEach(link => {
+                    const indicator = link.querySelector('.nav-indicator');
+                    const text = link.querySelector('.nav-text');
+                    const linkHrefId = link.getAttribute('href').substring(1);
+                    
+                    if (linkHrefId === currentActiveId) {
+                        indicator.classList.add('active');
+                        text.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                        text.classList.remove('active');
+                    }
+                });
+            }, {
+                rootMargin: '-40% 0px -60% 0px',
+            });
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
 </body>
 </html>
