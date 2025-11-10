@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charting the Future of Unanned Vehicles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Simple styles for prose elements */
+      .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom-width: 2px;
+        border-color: #3b82f6; /* border-blue-500 */
+        display: inline-block;
+      }
+      .prose h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      .prose p, .prose ul, .prose ol, .prose blockquote {
+        margin-bottom: 1rem;
+      }
+      .prose a {
+        color: #2563eb; /* text-blue-600 */
+      }
+      .prose a:hover {
+        color: #3b82f6; /* text-blue-500 */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 font-sans antialiased">
+    
+    <header class="bg-white border-b border-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+          Where Do We Go from Here? Charting the Future of Unmanned Vehicles
+        </h1>
+        
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+          <div>
+            <p class="font-semibold text-gray-900">Adarsh Nanjaiya Latha</p>
+            <p class="text-sm">Pervasive Systems</p>
+            <p class="text-sm">University of Twente</p>
+            <p class="text-sm">Enschede, The Netherlands</p>
+            <a href="mailto:a.nanjaiyalatha@utwente.nl" class="text-sm text-blue-600 hover:text-blue-500 break-all">a.nanjaiyalatha@utwente.nl</a>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">Sabari Nathan Anbalagan</p>
+            <p class="text-sm">Pervasive Systems</p>
+            <p class="text-sm">University of Twente</p>
+            <p class="text-sm">Enschede, The Netherlands</p>
+            <a href="mailto:s.n.anbalagan@utwente.nl" class="text-sm text-blue-600 hover:text-blue-500 break-all">s.n.anbalagan@utwente.nl</a>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">Alessandro Chiumento</p>
+            <p class="text-sm">Pervasive Systems</p>
+            <p class="text-sm">University of Twente</p>
+            <p class="text-sm">Enschede, The Netherlands</p>
+            <a href="mailto:a.chiumento@utwente.nl" class="text-sm text-blue-600 hover:text-blue-500 break-all">a.chiumento@utwente.nl</a>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-900">Jan Laarhuis</p>
+            <p class="text-sm">Pervasive Systems</p>
+            <p class="text-sm">University of Twente</p>
+            <p class="text-sm">Enschede, The Netherlands</p>
+            <a href="mailto:j.h.laarhuis@utwente.nl" class="text-sm text-blue-600 hover:text-blue-500 break-all">j.h.laarhuis@utwente.nl</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <article class="prose max-w-none">
+        
+        <section class="py-8 border-b border-gray-200">
+          <h2>Abstract</h2>
+          <div class="space-y-4">
+            <blockquote class="border-l-4 border-blue-500 pl-4 italic text-gray-700">
+              Unmanned vehicles (UVs), including aerial (UAVs), ground (UGVs), and sea-based (USVs) systems, are advancing rapidly, where the combined market is projected to go from over $29.3 billion in 2025 to more than $46 billion by 2030 [1]. Despite the market growth, the development occurs in isolated silos. However, real-world missions increasingly demand coordinated operations across multiple UV domains. In this paper, we argue the need for a unified approach to UV development and propose a Synergistic UxV Ecosystem architecture to enable heterogeneous UVs to share information, collaborate, and dynamically allocate tasks. The proposed high-level conceptual framework integrates collaborative intelligence, decentralized communication, and service-oriented design to improve mission effectiveness. We demonstrate how such an ecosystem can enhance situational awareness, adaptability, and operational efficiency, enabling unmanned systems to achieve what isolated entities cannot, through real world inspired scenarios as examples.
+            </blockquote>
+            <p class="text-sm text-gray-500 mt-4">
+              <strong>Index Terms</strong>—Unmanned Vehicles, Autonomous Vehicles, Unmanned Aerial Vehicles, Unmanned Ground Vehicles, Unmanned Surface Vehicles, Ecosystem, Information Fusion.
+            </p>
+          </div>
+        </section>
+
+        <section class="py-8 border-b border-gray-200">
+          <h2>I. Introduction</h2>
+          <div class="space-y-4">
+            <p>Unmanned vehicles (UVs), also known as uncrewed vehicles, operate without a human onboard, either remotely or autonomously. Significant amounts of money, energy, and manpower are invested in making unmanned vehicles autonomous [2] [3] [4]. Unmanned vehicles can be broadly classified into three categories based on the environment in which they operate: Unmanned Aerial Vehicles (UAVs)/Unmanned Aerial Systems (UAS) operate in the air/sky; Unmanned Ground Vehicles (UGVs) operate on the ground/land; and Unmanned Surface Vehicles (USVs) operate in the water/sea. Advancements in these categories often occur independently of one another. For instance, research on UAVs typically focuses on optimizing their operational efficiency. This is not inherently problematic, but in real-life applications, such as military, manufacturing, and transportation, operations involve more than one category of UVs in completing a mission. The different categories of UVs can either complement or compound or contradict each other in achieving the mission at hand. Therefore, aspects of operational efficiency should not be considered in isolation, but rather from the perspective of a broader UxV ecosystem.</p>
+            <p>Table I shows, how UAVs, UGVs, and USVs are deployed across diverse sectors, including transport, industry, military, and entertainment, each serving a wide range of use cases from combat operations to environmental monitoring.</p>
+            <div class="overflow-x-auto my-6">
+              <h4 class="text-center font-semibold mb-2">TABLE I: Structured overview of the application landscape for key unmanned platforms (UAV, UGV and USV).</h4>
+              <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-200 border-b border-gray-300">
+                  <tr>
+                    <th class="p-3">Platform</th>
+                    <th class="p-3">Domain</th>
+                    <th class="p-3">Applications</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                  <tr class="bg-white">
+                    <td rowspan="4" class="p-3 align-top font-bold">UAV</td>
+                    <td class="p-3">Transport</td>
+                    <td class="p-3">Package delivery, Urban Air Mobility, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Industrial</td>
+                    <td class="p-3">Infrastructure inspection, agri-monitoring, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Military</td>
+                    <td class="p-3">Intelligence, Surveillance, Reconnaissance, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Entertain.</td>
+                    <td class="p-3">Cinematography, drone racing, light shows, etc.</td>
+                  </tr>
+                   <tr class="bg-gray-100">
+                    <td rowspan="4" class="p-3 align-top font-bold">UGV</td>
+                    <td class="p-3">Transport</td>
+                    <td class="p-3">Delivery bots, autonomous transportation, etc.</td>
+                  </tr>
+                  <tr class="bg-gray-100">
+                    <td class="p-3">Industrial</td>
+                    <td class="p-3">Warehouse automation, mining bots, etc.</td>
+                  </tr>
+                  <tr class="bg-gray-100">
+                    <td class="p-3">Military</td>
+                    <td class="p-3">Combat vehicles, Explosive disposal, etc.</td>
+                  </tr>
+                  <tr class="bg-gray-100">
+                    <td class="p-3">Entertain.</td>
+                    <td class="p-3">Battle robots, theme park animatorics, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td rowspan="4" class="p-3 align-top font-bold">USV</td>
+                    <td class="p-3">Transport</td>
+                    <td class="p-3">Autonomous cargo ships, robotic ferries, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Industrial</td>
+                    <td class="p-3">Oceanography, offshore maintenance, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Military</td>
+                    <td class="p-3">Naval patrol, mine countermeasures, etc.</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="p-3">Entertain.</td>
+                    <td class="p-3">Autonomous tours, remote boat racing, etc.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>We strongly believe that unmanned vehicles should not evolve in isolated silos, but as part of a unified UxV ecosystem. This approach unlocks new opportunities and applications. We illustrate with cases where siloed deployments underperform, but a coordinated UxV ecosystem succeeds. Consider a forest wildfire where the primary goal is safe evacuation. UGVs may deliver emergency supplies [5] or transport individuals, yet locating people and planning optimal routes remain difficult. Relying only on UGVs limits mission effectiveness. A swarm of UAVs can assist with human localization and route-planning, greatly enhancing UGV performance. This shows how different unmanned vehicles complement one another.</p>
+          </div>
+        </section>
+
+        <section class="py-8 border-b border-gray-200">
+          <h2>II. Background and Related Works</h2>
+          <div class="space-y-4">
+            <h3>A. Evolution of Information Fusion</h3>
+            <p>To understand the architectural needs of the ecosystem, information fusion should be seen as a hierarchy of increasing abstraction and intelligence, not a monolithic process. While lower levels are well-studied, the highest level—which we term Mission Intelligence—poses the greatest challenge and promise.</p>
+            <ol class="list-decimal pl-5 space-y-2">
+              <li><strong>Intra-Vehicle Fusion:</strong> Intra-vehicle fusion creates a robust state estimate for a UV from its noisy and disparate sensors. The goal is to mitigate sensor noise, complement modalities (e.g., IMU and GPS), and manage redundancy to yield an accurate local understanding.</li>
+              <li><strong>Intra-Swarm Fusion:</strong> This frontier aggregates data from multiple UVs to build a shared tactical picture. A key challenge is data association, determining whether observations from different entities match [8].</li>
+              <li><strong>Mission Level Fusion:</strong> Our focus, Cross-domain Mission Intelligence, advances from fusing states to abstract concepts such as intent, capability, and causality. It enables heterogeneous UV teams to share a goal-oriented understanding of the mission.</li>
+            </ol>
+            <h3>B. State Of The Art</h3>
+            <p>The vision of collaboration of a swarm of cross-domain unmanned vehicles is not new. Few prior works have given the glimpse of its potential. Table II gives a brief comparison of the State Of The Art works. </p>
+            <div class="overflow-x-auto my-6">
+              <h4 class="text-center font-semibold mb-2">TABLE II: Comparative Summary of Cross-Domain UxV Systems</h4>
+              <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-200 border-b border-gray-300">
+                  <tr>
+                    <th class="p-3">Work / System</th>
+                    <th class="p-3">UVs</th>
+                    <th class="p-3">Collaboration</th>
+                    <th class="p-3">Info Sharing</th>
+                    <th class="p-3">Info Fusion</th>
+                    <th class="p-3">Generalizability</th>
+                    <th class="p-3">Semantic Understanding</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-center">
+                  <tr class="bg-white"><td class="p-3 text-left">Stolfi et al. [11]</td><td class="p-3">UAV, UGV, USV</td><td class="p-3">✓</td><td class="p-3"></td><td class="p-3"></td><td class="p-3"></td><td class="p-3"></td></tr>
+                  <tr class="bg-gray-100"><td class="p-3 text-left">Wang et al. [12]</td><td class="p-3">UxV</td><td class="p-3"></td><td class="p-3">✓</td><td class="p-3"></td><td class="p-3"></td><td class="p-3"></td></tr>
+                  <tr class="bg-white"><td class="p-3 text-left">JAUS [13]</td><td class="p-3">UxV</td><td class="p-3"></td><td class="p-3">✓</td><td class="p-3"></td><td class="p-3"></td><td class="p-3"></td></tr>
+                  <tr class="bg-gray-100"><td class="p-3 text-left">Wu et al. [14]</td><td class="p-3">UAV</td><td class="p-3">✓</td><td class="p-3"></td><td class="p-3">Intra-swarm</td><td class="p-3"></td><td class="p-3"></td></tr>
+                  <tr class="bg-white"><td class="p-3 text-left">Xu et al. [15]</td><td class="p-3">UAV, USV</td><td class="p-3">✓</td><td class="p-3"></td><td class="p-3">Inter-Vehicle</td><td class="p-3"></td><td class="p-3"></td></tr>
+                  <tr class="bg-blue-100 font-semibold"><td class="p-3 text-left">Ecosystem (Proposed)</td><td class="p-3">UxV</td><td class="p-3">✓</td><td class="p-3">✓</td><td class="p-3">Mission Level</td><td class="p-3">✓</td><td class="p-3">✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        
+        <section class="py-8 border-b border-gray-200">
+          <h2>III. Architecture</h2>
+          <div class="space-y-4">
+            <p>To give life to the envisioned UxV ecosystem, we propose UxV Ecosystem Architecture, a high-level conceptual blueprint designed for Scalability, Resilience and collaboration despite heterogeneity. The architecture is developed with the following principles: layered abstraction to separate concerns, decentralization to avoid single point of failure, and service oriented design for plug and play modularity.</p>
+            <div class="my-8">
+              <figure>
+                <img src="arch.png" alt="UxV Ecosystem Architecture Diagram" class="rounded-lg shadow-lg border border-gray-200"/>
+                <figcaption class="text-center mt-2 text-sm text-gray-600">
+                  <strong>Fig. 1:</strong> UxV Ecosystem Architecture: This diagram shows the flow from high-level human command (Layer 4) to coordinated action across heterogeneous assets (Layer 1). The core of the system is the Collaborative Intelligence Layer (Layer 3), which uses a Distributed World Model and Task Engine to enable autonomous, cross-domain operations, all facilitated by the Ecosystem Fabric (Layer 2).
+                </figcaption>
+              </figure>
+            </div>
+            <h3>A. Heterogeneous Asset Layer</h3>
+            <p>This layer consists of physical UxV assets and their software to extend the hardware and provide a baseline autonomy.</p>
+            <h3>B. Ecosystem Fabric</h3>
+            <p>This is the backbone of the ecosystem and it facilitates decentralized communication, and service discovery. It is not a centralized server, but a set of protocols and services that create a unified operational medium for information exchange.</p>
+            <h3>C. Collaborative Intelligence Layer</h3>
+            <p>This is the core of the proposed ecosystem architecture. It transforms raw data and information into a shared understanding and coordinated action. Its processes are distributed, running on nodes that have sufficient computations resources.</p>
+          </div>
+        </section>
+
+        <section class="py-8 border-b border-gray-200">
+          <h2>IV. Challenges, Opportunities, and Future Work</h2>
+          <div class="space-y-4">
+            <p>The proposed UxV Ecosystem represents a shift from siloed autonomy to coordinated, mission-driven collaboration. While promising in concept, its realization introduces technical challenges and opens new research opportunities.</p>
+            <h3>A. Major Challenges</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Scalability and Synchronization:</strong> Maintaining a consistent, low-latency DWM across agents requires scalable fusion algorithms and efficient communication protocols.</li>
+              <li><strong>Resilience in Adversarial Environments:</strong> Ensuring communication and coordination amid jamming, spoofing, or intermittent connectivity demands robust techniques.</li>
+              <li><strong>Trust, Security, and Verification:</strong> Decentralized architectures face risks of data poisoning and malicious agents. Verifiable task execution, secure data sharing, and distributed trust models are critical.</li>
+            </ul>
+            <h3>B. Opportunities for Future Work</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Cross-Domain Missions:</strong> The architecture enables heterogeneous teams for tasks like disaster response, infrastructure inspection, and logistics driving new approaches to coordination and planning.</li>
+              <li><strong>Open Standards:</strong> Defining shared formats for data exchange, task negotiation, and capability description will support interoperability across platforms and vendors.</li>
+            </ul>
+          </div>
+        </section>
+        
+        <section class="py-8 border-b border-gray-200">
+          <h2>V. Conclusion</h2>
+          <div class="space-y-4">
+            <p>In this paper we identified a critical bottleneck in the current development and deployment of unmanned vehicles (UVs): the siloed nature of information fusion, limited to individual platforms or homogeneous swarms. To address this, we proposed a paradigm shift toward Cross-domain Mission Intelligence, embodied in the UxV Ecosystem architecture. By framing our analysis around an evolutionary hierarchy, from intra-vehicle to intra-swarm to mission-level fusion, we justified the need for a fundamentally new architectural approach. The proposed ecosystem centers on a multi-layered DWM and a Collaborative Intelligence Layer, enabling semantic and relational reasoning essential for coordinated, high-level missions.</p>
+            <p>Crucially, the architecture moves beyond data exchange to support intent sharing, contextual awareness, and collective decision-making across heterogeneous agents. This work is not a conclusion, but a beginning to a conceptual foundation and a call to action for developing the tools, standards, and algorithms that will realize mission-level autonomy across domains.</p>
+          </div>
+        </section>
+        
+        <section class="py-8">
+          <h2>References</h2>
+          <div class="space-y-4">
+            <ol class="list-decimal pl-5 space-y-2 text-sm">
+                <li>Grand View Research, "Unmanned systems market size, share & trends analysis report..."</li>
+                <li>J. Deichmann, et al., "Autonomous driving's future: Convenient and connected," McKinsey Center for Future Mobility, Jan 2023.</li>
+                <li>D. Chiao, et al., "Autonomous vehicles moving forward: Perspectives from industry leaders," McKinsey & Company, Jan 2024.</li>
+                <li>U.S. Army Unmanned Aircraft Systems Center of Excellence, "Eyes of the army: U.s. army unmanned aircraft systems roadmap 2010-2035," Apr. 2010.</li>
+                <li>N. B. Roberts, et al., "Current summary of the evidence in drone-based emergency medical services care," Resuscitation Plus, vol. 13, 2023.</li>
+                <li>S. Thrun, "Probabilistic robotics," Communications of the ACM, vol. 45, no. 3, pp. 52-57, 2002.</li>
+                <li>C. Cadena, et al., "Past, present, and future of simultaneous localization and mapping: Toward the robust-perception age," IEEE Transactions on Robotics, vol. 32, no. 6, pp. 1309-1332, 2016.</li>
+                <li>S. Challa, et al., Fundamentals of Object Tracking. Cambridge University Press, 2011.</li>
+                <li>P.-Y. Lajoie, et al., "Towards collaborative simultaneous localization and mapping: A survey of the current research landscape," Field Robotics, vol. 2, May 2022.</li>
+                <li>S. J. Julier and J. K. Uhlmann, "Using covariance intersection for slam," Robot. Auton. Syst., vol. 55, no. 1, p. 3-20, Jan. 2007.</li>
+                <li>D. H. Stolfi, et al., "Uav-ugv-umv multi-swarms for cooperative surveillance," Frontiers in Robotics and Al, vol. 8, p. 616950, 2021.</li>
+                <li>Z. Wang, et al., "An interaction framework for multi-domain unmanned systems collaboration based on interoperability messages," in 2022 IEEE 5th International Conference on Electronic Information and Communication Technology (ICEICT), 2022, pp. 152-155.</li>
+                <li>D. Kent, et al., “Robotic manipulation and haptic feedback via high speed messaging with the joint architecture for un-manned systems (jaus)," in AUVSI Unmanned Systems Conference, 2024.</li>
+                <li>Z. Wu, et al., “A game-based approach for designing a collaborative evolution mechanism for unmanned swarms on community networks," Scientific Reports, vol. 12, no. 1, p. 18892, 2022.</li>
+                <li>R. Xu, et al., “A manipulator-assisted multiple uav landing system for usv subject to disturbance," Ocean Engineering, vol. 299, p. 117306, 2024.</li>
+            </ol>
+          </div>
+        </section>
+
+      </article>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-12 py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center text-gray-600 text-sm">
+        <p>
+          This publication is part of the project STEADFAST of the research programme NWO KiC, which is (partly) financed by the Dutch Research Council (NWO). ©2025 IFIP
+        </p>
+        <p class="mt-2">
+          Website created for presentation purposes.
+        </p>
+      </div>
+    </footer>
+
+    <div id="scrollToTopContainer" class="fixed bottom-5 right-5 z-50">
+      <button
+        id="scrollToTopBtn"
+        class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg transition-opacity duration-300 hidden"
+        aria-label="Go to top"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <script>
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      
+      const toggleVisibility = () => {
+        if (window.scrollY > 300) {
+          scrollToTopBtn.classList.remove('hidden');
+        } else {
+          scrollToTopBtn.classList.add('hidden');
+        }
+      };
+
+      const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      };
+
+      window.addEventListener('scroll', toggleVisibility);
+      scrollToTopBtn.addEventListener('click', scrollToTop);
+    </script>
+  </body>
+</html>
