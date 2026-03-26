@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+   <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
      
   
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/basic.css">
-  <link rel="icon" href="/assets/favicon.png">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css">
+  <link rel="icon" href="/Portfolio/assets/favicon.png">
    <title>Markov Decision Processes</title>  
 </head>
 <body>
   <header>
-<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
-<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<!--<img src="/Portfolio/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/Portfolio/">Adarsh N L</a></div>
 <nav>
   <ul>
-    <li><a href="/">Home</a></li>
-    <!-- <li><a href="/research/">Research</a></li> -->
-    <li><a href="/otium/">Otium</a></li>
-    <!-- <li><a href="/notes/">Notes</a></li> -->
-    <li><a href="/misc/">Misc</a></li>
+    <li><a href="/Portfolio/">Home</a></li>
+    <!-- <li><a href="/Portfolio/research/">Research</a></li> -->
+    <li><a href="/Portfolio/otium/">Otium</a></li>
+    <!-- <li><a href="/Portfolio/notes/">Notes</a></li> -->
+    <li><a href="/Portfolio/misc/">Misc</a></li>
   </ul>
-  <img src="/assets/hamburger.svg" id="menu-icon">
+  <img src="/Portfolio/assets/hamburger.svg" id="menu-icon">
 </nav>
 </header>
 
@@ -45,8 +45,8 @@
 <p>Is \(\pi^*\) optimal for every starting state \(x_0\)? It will be more convenient to model the transition dynamics of such a model using stochastic kernels, which informally model the transition probabilities of the process. That is, we want to find a stochastic kernel \(\kappa\) from \(\mathsf S \times \mathsf A\) to \(\mathsf S\) which gives the probability of the state at day \(n+1\) being in \(B \subseteq \mathsf S\) given that on day \(n\) the state was \(X_{n}\) and we took action \(A_n\). We can do this as follows <div class="nonumber">\[\begin{aligned} \kappa((X_n,A_n), B) = \mu(\{s \in \mathsf S : f(X_n,A_n,s) \in B\}).\end{aligned}\]</div></p>
 <p>We haven’t been very precise about our formulation. To this end, let us start by defining the objects like stochastic kernels and sets which will define our action and state spaces.</p>
 <h2 id="setting_the_stage"><a href="#setting_the_stage" class="header-anchor">SETTING THE STAGE</a></h2>
-<p>I had initially intended for this section to be a small one, but as I wrote I couldn’t help but go on a ramble since it helped me learn. If you are already comfortable with the notions of standard Borel spaces, stochastic kernels &#40;also known as Markov kernels or transition probability kernels&#41; and regular conditional distributions, or if you don’t want to be fully rigorous and are okay with understanding the core ideas without bothering too much with rigour and notation, feel free to skip directly to the section on <a href="/otium/mdp#markov_decision_process">Markov Decision Process</a>.</p>
-<p><strong>Note on notation</strong>: I will be using sans serif typestyle for spaces, for example \(\mathsf{S}, \mathsf{T}, \mathsf{A}\) etc., and script typestyle for \(\sigma-\)algebras, for example, \(\mathscr{S}, \mathscr{T}, \mathscr{A}\) etc. In this section I will be fastidiously careful about writing the \(\sigma-\)algebra, but starting from the next section on <a href="/otium/mdp#markov_decision_process">Markov Decision Processes</a> I often won’t write the \(\sigma-\)algebra explicitly because we will dealing with topological spaces and Borel \(\sigma-\)algebra is to be assumed implicit. But if I am forced to write, then I’ll use the script typestyle of a letter to denote the Borel \(\sigma-\)algebra of the space written in sans serif typestyle of the corresponding letter; for example, \(\mathscr{A}\) for \(\mathsf A.\) We denote the vector space of measurable functions from \((\mathsf X, \mathscr X)\) to \(\mathbb R\) by \(\mathscr X\) — the context will make it clear if we are referring to a function or a set, and what the domain of the function is. We denote the cone &#40;i.e., stable under sums and multiplication by positive constants&#41; of measurable functions from \((\mathsf X, \mathscr X)\) to \([0, +\infty]\) by \(\mathscr X_+.\)</p>
+<p>I had initially intended for this section to be a small one, but as I wrote I couldn’t help but go on a ramble since it helped me learn. If you are already comfortable with the notions of standard Borel spaces, stochastic kernels &#40;also known as Markov kernels or transition probability kernels&#41; and regular conditional distributions, or if you don’t want to be fully rigorous and are okay with understanding the core ideas without bothering too much with rigour and notation, feel free to skip directly to the section on <a href="/Portfolio/otium/mdp#markov_decision_process">Markov Decision Process</a>.</p>
+<p><strong>Note on notation</strong>: I will be using sans serif typestyle for spaces, for example \(\mathsf{S}, \mathsf{T}, \mathsf{A}\) etc., and script typestyle for \(\sigma-\)algebras, for example, \(\mathscr{S}, \mathscr{T}, \mathscr{A}\) etc. In this section I will be fastidiously careful about writing the \(\sigma-\)algebra, but starting from the next section on <a href="/Portfolio/otium/mdp#markov_decision_process">Markov Decision Processes</a> I often won’t write the \(\sigma-\)algebra explicitly because we will dealing with topological spaces and Borel \(\sigma-\)algebra is to be assumed implicit. But if I am forced to write, then I’ll use the script typestyle of a letter to denote the Borel \(\sigma-\)algebra of the space written in sans serif typestyle of the corresponding letter; for example, \(\mathscr{A}\) for \(\mathsf A.\) We denote the vector space of measurable functions from \((\mathsf X, \mathscr X)\) to \(\mathbb R\) by \(\mathscr X\) — the context will make it clear if we are referring to a function or a set, and what the domain of the function is. We denote the cone &#40;i.e., stable under sums and multiplication by positive constants&#41; of measurable functions from \((\mathsf X, \mathscr X)\) to \([0, +\infty]\) by \(\mathscr X_+.\)</p>
 <h3 id="standard_borel_space"><a href="#standard_borel_space" class="header-anchor">Standard Borel Space</a></h3>
 <p>I discussed the notion of standard Borel spaces in the <a href="https://adarshnl.github.io/otium/regularcondprob">blog post on conditional probability</a>, but since they play an important role in our discussion on Markov decision processes, let me elaborate on them a bit more here. Standard Borel spaces are usually studied under the banner of descriptive set theory and are intimately connected with other descriptive set theoretic concepts like analytic spaces, Lusin spaces and Souslin spaces. We will not focus on this side of the standard Borel spaces though, but rather on some important probabilistic results that can be formulated at this level of generality.</p>
 <p>Generally speaking, very few meaningful statements can be made about Markov decision processes when we impose no regularity structure on the spaces involved and let them be any measurable spaces. This is where standard Borel spaces come in — powerful results can be concluded with this structure, and yet they are sufficiently general to be satisfying.</p>
@@ -121,7 +121,7 @@
 
 <center>
 <figure>
-    <img src="/assets/doob_dynkin.png" alt="missing" />
+    <img src="/Portfolio/assets/doob_dynkin.png" alt="missing" />
 </figure>
 </center>
 
@@ -181,7 +181,7 @@
 <p>Suppose in the setting of Definition 6, we also have a measurable space \((\mathsf T, \mathscr T)\) and a random element \(Y \colon \Omega \to \mathsf T.\) Then by the <em>conditional distribution of \(X\) given \(Y\)</em> we will mean the conditional distribution of \(X\) given \(\sigma(Y).\)</p>
 <h3 id="disintegration"><a href="#disintegration" class="header-anchor">Disintegration</a></h3>
 <p>Let us first recall the <strong>construction of measures on a product space</strong>, which is closely tied with disintegrations. Suppose \((\mathsf S, \mathscr{S})\) and \((\mathsf T, \mathscr{T})\) are measurable spaces, \(\mu\) is a measure on \((\mathsf S, \mathscr{S})\), and \(\kappa\) is a kernel from \((\mathsf S, \mathscr{S})\) to \((\mathsf T, \mathscr{T})\) that can be written as \(\kappa = \sum_{n=1}^\infty \kappa_n\) for kernels \(\kappa_n\) from \((\mathsf S, \mathscr{S})\) to \((\mathsf T, \mathscr{T})\) that satisfy \(\kappa_n(x, \mathsf{T}) < \infty\) for each \(x \in \mathsf{S}\) &#40;such kernels \(\kappa\) are called \(\Sigma-\)finite&#41;. If \(f \colon \mathsf{S} \times \mathsf{T} \to [-\infty, +\infty]\) is measurable, recall that \(x \mapsto f(x,y)\) is measurable for each \(y \in \mathsf T\) and \(y \mapsto f(x,y)\) is measurable for each \(x \in \mathsf S.\) If \(f \in (\mathscr S \otimes \mathscr T)_+\), then <div class="nonumber">\[\begin{aligned} \mathsf S \ni x \mapsto \kappa f(x) := \int_{\mathsf T} f(x,y) \, \kappa(x, \mathrm{d}y) \in [0, +\infty]\end{aligned}\]</div> defines a non-negative measurable function. The iterated integral <a id="d1" class="anchor"></a>\[\begin{aligned} 
-\gamma f \equiv \int_{\mathsf S \times \mathsf T} f \, \mathrm{d}\gamma := \int_{\mathsf S} \left( \int_{\mathsf T} f(x,y) \, \kappa(x, \mathrm{d}y)\right)\,\mu(\mathrm{d}x)\end{aligned}\] for \(f \in (\mathscr S \otimes \mathscr T)_+\) defines a measure \(\gamma\) on the product space \((\mathsf{S} \times \mathsf T, \mathscr S \otimes \mathscr T).\) Moreover, if \(\mu\) is \(\sigma-\)finite and \(\kappa\) is \(\sigma-\)bounded &#40;i.e., there exists a measurable partition \(\{\mathsf T_n\}\) of \(\mathsf T\) such that \(x \mapsto \kappa(x, \mathsf T_n)\) is bounded for each \(n\)&#41;, then \(\gamma\) is \(\sigma-\)finite and is the unique measure on the product space satisfying <div class="nonumber">\[\begin{aligned} \gamma(A \times B) = \int_A\kappa(x,B) \, \mu(\mathrm{d} x), \quad A \in \mathscr{S}, B \in \mathscr{T}.\end{aligned}\]</div> We denote \(\gamma\) with \(\mu \otimes \kappa.\) For the special case when \(\kappa(x,B) = \nu(B)\) for some measure \(\nu\) on \(\mathscr T\), like in the <a href="/otium/mdp#examples">example above</a>, we denote \(\gamma\) with \(\mu \otimes \nu.\) In this special case we can interchange the order of integrals, i.e., <div class="nonumber">\[\begin{aligned} \int_{\mathsf S} \left( \int_{\mathsf T} f(x,y) \, \nu( \mathrm{d}y)\right)\,\mu(\mathrm{d}x) = \int_{\mathsf T} \left( \int_{\mathsf S} f(x,y) \, \mu( \mathrm{d}x)\right)\,\nu(\mathrm{d}y),\end{aligned}\]</div> for \(f \in (\mathscr S \otimes \mathscr T)_+\) &#40;this is known as the <em>Tonelli’s theorem</em>&#41;. Also if \(f \colon \mathsf{S} \times \mathsf{T} \to [-\infty, +\infty]\) is \(\mu \otimes \nu-\)integrable, then \(x \mapsto f(x,y)\) is \(\mu-\)integrable for \(\nu-\)a.e. \(y\), and \(y \mapsto f(x,y)\) is \(\nu-\)integrable for \(\mu-\)a.e. \(x\), and the interchange above holds again &#40;this is known as the <em>Fubini’s theorem</em>&#41;.</p>
+\gamma f \equiv \int_{\mathsf S \times \mathsf T} f \, \mathrm{d}\gamma := \int_{\mathsf S} \left( \int_{\mathsf T} f(x,y) \, \kappa(x, \mathrm{d}y)\right)\,\mu(\mathrm{d}x)\end{aligned}\] for \(f \in (\mathscr S \otimes \mathscr T)_+\) defines a measure \(\gamma\) on the product space \((\mathsf{S} \times \mathsf T, \mathscr S \otimes \mathscr T).\) Moreover, if \(\mu\) is \(\sigma-\)finite and \(\kappa\) is \(\sigma-\)bounded &#40;i.e., there exists a measurable partition \(\{\mathsf T_n\}\) of \(\mathsf T\) such that \(x \mapsto \kappa(x, \mathsf T_n)\) is bounded for each \(n\)&#41;, then \(\gamma\) is \(\sigma-\)finite and is the unique measure on the product space satisfying <div class="nonumber">\[\begin{aligned} \gamma(A \times B) = \int_A\kappa(x,B) \, \mu(\mathrm{d} x), \quad A \in \mathscr{S}, B \in \mathscr{T}.\end{aligned}\]</div> We denote \(\gamma\) with \(\mu \otimes \kappa.\) For the special case when \(\kappa(x,B) = \nu(B)\) for some measure \(\nu\) on \(\mathscr T\), like in the <a href="/Portfolio/otium/mdp#examples">example above</a>, we denote \(\gamma\) with \(\mu \otimes \nu.\) In this special case we can interchange the order of integrals, i.e., <div class="nonumber">\[\begin{aligned} \int_{\mathsf S} \left( \int_{\mathsf T} f(x,y) \, \nu( \mathrm{d}y)\right)\,\mu(\mathrm{d}x) = \int_{\mathsf T} \left( \int_{\mathsf S} f(x,y) \, \mu( \mathrm{d}x)\right)\,\nu(\mathrm{d}y),\end{aligned}\]</div> for \(f \in (\mathscr S \otimes \mathscr T)_+\) &#40;this is known as the <em>Tonelli’s theorem</em>&#41;. Also if \(f \colon \mathsf{S} \times \mathsf{T} \to [-\infty, +\infty]\) is \(\mu \otimes \nu-\)integrable, then \(x \mapsto f(x,y)\) is \(\mu-\)integrable for \(\nu-\)a.e. \(y\), and \(y \mapsto f(x,y)\) is \(\nu-\)integrable for \(\mu-\)a.e. \(x\), and the interchange above holds again &#40;this is known as the <em>Fubini’s theorem</em>&#41;.</p>
 <p>Disintegration asks the converse to the construction of measures on product spaces: Given a measure \(\gamma\) on the product space \((\mathsf{S} \times \mathsf T, \mathscr S \otimes \mathscr T)\) does there exist a measure \(\mu\) on \((\mathsf S, \mathscr{S})\) and a kernel \(\kappa\) from \((\mathsf S, \mathscr{S})\) to \((\mathsf T, \mathscr{T})\) such that <span class="eqref">(<a href="#d1">3</a>)</span> holds? We will answer this in the affirmative for the special case for probability measures and stochastic kernels. For a more thorough discussion see the paper <span class="bibref"><a href="#chang_pollard">(Chang and Pollard, 1997)</a></span>.</p>
 <div class="thm"><strong>Theorem 3 &#40;Disintegration&#41;</strong>: Suppose \((\mathsf S, \mathscr{S})\) and \((\mathsf T, \mathscr{T})\) are measurable spaces with \((\mathsf T, \mathscr T)\) being a standard Borel space endowed with its Borel \(\sigma-\)algebra, and \(\gamma\) is a probability measure on the product space \((\mathsf{S} \times \mathsf T, \mathscr S \otimes \mathscr T).\) Then there exists a probability measure \(\mu\) on \((\mathsf S, \mathscr{S})\) and a stochastic kernel \(\kappa\) from \((\mathsf S, \mathscr{S})\) to \((\mathsf T, \mathscr{T})\) such that <span class="eqref">(<a href="#d1">3</a>)</span> holds for all \(f \in (\mathscr S \otimes \mathscr T)_+.\)</div>
 <div class="proof"><p>&#40;From <span class="bibref"><a href="#cinlar">(Cinlar, 2011)</a></span> Theorem IV.2.18&#41;</p>
@@ -243,7 +243,7 @@
 \llbracket\alpha_n\rrbracket &:= \{(x,a) \in \mathsf S_n \times \mathsf A_n \mid a \in \alpha_n(x)\} \\
 \llbracket f_n\rrbracket &:= \{(x,a) \in \mathsf S_n \times \mathsf A_n \mid a= f_n(x)\}
 \end{aligned}\]</div>
-<p>denotes the <em>graphs</em> of \(\alpha_n\) and \(f_n\) respectively. For a justification of these assumptions, see the section <a href="/otium/mdp#a_note_about_admissible_actions">“A Note About Admissible Actions”</a> below.</p>
+<p>denotes the <em>graphs</em> of \(\alpha_n\) and \(f_n\) respectively. For a justification of these assumptions, see the section <a href="/Portfolio/otium/mdp#a_note_about_admissible_actions">“A Note About Admissible Actions”</a> below.</p>
 <h4 id="transition_law"><a href="#transition_law" class="header-anchor">Transition Law</a></h4>
 <p>For each time \(n \ge 0\), we have a stochastic kernel <div class="nonumber">\[\begin{aligned} \kappa_n \colon \llbracket\alpha_n\rrbracket \times \mathscr S_{n+1} \to [0,1]\end{aligned}\]</div> from the graph \(\llbracket\alpha_n\rrbracket\) &#40;endowed with the Borel \(\sigma-\)algebra on the subspace topology&#41; to \(\mathsf S_{n+1}\), called the transition law. Therefore, if at time \(n\) the model’s state is \(x_n\) and we took an admissible action \(a_n\), then the probability of finding the model in state \(B \in \mathscr S_{n+1}\) at time \(n+1\) is \(\kappa_n((x_n, a_n), B).\)</p>
 <h4 id="reward_function"><a href="#reward_function" class="header-anchor">Reward Function</a></h4>
@@ -461,8 +461,8 @@ R_n(\pi, x) \le J_n(x) \text{ and } R_n(\pi^*, x) = J_n(x).\end{aligned}\] <span
 </div>
 </div><!-- CONTENT ENDS HERE -->
     
-        <script src="/libs/katex/katex.min.js"></script>
-<script src="/libs/katex/contrib/auto-render.min.js"></script>
+        <script src="/Portfolio/libs/katex/katex.min.js"></script>
+<script src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
 <script>renderMathInElement(document.body)</script>
 
     
