@@ -1,8 +1,35 @@
----
-layout: default
-title: baire
----
-<div class="main-heading">Baire Spaces</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Baire Spaces</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Baire Spaces</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">INTRODUCTION</a><ol><li><a href="#small_sets">Small Sets</a></li><li><a href="#warm-up">Warm-Up</a></li></ol></li><li><a href="#prerequisites">PREREQUISITES</a><ol><li><a href="#properties_of_nowhere_dense_sets">Properties Of Nowhere Dense Sets</a></li></ol></li><li><a href="#meager_sets">MEAGER SETS</a><ol><li><a href="#properties_of_meager_sets">Properties Of Meager Sets</a></li></ol></li><li><a href="#baire_spaces">BAIRE SPACES</a><ol><li><a href="#properties_of_baire_spaces">Properties Of Baire Spaces</a></li></ol></li><li><a href="#baire_category_theorems">BAIRE CATEGORY THEOREMS</a></li><li><a href="#topological_games">TOPOLOGICAL GAMES</a><ol><li><a href="#banach-mazur_game">Banach-Mazur Game</a><ol><li><a href="#generalization">Generalization</a></li></ol></li><li><a href="#choquet_game">Choquet Game</a></li></ol></li><li><a href="#applications">APPLICATIONS</a><ol><li><a href="#mathbb_q_is_not_homeomorphic_to_any_complete_metric_space">\(\mathbb Q\) Is Not Homeomorphic To Any Complete Metric Space</a></li><li><a href="#infinite-dimensional_banach_spaces">Infinite-Dimensional Banach Spaces</a></li><li><a href="#a_generic_element_of_c01_is_nowhere_differentiable">A Generic Element Of \(C[0,1]\) Is Nowhere Differentiable</a></li><li><a href="#a_special_infinitely_differentiable_function">A Special Infinitely Differentiable Function</a></li></ol></li><li><a href="#references">REFERENCES</a></li></ol></div>
 
 <hr style="border: 0.1px solid lightgrey">
@@ -14,7 +41,7 @@ title: baire
 <h2 id="introduction"><a href="#introduction" class="header-anchor">INTRODUCTION</a></h2>
 <p>Every mathematician has a few tricks <span class="bibref"><a href="#rota">(Rota, 2008)</a></span> which form the foundation of their toolkit that they apply skilfully to a great variety of problems <span class="bibref"><a href="#tao_bourgain">(Tao, 2021)</a></span>. One of the goals of this expository blog post is to convince the reader that Baire category theorems are a worthwhile addition to their toolkit. The other goal is to simply indulge in the study of Baire spaces for it is beautiful mathematics.</p>
 <h3 id="small_sets"><a href="#small_sets" class="header-anchor">Small Sets</a></h3>
-<p>What is a “small” set? This question can have multiple answers depending on whom you ask. For a set theorist, a countable set is small, while for an analyst, a set of measure \(0\) is small. We will see that for a topologist the ideas of nowhere dense set and meager set encapsulate the notion of smallness. These different notions of smallness don&#39;t always coincide though. For example, Cantor set is an uncountable set having Lebesgue measure \(0\), and as we will see in Section <a href="/Portfolio/otium/baire#prerequisites">2</a> it is also nowhere dense in \(\mathbb R.\)</p>
+<p>What is a “small” set? This question can have multiple answers depending on whom you ask. For a set theorist, a countable set is small, while for an analyst, a set of measure \(0\) is small. We will see that for a topologist the ideas of nowhere dense set and meager set encapsulate the notion of smallness. These different notions of smallness don&#39;t always coincide though. For example, Cantor set is an uncountable set having Lebesgue measure \(0\), and as we will see in Section <a href="/otium/baire#prerequisites">2</a> it is also nowhere dense in \(\mathbb R.\)</p>
 <p>Using this topological vocabulary for small sets we will define the notion of a Baire space, which in this vocabulary aren&#39;t small. Many well-behaved classes of spaces are Baire. Among the most well-known are locally compact Hausdorff spaces and complete pseudometric spaces. This is the content of the famous Baire category theorems which will be the highlight of this blog post.</p>
 <p>These Baire category theorems are a powerful class of results useful for proving existence. We will see in Section 7 how they can be applied to prove existence of objects of desired property. The main idea which these applications follow is to first construct a set \(X\) in which we want to prove there exist elements satisfying a certain property, and then show that elements <em>not</em> satisfying this property, in fact, form a small set.</p>
 <h3 id="warm-up"><a href="#warm-up" class="header-anchor">Warm-Up</a></h3>
@@ -143,7 +170,7 @@ A := \mathbb R \setminus B  = \bigcup_{m \in \mathbb N} (X \setminus G_m)
 <p>We next prove the Banach category theorem which says that any topological space is “almost” a Baire space &#40;see the next section for the definition of a Baire space&#41;. More specifically, given this theorem, we can write any topological space \(X\) as a union of a Baire space &#40;union of all nonmeager open sets&#41; and a meager set &#40;union of all meager open sets&#41; since in a Baire space every nonempty open set is nonmeager.</p>
 <div class="thm"><strong>Theorem 3.6 &#40;Banach Category Theorem&#41;</strong>: In a topological space \(X,\) the union of any family of meager open sets is also meager.</div>
 <div class="proof"><p>Let \(\mathcal{U}\) be a family of nonempty meager open subsets of \(X,\) and denote by \(O = \bigcup_{U \in \mathcal{U}} U\) its union. We want to show that \(O\) is meager in \(X.\)</p>
-<p>Let \(\mathscr{U}\) denote the set of all collections of pairwise disjoint nonempty open sets in \(X\) with the property that each member of each collection is a subset of some member of \(\mathcal{U}.\) We will use <a href="https://makkar.github.io/otium/zorn">Zorn&#39;s lemma</a> to find a maximal element of \(\mathscr{U}.\) \(\mathscr{U}\) is partially ordered by set inclusion. Let \(\mathscr{C}\) be a chain in \(\mathscr{U}.\) To apply Zorn&#39;s lemma, we will show that \(\mathcal{B} = \bigcup_{\mathcal{R} \in \mathscr{C}} \mathcal{R}\) is an upper bound of \(\mathscr{C}\) in \(\mathscr{U}\), i.e., we need to show \(\mathcal{B} \in \mathscr{U}\) and \(\mathcal{R} \subseteq \mathcal{B}\) for every \(\mathcal{R} \in \mathscr{C}.\) But both these claims are immediate from our construction. Therefore, by Zorn&#39;s lemma, \(\mathscr{U}\) has a maximal element, say \(\mathcal{V} = \{V_\alpha \,:\, \alpha \in A\}\) for some index set \(A.\) Denote by \(V = \bigcup_{\alpha \in A} V_\alpha\) its union.</p>
+<p>Let \(\mathscr{U}\) denote the set of all collections of pairwise disjoint nonempty open sets in \(X\) with the property that each member of each collection is a subset of some member of \(\mathcal{U}.\) We will use <a href="https://adarshnl.github.io/otium/zorn">Zorn&#39;s lemma</a> to find a maximal element of \(\mathscr{U}.\) \(\mathscr{U}\) is partially ordered by set inclusion. Let \(\mathscr{C}\) be a chain in \(\mathscr{U}.\) To apply Zorn&#39;s lemma, we will show that \(\mathcal{B} = \bigcup_{\mathcal{R} \in \mathscr{C}} \mathcal{R}\) is an upper bound of \(\mathscr{C}\) in \(\mathscr{U}\), i.e., we need to show \(\mathcal{B} \in \mathscr{U}\) and \(\mathcal{R} \subseteq \mathcal{B}\) for every \(\mathcal{R} \in \mathscr{C}.\) But both these claims are immediate from our construction. Therefore, by Zorn&#39;s lemma, \(\mathscr{U}\) has a maximal element, say \(\mathcal{V} = \{V_\alpha \,:\, \alpha \in A\}\) for some index set \(A.\) Denote by \(V = \bigcup_{\alpha \in A} V_\alpha\) its union.</p>
 <p>We next claim that \(\mathrm{cl}_X(O) \setminus V\) is nowhere dense in \(X.\) Suppose to the contrary that this is not the case, and therefore by Proposition 2.7 &#40;c&#41; there exists a nonempty open subset \(W\) of \(X,\) such that every nonempty open subset of \(W\) intersects \(\mathrm{cl}_X(O) \setminus V.\) In particular, \(W\) intersects \(\mathrm{cl}_X(O) \setminus V,\) which implies \(W \cap O \neq \varnothing.\) But then \(W \cap U,\) for some \(U \in \mathcal{U},\) is a nonempty open set disjoint from all sets in \(\mathcal{V},\) contradicting the fact that \(\mathcal{V}\) is maximal.</p>
 <p>This fact and the fact that \(\mathcal{U}\) is a family of meager sets, means that \(V_\alpha\) is meager for each \(\alpha \in A.\) Write \(V_\alpha = \bigcup_{n \in \mathbb N} S_{\alpha, n}\) for some nowhere dense sets \(S_{n, \alpha}.\) Define \(S_n = \bigcup_{\alpha \in A} S_{\alpha, n}.\) We now claim that \(S_n\) is nowhere dense for each \({n \in \mathbb N}.\) To see this suppose \(W\) is a nonempty open set in \(X\) which intersects \(S_n.\) Then \(W\) intersects \(S_{\alpha, n}\) for some \(\alpha \in A,\) and since \(S_{\alpha,n}\) is nowhere dense, there exists a nonempty open set \(W' \subseteq (W \cap V_\alpha) \setminus S_{\alpha, n}.\) This gives \(W' \subseteq W \setminus S_n,\) and thus \(S_n\) is nowhere dense.</p>
 <p>Finally, note that <div class="nonumber">\[
@@ -323,7 +350,7 @@ I_{2n-1} = J_{i_1, \ldots, i_n} \text{ and } I_{2n} = K_{i_1, \ldots, i_n}, \qua
 
 <center>
 <figure>
-    <img src="/Portfolio/assets/sawtooth.png" alt="missing" />
+    <img src="/assets/sawtooth.png" alt="missing" />
     <figcaption>Figure 1</figcaption>
 </figure>
 </center>
@@ -373,3 +400,17 @@ I_{2n-1} = J_{i_1, \ldots, i_n} \text{ and } I_{2n} = K_{i_1, \ldots, i_n}, \qua
 <li><p><a id="folland" class="anchor"></a> Folland, G. B. &#40;1999&#41;. <em>Real Analysis: Modern Techniques and Their Applications. Pure and Applied Mathematics</em>, Wiley, 2nd edition.</p>
 </li>
 </ul>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

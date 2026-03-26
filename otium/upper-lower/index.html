@@ -1,8 +1,35 @@
----
-layout: default
-title: upper-lower
----
-<div class="main-heading">Upper and Lower Limits</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Upper and Lower Limits</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Upper and Lower Limits</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#definitions">Definitions</a></li><li><a href="#some_useful_lemmas">Some Useful Lemmas</a></li><li><a href="#properties">Properties</a></li><li><a href="#upper_and_lower_limits_a_reprise">Upper and Lower Limits — A Reprise</a></li><li><a href="#more_properties">More Properties</a></li></ol></div>
 
 <hr style="border: 0.1px solid lightgrey">
@@ -106,3 +133,17 @@ s_* &= \inf E.
 <div class="thm"><strong>Theorem 7 &#91;Superadditivity of \(\liminf\)&#93;</strong>: For any two real sequences \(\{s_n\}\) and \(\{t_n\}\), we have <div class="nonumber">\[\begin{aligned} \liminf_{n \to \infty} (s_n + t_n) \ge \liminf_{n \to \infty} s_n + \liminf_{n \to \infty} t_n.\end{aligned}\]</div></div>
 <div class="proof">Similar to the proof of Theorem 6.</div>
 <p><a href="#">Back to top</a></p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

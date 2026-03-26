@@ -1,8 +1,36 @@
----
-layout: default
-title: equilibrium
----
-<div class="main-heading">Equilibria in Static Games</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+   <link rel="stylesheet" href="/libs/highlight/styles/github.min.css">
+   
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Equilibria in Static Games</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Equilibria in Static Games</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">INTRODUCTION</a><ol><li><a href="#what_is_an_equilibrium">What Is An Equilibrium?</a></li><li><a href="#classification_of_games">Classification of Games</a></li><li><a href="#notation">Notation</a></li></ol></li><li><a href="#games_with_complete_information">GAMES WITH COMPLETE INFORMATION</a><ol><li><a href="#normal-form_games_and_nash_equilibrium">Normal-Form Games and Nash Equilibrium</a><ol><li><a href="#computing_nash_equilibria">Computing Nash Equilibria</a></li></ol></li><li><a href="#correlated_equilibrium">Correlated Equilibrium</a><ol><li><a href="#a_game_with_correlated_equilibrium_but_no_nash_equilibrium">A game with correlated equilibrium but no Nash equilibrium</a></li></ol></li><li><a href="#properties_of_correlated_equilibrium">Properties of correlated equilibrium</a></li></ol></li><li><a href="#games_with_incomplete_information">GAMES WITH INCOMPLETE INFORMATION</a><ol><li><a href="#belief_spaces">Belief Spaces</a><ol><li><a href="#belief_operators">Belief Operators</a></li></ol></li><li><a href="#modeling_games_with_incomplete_information">Modeling Games with Incomplete Information</a><ol><li><a href="#bayesian_equilibrium">Bayesian Equilibrium</a></li></ol></li><li><a href="#belief_hierarchies">Belief Hierarchies</a></li></ol></li><li><a href="#references">REFERENCES</a></li></ol></div>
 
 <hr style="border: 0.1px solid lightgrey">
@@ -34,7 +62,7 @@ title: equilibrium
 <h3 id="notation"><a href="#notation" class="header-anchor">Notation</a></h3>
 <p>I will be using sans-serif typestyle for spaces, for example \(\mathsf{S}, \mathsf{X}, \mathsf W\) etc., and caligraphic typestyle for \(\sigma\)-algebras, for example, \(\mathcal S, \mathcal X, \mathcal W\) etc. For finite sets the \(\sigma\)-algebra will be the power set, and for topological spaces it will be the Borel \(\sigma\)-algebras.</p>
 <h2 id="games_with_complete_information"><a href="#games_with_complete_information" class="header-anchor">GAMES WITH COMPLETE INFORMATION</a></h2>
-<p>The setting studied in this section is a special case of the more general setting considered in the <a href="/Portfolio/otium/equilibrium/#games_with_incomplete_information">next section on games with incomplete information</a>. But the intuition developed here will be useful. We start by defining normal-form games; these games are also called strategic-form games.</p>
+<p>The setting studied in this section is a special case of the more general setting considered in the <a href="/otium/equilibrium/#games_with_incomplete_information">next section on games with incomplete information</a>. But the intuition developed here will be useful. We start by defining normal-form games; these games are also called strategic-form games.</p>
 <h3 id="normal-form_games_and_nash_equilibrium"><a href="#normal-form_games_and_nash_equilibrium" class="header-anchor">Normal-Form Games and Nash Equilibrium</a></h3>
 <div class="def"><strong>Definition 1 &#40;Normal-Form Games&#41;</strong>: There are \(N\) players, denoted \([N] := \left\{ 1, \ldots, N\right\}\). Each player \(i \in [N]\) has a strategy set \(\mathsf S_i\), and all the players simultaneously choose an element from their strategy sets. The decisions of the players are motivated by their utility functions, i.e., for each player \(i \in [N]\), there is a utility function \(u_i \colon \mathsf{S} \to \mathbb R\), where \(\mathsf{S} := \mathsf{S}_1 \times \cdots \times \mathsf{S}_N\), that depends on their own decision and the decision of other players and which they seek to maximize.</div>
 <p>This structure of the game is common knowledge, i.e., each player knows this structure, each player knows that the other players know this structure, and so on. This can be achieved by reading aloud the above paragraph in a room where all the players are present &#40;assuming none of them are deaf, or are distracted, etc&#41;; then all the players will hear it, all the players will know that all the other players heard it, and so on.</p>
@@ -120,15 +148,15 @@ title: equilibrium
 <li><p>The state \(\omega_{C,T}\) is exactly the same as the state \(\omega_{B, T}\), except interchange the role of \(B\) and \(C\).</p>
 </li>
 </ol>
-<p>We first notice that by associating each state of the world with a state of the reality we have created a mapping \(\mathfrak{r} \colon \mathsf{W} \to \mathsf{R}\). Here the mapping is trivial: \(\mathfrak{r}(\omega_{X,Y}) = X\) for \(X \in \left\{ A,B,C\right\}\) and \(Y \in \left\{ H,T\right\}\). We next notice that player 1 cannot distinguish between \(\omega_{A,H}\) and \(\omega_{A,T}\), and between \(\omega_{B, H}\), \(\omega_{B, T}\), \(\omega_{C, H}\) and \(\omega_{C, T}\). Player 2, on the other hand, cannot distinguish between \(\omega_{A,T}\), \(\omega_{B,T}\) and \(\omega_{C,T}\). Recalling the idea of using \(\sigma\)-algebras to encode information from the section on <a href="/Portfolio/otium/equilibrium/#correlated_equilibrium">correlated equilibrium</a>, we have <a id="eq_info" class="anchor"></a>\[\begin{aligned} 
+<p>We first notice that by associating each state of the world with a state of the reality we have created a mapping \(\mathfrak{r} \colon \mathsf{W} \to \mathsf{R}\). Here the mapping is trivial: \(\mathfrak{r}(\omega_{X,Y}) = X\) for \(X \in \left\{ A,B,C\right\}\) and \(Y \in \left\{ H,T\right\}\). We next notice that player 1 cannot distinguish between \(\omega_{A,H}\) and \(\omega_{A,T}\), and between \(\omega_{B, H}\), \(\omega_{B, T}\), \(\omega_{C, H}\) and \(\omega_{C, T}\). Player 2, on the other hand, cannot distinguish between \(\omega_{A,T}\), \(\omega_{B,T}\) and \(\omega_{C,T}\). Recalling the idea of using \(\sigma\)-algebras to encode information from the section on <a href="/otium/equilibrium/#correlated_equilibrium">correlated equilibrium</a>, we have <a id="eq_info" class="anchor"></a>\[\begin{aligned} 
 \begin{split}
 \mathcal I_1 &= \sigma(\left\{ \left\{ \omega_{A,H}, \omega_{A,T}\right\}, \left\{ \omega_{B, H}, \omega_{C, H}, \omega_{B, T}, \omega_{C, T}\right\}\right\}), \text{ and}\\
 \mathcal I_2 &= \sigma(\left\{ \left\{ \omega_{A,H}\right\}, \left\{ \omega_{B, H}\right\}, \left\{ \omega_{C, H}\right\}, \left\{ \omega_{A,T},\omega_{B, T}, \omega_{C, T}\right\}\right\})
 \end{split}\end{aligned}\] as their information \(\sigma\)-algebras on \(\mathsf{W}\).</p>
 <p>We need a mathematical structure that allows us to model players’ beliefs about the game, players’ beliefs about the beliefs of other players, and so on, that lets us study this infinite hierarchy without having to explicitly write it every time. Situations where players do not necessarily have the full information about the game, or are uncertain about the other players’ beliefs about the game, and so on, are called games with incomplete information. These ideas were developed by John Harsanyi and Robert Aumann in the 1960s and 1970s, and later refined by many other mathematicians and economists.</p>
 <h3 id="belief_spaces"><a href="#belief_spaces" class="header-anchor">Belief Spaces</a></h3>
-<p>Taking inspiration from example 8 we define the following. The definition here generalizes the modeling of beliefs we did in the section on <a href="/Portfolio/otium/equilibrium/#correlated_equilibrium">correlated equilibrium</a> because instead of having one prior distribution \(\mathbb P\) we have a different stochastic kernel for each player.</p>
-<p>At this point it might be useful to look at the <a href="/Portfolio/otium/mdp/#stochastic_kernels">definition of stochastic kernels</a>. I use the notation defined there.</p>
+<p>Taking inspiration from example 8 we define the following. The definition here generalizes the modeling of beliefs we did in the section on <a href="/otium/equilibrium/#correlated_equilibrium">correlated equilibrium</a> because instead of having one prior distribution \(\mathbb P\) we have a different stochastic kernel for each player.</p>
+<p>At this point it might be useful to look at the <a href="/otium/mdp/#stochastic_kernels">definition of stochastic kernels</a>. I use the notation defined there.</p>
 <div class="def"><p><strong>Definition 9 &#40;Belief Space&#41;</strong>: A <em>belief space</em> is a tuple \(\left(  N, (\mathsf{R}, \mathcal{R}), (\mathsf{W}, \mathcal W), \mathfrak{r}, \left(  \kappa_i \right)_{i \in [N]} \right)\) with the following definitions:</p>
 <ul>
 <li><p>There are \(N\) players, denoted \([N]\).</p>
@@ -156,7 +184,7 @@ title: equilibrium
 <h4 id="belief_operators"><a href="#belief_operators" class="header-anchor">Belief Operators</a></h4>
 <p>These operators act on \(\mathcal W\) and tell us about world states where a player believes an event happens almost surely &#40;a.s.&#41;.</p>
 <div class="def"><strong>Definition 12 &#40;Belief Operator&#41;</strong>: For each player \({i \in [N]}\), let \(\mathtt{B}_i \colon \mathcal W \to \mathcal W\) be defined as <div class="nonumber">\[\begin{aligned} \mathtt{B}_i A := \left\{ \omega \in \mathsf{W} \,:\,  \kappa_i(\omega,A) =1\right\}.\end{aligned}\]</div></div>
-<p>Note that \(\mathtt{B}_i A = \kappa_i(A)^{-1}(\left\{ 1\right\}) \in \mathcal W\) follows from the measurability of \(\kappa_i(A)\) &#40;condition 2 of the <a href="/Portfolio/otium/mdp/#stochastic_kernels">definition of stochastic kernel here</a>&#41;.</p>
+<p>Note that \(\mathtt{B}_i A = \kappa_i(A)^{-1}(\left\{ 1\right\}) \in \mathcal W\) follows from the measurability of \(\kappa_i(A)\) &#40;condition 2 of the <a href="/otium/mdp/#stochastic_kernels">definition of stochastic kernel here</a>&#41;.</p>
 <p>The belief operators satisfy certain intuitive properties. The proofs involve simple definition chasing.</p>
 <div class="thm"><p><strong>Proposition 13</strong>: For each player \({i \in [N]}\), the belief operation \(\mathtt{B}_i\) satisfies:</p>
 <ol>
@@ -192,7 +220,7 @@ title: equilibrium
 \llbracket  f_i \rrbracket &:= \left\{ (r,s_i) \in \mathsf{R} \times \mathsf{S}_i \,:\,  s_i = f_i(r)\right\}\end{aligned}\]</div>   denotes the <em>graphs</em> of \(\mathfrak{s}_i\) and \(f_i\) respectively.</p>
 </li>
 </ul></div>
-<p>The raison d&#39;être for the last assumption in Definition 15 is to avoid measurability issues. This is the topic of measurable selection theorems. See the review papers <span class="bibref"><a href="#wagner1">(Wagner, 1977)</a>, <a href="#wagner2">(Wagner, 1980)</a></span> or Chapter 18 of the book <span class="bibref"><a href="#aliprantis">(Aliprantis and Border, 2006)</a></span>. Similar concerns arise in defining Markov decision processes; see the <a href="/Portfolio/otium/mdp/#a_note_about_admissible_actions">discussion here</a>.</p>
+<p>The raison d&#39;être for the last assumption in Definition 15 is to avoid measurability issues. This is the topic of measurable selection theorems. See the review papers <span class="bibref"><a href="#wagner1">(Wagner, 1977)</a>, <a href="#wagner2">(Wagner, 1980)</a></span> or Chapter 18 of the book <span class="bibref"><a href="#aliprantis">(Aliprantis and Border, 2006)</a></span>. Similar concerns arise in defining Markov decision processes; see the <a href="/otium/mdp/#a_note_about_admissible_actions">discussion here</a>.</p>
 <p>The players may choose a mixed strategy. We define it as follows.</p>
 <div class="def"><strong>Definition 16 &#40;Mixed Strategy&#41;</strong>: The setting is that of Definition 15. A <em>mixed strategy</em> for player \(i\) is a measurable function \(\sigma_i \colon \mathsf{W} \to \mathscr{P}(\mathsf{S}_i)\), with the constraints that for all \(\omega, \omega' \in \mathsf{W}\), <div class="nonumber">\[\begin{aligned} \sigma_i(\omega) \in \mathscr{P}\!\left(  \mathfrak{s}_i^{\mathfrak{r}(\omega)} \right) \text{ and } \omega \equiv_i \omega' \implies \sigma_i(\omega) = \sigma_i(\omega').\end{aligned}\]</div> We denote \(\sigma_i(\omega)\) with \(\sigma_i^\omega\) for notational convenience. We denote the space of all mixed strategies for player \(i\) with \(\Sigma_i\). Also define \(\Sigma := \Sigma_1 \times \cdots \times \Sigma_N\). Note that we have overloaded our notation; compare \(\Sigma\) in Definition 3.</div>
 <p>In Definition 16, the first constraint is added because the player \(i\) can only choose from \(\mathfrak{s}_i^{\mathfrak{r}(\omega)}\), and the second constraint is added because if the player \(i\) cannot distinguish between \(\omega\) and \(\omega'\) then his distribution over available pure strategies should be the same.</p>
@@ -201,7 +229,7 @@ title: equilibrium
 <h4 id="bayesian_equilibrium"><a href="#bayesian_equilibrium" class="header-anchor">Bayesian Equilibrium</a></h4>
 <p>We are finally ready to define a notion of equilibrium&#33;</p>
 <div class="def"><strong>Definition 18 &#40;Bayesian Equilibrium&#41;</strong>: Under the setting of Definitions 15, 16 and 17, a mixed strategy tuple \(\sigma = (\sigma_i)_{i \in [N]} \in \Sigma\) is called a <em>Bayesian equilibrium</em> if for every player \({i \in [N]}\), every world state \(\omega \in \mathsf{W}\), and every mixed strategy \(\tau_i \in \Sigma_i\), we have <div class="nonumber">\[\begin{aligned} \gamma_i(\omega, \sigma) \ge \gamma_i(\omega, (\tau_i, \sigma_{-i})).\end{aligned}\]</div> Here \((\tau_i, \sigma_{-i})\) is a mixed strategy tuple that is same as \(\sigma\), except that we have replaced \(\sigma_i\) with \(\tau_i\).</div>
-<p>The setting considered in this section and the notion of equilibrium defined above is a significant generalization of the setting considered in the <a href="/Portfolio/otium/equilibrium/#games_with_complete_information">section on games with complete information</a>.</p>
+<p>The setting considered in this section and the notion of equilibrium defined above is a significant generalization of the setting considered in the <a href="/otium/equilibrium/#games_with_complete_information">section on games with complete information</a>.</p>
 <p>There are no general results about the existence of Bayesian equilibria, but we do have that if all the sets \(\left(  \mathsf{R}, \mathsf{W}, (\mathsf{S}_i)_{i \in [N]} \right)\) are finite, then a Bayesian equilibrium always exists. The proof is very similar to that of the existence of a Nash equilibrium.</p>
 <h3 id="belief_hierarchies"><a href="#belief_hierarchies" class="header-anchor">Belief Hierarchies</a></h3>
 <p>Until now we haven’t precisely and succinctly characterized the beliefs of players about the true state of reality, beliefs about beliefs about the states of reality, and so on. Let us do that now. We want to define this hierarchy inductively. It is from the viewpoint of a single player. At the first order, a player has beliefs &#40;which are just probability measures&#41; over the states of reality \(\mathsf{R}\). At the second order, a player has beliefs over the states of reality, and beliefs over the beliefs of the players about the state of the reality. At the third order, we have beliefs of order 1 and 2 just discussed, while also having beliefs about the second-order beliefs of other players. And so on for higher orders. More formally, we have the following definition.</p>
@@ -240,3 +268,21 @@ title: equilibrium
 <li><p><a id="wagner2" class="anchor"></a> Wagner, D. H. &#40;1980&#41;. <em>Survey of Measurable Selection Theorems - An update</em>. Measure Theory Oberwolfach 1979, pp. 176-219, Lecture Notes in Mathematics, volume 794, Springer.</p>
 </li>
 </ul>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+        <script src="/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
+
+    
+  </body>
+</html>

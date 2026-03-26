@@ -1,14 +1,41 @@
----
-layout: default
-title: mcmc
----
-<div class="main-heading">Zorn&#39;s Lemma</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Zorn's Lemma</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Zorn&#39;s Lemma</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#preliminaries">Preliminaries</a><ol><li><a href="#examples">Examples</a></li></ol></li><li><a href="#zorns_lemma">Zorn&#39;s Lemma</a></li><li><a href="#example_application_1">Example Application 1</a></li><li><a href="#example_application_2">Example application 2</a></li></ol></div>
 <h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
 <p>I have been self-studying some functional analysis recently, and Zorn&#39;s lemma comes up often in proofs &#40;for example, showing that every nontrivial vector space has a Hamel basis &#40;I show this fundamental result below&#41; or in the proof of Hahn-Banach theorem&#41;. Since I have no formal background in mathematics &#40;my undergrad was in Mechanical engineering&#41;, it was my first time hearing about Zorn&#39;s lemma. I read its statement from the Wikipedia article, naively assuming I understood this extremely powerful tool. But every usage of Zorn&#39;s lemma seemed contrived to me, and it was only in retrospect that I could see how Zorn&#39;s lemma seems like an obvious tool to apply. An excellent article which helped me understand Zorn&#39;s lemma is <a href="https://gowers.wordpress.com/2008/08/12/how-to-use-zorns-lemma/">How to use Zorn&#39;s lemma</a> by Timothy Gowers. If you didn&#39;t know about Gowers&#39;s article, then mentioning it is the biggest contribution of my article and I recommend you read it.</p>
 <p>In this article, I want to show how to use Zorn&#39;s lemma by stating two theorems and discussing their proofs. Things &quot;clicked&quot; for me when I proved the first theorem discussed below. I will therefore try to be verbose, and go through my thinking process in detail. But before we do that let me define some important concepts.</p>
 <h2 id="preliminaries"><a href="#preliminaries" class="header-anchor">Preliminaries</a></h2>
-<p>Recall the concept of <em>relation</em> I defined <a href="https://makkar.github.io/otium/partitions">here</a>.</p>
+<p>Recall the concept of <em>relation</em> I defined <a href="https://adarshnl.github.io/otium/partitions">here</a>.</p>
 <div class="def"><p><strong>Definition 1</strong>: Let \(P\) be a nonempty set. A <em>partial order relation</em> in \(P\) is a relation which is symbolized by \(\preceq\) and that satisfies the following properties for all \(x,y,z \in P\):</p>
 <ol>
 <li><p>Reflexivity: \(x \preceq x\);</p>
@@ -67,3 +94,17 @@ title: mcmc
 <div class="proof"><p>Let \(\mathcal{P}\) denote the set formed by all linearly independent families of vectors of \(X.\) Hence, \(\mathcal{P}\) is nonempty, since \(\mathcal{P}\) contains \(\{x\}\), where \(x\) is any nonzero vector of \(X.\) We define a partial order on the elements of \(\mathcal{P}\) as follows: if \(E = \{e_i\} _ {i \in I}\) and \(F = \{e_j\} _ {j \in J}\) are any two elements of \(\mathcal{P}\), then \(E \preceq F\) iff \(E \subseteq F.\)</p>
 <p>The next step is to show that if \(\mathcal{C}\) is any chain in \(\mathcal{P}\), then \(\mathcal{C}\) has an upper bound in \(\mathcal{P}.\) To this end, define \(U = \bigcup_{S \in \mathcal{C}} S.\) We claim that this is the desired upper bound. \(U\) is in \(\mathcal{P}\) because any finite subfamily \(\{e_i\} _ {i=1}^n\) of \(U\) is a subfamily of some \(S \in \mathcal{C}\) since \(\mathcal{C}\) is a chain, and therefore the vectors \(\{e_i\} _ {i=1}^n\) are linearly independent. Also, \(U\) is clearly an upper bound of \(\mathcal{C}\), since \(S \subseteq U\) for all \(S \in \mathcal{C}.\)</p>
 <p>By the Zorn&#39;s lemma, \(\mathcal{P}\) possesses a maximal element \(M\), which we claim to be a Hamel basis of \(X.\) For otherwise, there would exist a nonzero vector \(x \in X\) that cannot be written as a linear combination of elements of \(M.\) But then \(M \cup \{x\}\) would be an element of \(\mathcal{P}\) that satisfies \(M \prec M \cup \{x\}\), a contradiction.</p></div>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

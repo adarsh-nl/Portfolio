@@ -1,11 +1,38 @@
----
-layout: default
-title: kernels1
----
-<div class="main-heading">Kernels - Part 1</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Kernels - Part 1</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Kernels - Part 1</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#characterization_of_reproducing_kernels">Characterization of Reproducing Kernels</a><ol><li><a href="#examples">Examples</a></li><li><a href="#equivalence_between_kernel_function_and_reproducing_kernel">Equivalence between kernel function and reproducing kernel</a></li></ol></li><li><a href="#mercers_theorem">Mercer&#39;s Theorem</a></li><li><a href="#operations_on_kernels">Operations on Kernels</a><ol><li><a href="#sums_of_kernels">Sums of kernels</a></li><li><a href="#products_of_kernels">Products of kernels</a></li><li><a href="#other_operations">Other operations</a></li></ol></li><li><a href="#representer_theorem">Representer theorem</a></li><li><a href="#epilogue">Epilogue</a></li></ol></div>
 <h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
-<p>This is the second blog post in the series of blog posts on kernels. In the <a href="/Portfolio/otium/kernels0">first part</a> I introduced the functional analysis background for kernel theory. I highly recommend you read it before continuing. I will frequently refer to it and use the same notation. In this blog post I aim to introduce the fundamental theorems like Mercer&#39;s theorem and Representer theorem.</p>
+<p>This is the second blog post in the series of blog posts on kernels. In the <a href="/otium/kernels0">first part</a> I introduced the functional analysis background for kernel theory. I highly recommend you read it before continuing. I will frequently refer to it and use the same notation. In this blog post I aim to introduce the fundamental theorems like Mercer&#39;s theorem and Representer theorem.</p>
 <h2 id="characterization_of_reproducing_kernels"><a href="#characterization_of_reproducing_kernels" class="header-anchor">Characterization of Reproducing Kernels</a></h2>
 <p>We already defined the notion of reproducing kernels for an RKHS &#40;Definition 20&#41;. We now turn our attention to obtaining necessary and sufficient conditions for a function \(K \colon \mathcal{X} \times \mathcal{X} \to \mathbb{C}\) to be the reproducing kernel for some RKHS. But first we must define kernel functions.</p>
 <div class="def"><strong>Definition 21</strong>: Let \(A = (a_{i,j})\) be an \(n \times n\) complex matrix. Then \(A\) is called <em>positive</em> if for every \(\alpha_1, \ldots, \alpha_n \in \mathbb{C}\) we have <div class="nonumber">\[\begin{aligned} \sum_{i,j = 1}^{n} \overline{\alpha_i}\alpha_j a_{i,j} \geq 0.\end{aligned}\]</div> We denote this by \(A \geq 0.\)</div>
@@ -67,7 +94,7 @@ title: kernels1
 <p>We are now ready to state the Mercer&#39;s theorem.</p>
 <div class="thm"><strong>Theorem 5 &#91;Mercer&#39;s theorem&#93;</strong>: Suppose that \(\mathcal{X}\) is a compact metric space, and \(K : \mathcal{X} \times \mathcal{X} \to \mathbb{C}\) is a Mercer&#39;s kernel that satisfies the Hilbert-Schmidt condition. Then there exists an at most countable set of eigenfunctions \((e_{i})_{i}\) for \(T_K\) that forms an orthonormal basis of \(L^2(\mu)\), and a corresponding set of non-negative eigenvalues \((\lambda_{i})_{i}\) such that <div class="nonumber">\[\begin{aligned} T_K(e_i) = \lambda_i e_i, \quad i \in \mathbb N.\end{aligned}\]</div> Moreover, \(K\) has the expansion <div class="nonumber">\[\begin{aligned} K(x,y) = \sum_{i} \lambda_i e_i(x) e_i(y), \quad x,y \in \mathcal{X},\end{aligned}\]</div> where the convergence of the series above holds absolutely and uniformly.</div>
 <p>I&#39;ll skip the proof.</p>
-<p>Among other things, Mercer&#39;s theorem provides a framework for embedding an element of \(\mathcal{X}\) into an element of \(\ell^2(\mathbb N)\) &#40;for its definition, see Example-4 in the section on Hilbert spaces in the <a href="https://makkar.github.io/otium/kernels0">previous part</a>&#41;. More concretely, given the eigenfunctions and eigenvalues guaranteed by Mercer&#39;s theorem, we may define a mapping \(\Phi : \mathcal{X} \to \ell^2(\mathbb N)\) as follows <div class="nonumber">\[\begin{aligned} \mathcal{X} \ni x \mapsto \Phi(x) := \left( \sqrt{\lambda_i} e_i(x) \right)_{i \in \mathbb N} \in \ell^2(\mathbb N).\end{aligned}\]</div> Therefore, we have <div class="nonumber">\[\begin{aligned} \left\langle \Phi(x), \Phi(y) \right\rangle = \sum_{i=1}^{\infty} \lambda_i e_i(x) e_i(y) = K(x,y).\end{aligned}\]</div></p>
+<p>Among other things, Mercer&#39;s theorem provides a framework for embedding an element of \(\mathcal{X}\) into an element of \(\ell^2(\mathbb N)\) &#40;for its definition, see Example-4 in the section on Hilbert spaces in the <a href="https://adarshnl.github.io/otium/kernels0">previous part</a>&#41;. More concretely, given the eigenfunctions and eigenvalues guaranteed by Mercer&#39;s theorem, we may define a mapping \(\Phi : \mathcal{X} \to \ell^2(\mathbb N)\) as follows <div class="nonumber">\[\begin{aligned} \mathcal{X} \ni x \mapsto \Phi(x) := \left( \sqrt{\lambda_i} e_i(x) \right)_{i \in \mathbb N} \in \ell^2(\mathbb N).\end{aligned}\]</div> Therefore, we have <div class="nonumber">\[\begin{aligned} \left\langle \Phi(x), \Phi(y) \right\rangle = \sum_{i=1}^{\infty} \lambda_i e_i(x) e_i(y) = K(x,y).\end{aligned}\]</div></p>
 <p>This is the well-known &quot;kernel trick&quot;. Let us connect Mercer&#39;s theorem to the spectral theorem.</p>
 <p>Let \(\mathcal{X} = [d] := \{1, 2, \ldots, d\}\) along with the Hamming metric be our compact metric space. Let \(\mu(\{i\}) = 1\) for all \(i \in [d]\) be the counting measure on \(\mathcal{X}.\) Any function \(f : \mathcal{X} \to \mathbb{C}\) is equivalent to the \(d\)-dimensional vector \([f(1), \ldots, f(d)]\), and any kernel function \(K : \mathcal{X} \times \mathcal{X} \to \mathbb{C}\) is continuous, satisfies the Hilbert-Schmidt condition and is equivalent to a \(d \times d\) normal matrix \(\mathbf{K}\) where \(\mathbf{K}_{i,j} = K(i, j).\) The Hilbert-Schmidt operator reduces to <div class="nonumber">\[\begin{aligned} T_K(f)(x) = \int_{\mathcal{X}} K(x, y) f(y) \,\mathrm{d}\mu(y) = \sum_{i=1}^{d} K(x,y) f(y).\end{aligned}\]</div> Mercer&#39;s theorem then states that there exists a set of eigenfunctions \(v_1, \ldots, v_d\) &#40;for our \(\mathcal{X}\) they are equivalent to vectors&#41; and the corresponding eigenvalues \(\lambda_1, \ldots, \lambda_d\) such that <div class="nonumber">\[\begin{aligned} \mathbf{K} = \sum_{i=1}^{d} \lambda_i v_i v_i^T,\end{aligned}\]</div> which is exactly the spectral theorem.</p>
 <h2 id="operations_on_kernels"><a href="#operations_on_kernels" class="header-anchor">Operations on Kernels</a></h2>
@@ -115,4 +142,18 @@ J(f^*) = \inf_{f \in \mathcal{H}} J(f),\end{aligned}\] then \(f^*\) is in the sp
 <li><p>Aronszajn N: <em>Theory of Reproducing Kernels</em> &#40;1950&#41;</p>
 </li>
 </ol>
-<p>In the <a href="/Portfolio/otium/kernels2">next article</a> I will discuss kernel approximation methods. In particular I will focus on random Fourier Features developed by Rahimi and Recht which I am using in my work.</p>
+<p>In the <a href="/otium/kernels2">next article</a> I will discuss kernel approximation methods. In particular I will focus on random Fourier Features developed by Rahimi and Recht which I am using in my work.</p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

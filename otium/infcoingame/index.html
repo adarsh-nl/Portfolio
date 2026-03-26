@@ -1,8 +1,35 @@
----
-layout: default
-title: infcoingame
----
-<div class="main-heading">A Coin Tossing Game</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>A Coin Tossing Game</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">A Coin Tossing Game</div>
 <h3 id="the_game"><a href="#the_game" class="header-anchor">The Game</a></h3>
 <p>I recently came across this simple to state puzzle:</p>
 <blockquote>
@@ -28,3 +55,17 @@ title: infcoingame
 <p>If player \(1\) chooses \(HT\) and player \(2\) chooses \(HH\), then for no \(p \geq 1/2\) it is better to be player \(1.\)</p>
 <p>If player \(1\) chooses \(TH\) and player \(2\) chooses \(HT\), then for no \(p \geq 1/2\) it is better to be player \(1.\)</p>
 <p>Overall it is better to be player \(1\) if \(p > 1/\sqrt{2}\) or if \(p < 1 - 1/\sqrt{2}.\) And on the other hand it is better to be player \(2\) if \(1 - 1/\sqrt{2} < p < 1/\sqrt{2}.\)</p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

@@ -1,8 +1,35 @@
----
-layout: default
-title: lisprob
----
-<div class="main-heading">Longest Increasing Subsequence</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Longest Increasing Subsequence</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Longest Increasing Subsequence</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#problem">Problem</a></li><li><a href="#combinatorial_results">Combinatorial results</a></li><li><a href="#poissonization">Poissonization</a></li><li><a href="#back_to_longest_increasing_subsequences">Back to longest increasing subsequences</a></li><li><a href="#epilogue">Epilogue</a></li></ol></div>
 <h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
 <p>Finding a longest increasing subsequence is a well-known problem in computer science &#40;note that I use the article &quot;a&quot; instead of &quot;the&quot; because there could be multiple longest subsequences&#41;: Given a sequence \(\{a_1, \ldots, a_n\}\) of real numbers, we want to find a subsequence \(\{a_{i_1}, \ldots, a_{i_k}\}\) such that \(0 \le i_1 < \cdots < i_k \le n\), \(a_{i_1} \le \cdots \le a_{i_k}\), and the subsequence is as long as possible. It has a very easy <a href="https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/">dynamic programming solution</a> with a time complexity of \(O(n^2)\) and a slightly <a href="https://en.wikipedia.org/wiki/Longest_increasing_subsequence#Efficient_algorithms">more involved solution</a> with a time complexity of \(O(n \log n).\) But we are not interested in these algorithms in this blog post.</p>
@@ -90,3 +117,17 @@ title: lisprob
 <p>where \(\gamma\), due to Equations <span class="eqref">(<a href="#eq3">3</a>)</span> and <span class="eqref">(<a href="#eq5">5</a>)</span>, lies in \([1,e]\) and we are done since this implies <span class="eqref">(<a href="#eq2">2</a>)</span>.</p>
 <h2 id="epilogue"><a href="#epilogue" class="header-anchor">Epilogue</a></h2>
 <p>I got introduced to this problem from an exam question in a math course I took recently. I recommend the book <em>The Surprising Mathematics of Longest Increasing Subsequences</em> by Dan Romik, which is <a href="https://www.math.ucdavis.edu/~romik/book/">freely available online</a>, for a lot more content.</p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

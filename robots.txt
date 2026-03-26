@@ -1,0 +1,4 @@
+Sitemap: https://adarshnl.github.io/sitemap.xml
+
+User-agent: *
+Disallow:

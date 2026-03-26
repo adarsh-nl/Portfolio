@@ -1,8 +1,35 @@
----
-layout: default
-title: partitions
----
-<div class="main-heading">Partitions and Equivalence Relations</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Partitions and Equivalence Relations</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Partitions and Equivalence Relations</div>
 <div class="franklin-toc"><ol><li><a href="#partition">Partition</a></li><li><a href="#equivalence_relation">Equivalence Relation</a><ol><li><a href="#examples">Examples</a></li></ol></li><li><a href="#relation_to_partition">“Relation” to Partition</a></li></ol></div>
 
 <hr style="border: 0.1px solid lightgrey">
@@ -38,3 +65,17 @@ title: partitions
 <p>By reflexivity, \(x \in [x]\) for every \(x \in X\), and thus each equivalence set is non-empty and their union is \(X.\) We now need to show that any two equivalence sets \([x_1]\) and \([x_2]\) are either disjoint or identical. We prove this by showing that if \([x_1]\) and \([x_2]\) are not disjoint then they are identical. To this end, let \(z\) be a common element of \([x_1]\) and \([x_2].\) Let \(y\) be any element of \([x_1].\) Using transitivity, <div class="nonumber">\[\begin{aligned} y \sim x_1 \sim z \sim x_2.\end{aligned}\]</div></p>
 <p>Therefore, \(y \in [x_2].\) Since \(y\) was an arbitrary element of \([x_1]\), we get \([x_1] \subseteq [x_2].\) We can similarly show that \([x_2] \subseteq [x_1].\) In short, \([x_1] = [x_2].\)</p>
 <p>We have shown that there is no real distinction between partitions of a set and equivalence relations in the set. They are two equivalent approaches for the same mathematical idea. The approach we choose in an application depends entirely on our own convenience.</p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>

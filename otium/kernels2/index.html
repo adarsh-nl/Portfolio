@@ -1,11 +1,38 @@
----
-layout: default
-title: kernels2
----
-<div class="main-heading">Kernels - Part 2</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+  
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/basic.css">
+  <link rel="icon" href="/assets/favicon.png">
+   <title>Kernels - Part 2</title>  
+</head>
+<body>
+  <header>
+<!--<img src="/assets/photo.png" alt="Brownian motion in 2D" width="50" height="auto">-->
+<div class="blog-name"><a href="/">Adarsh N L</a></div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <!-- <li><a href="/research/">Research</a></li> -->
+    <li><a href="/otium/">Otium</a></li>
+    <!-- <li><a href="/notes/">Notes</a></li> -->
+    <li><a href="/misc/">Misc</a></li>
+  </ul>
+  <img src="/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="main-heading">Kernels - Part 2</div>
 <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#kernel_ridge_regression">Kernel Ridge Regression</a><ol><li><a href="#ridge_regression">Ridge Regression</a></li><li><a href="#kernel_ridge_regression__2">Kernel Ridge Regression</a></li></ol></li><li><a href="#kernel_approximation">Kernel Approximation</a><ol><li><a href="#bochners_theorem">Bochner’s Theorem</a></li><li><a href="#random_fourier_features">Random Fourier Features</a><ol><li><a href="#extension_to_a_more_general_class_of_kernels">Extension to a more general class of kernels</a></li></ol></li></ol></li><li><a href="#epilogue">Epilogue</a></li></ol></div>
 <h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
-<p>We discussed <a href="https://makkar.github.io/otium/kernels0">some functional analysis</a> and the <a href="https://makkar.github.io/otium/kernels1">basics of Reproducing Kernel Hilbert Space theory</a> in a previous two blog posts. The aim of this article is to discuss the need for approximating the kernel matrix and one method in particular to do that, Random Fourier Features.</p>
+<p>We discussed <a href="https://adarshnl.github.io/otium/kernels0">some functional analysis</a> and the <a href="https://adarshnl.github.io/otium/kernels1">basics of Reproducing Kernel Hilbert Space theory</a> in a previous two blog posts. The aim of this article is to discuss the need for approximating the kernel matrix and one method in particular to do that, Random Fourier Features.</p>
 <p>Let&#39;s start by discussing Kernel Ridge Regression, a simple application of kernel methods.</p>
 <h2 id="kernel_ridge_regression"><a href="#kernel_ridge_regression" class="header-anchor">Kernel Ridge Regression</a></h2>
 <h3 id="ridge_regression"><a href="#ridge_regression" class="header-anchor">Ridge Regression</a></h3>
@@ -36,7 +63,7 @@ title: kernels2
 <p>We are now inverting an \(n \times n\) matrix taking \(\mathcal{O}(n^3)\) time, and matrix multiplication of a \(D \times n\) matrix with a \(n \times n\) matrix taking \(\mathcal{O}(D n^2)\) time.</p>
 <p>Notice that \(\mathbf{\Phi} \mathbf{\Phi}^\top\) is the gram matrix, and let&#39;s denote it by \(\mathbf{K}.\) Its \((i,j)^{\text{th}}\) entry is \(\mathbf{K}_{i,j} = \left\langle \phi(x_i),\phi(x_j) \right\rangle = K(x_i, x_j)\), where \(K \colon \mathbb R^d \times \mathbb R^d \to \mathbb{C}\) is the kernel function corresponding to the RKHS \(\mathcal{H}.\)</p>
 <p>If we denote <div class="nonumber">\[\begin{aligned} \mathbf{\alpha} = (\lambda \sigma^2 \mathbf{I}_n + \mathbf{\Phi} \mathbf{\Phi}^\top)^{-1} \mathbf{y} = (\lambda \sigma^2 \mathbf{I}_n + \mathbf{K})^{-1} \mathbf{y}\end{aligned}\]</div> then we have <div class="nonumber">\[\begin{aligned} \mathbf{w}_{\text{RR}} = \mathbf{\Phi}^\top \mathbf{\alpha} = \sum _{i=1}^n \alpha_i \phi(x_i),\end{aligned}\]</div> and prediction for a test data point, \(x\), is <div class="nonumber">\[\begin{aligned} \mathbf{w}_{\text{RR}}^\top \phi(x) = \sum _{i=1}^n \alpha_i \phi(x_i)^\top \phi(x) = \sum _{i=1}^n \alpha_i k _{x_i}(x),\end{aligned}\]</div> where \(k_{x_i}\) denotes the reproducing kernel for the point \(x_i.\)</p>
-<p>If this looks suspiciously similar to the Representer theorem &#40;Theorem-8 <a href="https://makkar.github.io/otium/kernels1">here</a>&#41;, then that&#39;s because it is an instance of it&#33; So prediction takes \(\mathcal{O}(n)\) time.</p>
+<p>If this looks suspiciously similar to the Representer theorem &#40;Theorem-8 <a href="https://adarshnl.github.io/otium/kernels1">here</a>&#41;, then that&#39;s because it is an instance of it&#33; So prediction takes \(\mathcal{O}(n)\) time.</p>
 <p>The point of this discussion was to show that Kernel Ridge Regression is computationally expensive. Simply storing the gram matrix, \(\mathbf{K}\), takes \(\mathcal{O}(n^2)\) space. We need to find methods which can circumvent using \(\mathbf{K}\) if we are to apply kernel methods to anything other than the smallest of the data sets.</p>
 <h2 id="kernel_approximation"><a href="#kernel_approximation" class="header-anchor">Kernel Approximation</a></h2>
 <p>The idea behind kernel approximation methods is to replace the gram matrix, \(\mathbf{K}\), with a low rank approximation, i.e., find an \(n \times S\) matrix, \(\mathbf{Z}\), such that <div class="nonumber">\[\begin{aligned} \mathbf{K} \approx \mathbf{Z} \mathbf{Z}^\top.\end{aligned}\]</div></p>
@@ -44,7 +71,7 @@ title: kernels2
 <p>One way to think about this is we want to find a mapping of \(x_i\)&#39;s to some latent space such that the inner product in this latent space approximates the kernel <div class="nonumber">\[\begin{aligned} \mathbf{K}_{i,j} = K(x_i, x_j) \approx z_i^\top z_j,\end{aligned}\]</div> where \(z_i\) denotes the \(i^\text{th}\) row of \(\mathbf{Z}.\) One popular way to do that is by Nyström approximation, which I won&#39;t be discussing at all. The other popular method is to use random Fourier features. This approach was introduced by Rahimi and Recht in their seminal 2007 paper <a href="https://papers.nips.cc/paper/3182-random-features-for-large-scale-kernel-machines.pdf">Random Features for Large-Scale Kernel Machines</a>. It relies on a result from functional analysis called Bochner&#39;s theorem, so let&#39;s digress and discuss that first.</p>
 <h3 id="bochners_theorem"><a href="#bochners_theorem" class="header-anchor">Bochner’s Theorem</a></h3>
 <div class="def"><strong>Definition 28</strong>: A function \(K : \mathbb R^n \to \mathbb{C}\), is said to be <em>positive-definite</em> if <div class="nonumber">\[\begin{aligned} \sum _{i,j = 1}^n \alpha_i \overline{\alpha}_j K(x_i - x_j) \geq 0\end{aligned}\]</div> for every choice of \(x_1, \ldots, x_n \in \mathbb R^n\) and for every choice of complex numbers \(\alpha_1, \ldots, \alpha_n.\)</div>
-<p>Notice how similar this definition is to the <a href="https://makkar.github.io/otium/kernels1">definition of a kernel function</a>. Positive-definite functions have some nice properties:</p>
+<p>Notice how similar this definition is to the <a href="https://adarshnl.github.io/otium/kernels1">definition of a kernel function</a>. Positive-definite functions have some nice properties:</p>
 <div class="thm"><strong>Lemma 3</strong>: If \(K: \mathbb R^n \to \mathbb{C}\) is a positive-definite function, then \(K(-x) = \overline{K(x)}\) for every \(x \in \mathbb R^n.\)</div>
 <div class="proof">It is easy to see that \(K(0) \geq 0.\) In the definition 28 above, let \(n = 2\), \(x_1 = x\), \(x_2 = 0\), \(\alpha_1\) be an arbitrary complex number, and \(\alpha_2 = 1.\) Then applying the definition of a positive-definite function, we get <div class="nonumber">\[\begin{aligned} (1 + |\alpha_1|^2)K(0) + \alpha_1 K(x) + \overline{\alpha}_1K(-x) \geq 0.\end{aligned}\]</div> Let \(\alpha_1 = 1\), then <div class="nonumber">\[\begin{aligned} 2K(0) + K(x) + K(-x) \geq 0.\end{aligned}\]</div> In particular, \(K(x) + K(-x)\) is real, which implies <div class="nonumber">\[\begin{aligned} K(x) + K(-x) = \overline{K(x)} +\overline{K(-x)}.\end{aligned}\]</div> Similarly, letting \(\alpha_1 = i\), we get \(i(K(x) - K(-x))\) is real, which implies <div class="nonumber">\[\begin{aligned} K(x) - K(-x) = -\overline{K(x)} + \overline{K(-x)}.\end{aligned}\]</div> Adding these two equations, we get \(K(-x) = \overline{K(x)}.\)</div>
 <div class="thm"><strong>Lemma 4</strong>: If \(K: \mathbb R^n \to \mathbb{C}\) is a positive-definite function, then \(K\) is bounded. In particular, \(|K(x)| \leq K(0)\) for every \(x \in \mathbb R^n.\)</div>
@@ -101,3 +128,17 @@ K(x,y) &= \int_{\Omega} \varphi(\omega, x) \varphi(\omega, y)\,\mathrm{d}\mu(\om
 <h2 id="epilogue"><a href="#epilogue" class="header-anchor">Epilogue</a></h2>
 <p>Random Fourier Features is an easy to implement approach that allows us to apply kernel methods on large data sets. I haven&#39;t discussed the number of samples, \(S\), needed to approximate the kernel function within an error bound. You can find such results in the papers linked above.</p>
 <p>With this article I conclude the series on kernels. I had initially set out to write a short piece on Random Fourier Features but the subject of kernel theory is vast and beautiful, and that short piece metastasised to three articles.</p>
+<div class="page-foot">
+    <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    
+        <script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/contrib/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+    
+    
+  </body>
+</html>
