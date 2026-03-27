@@ -159,17 +159,25 @@ body {
 /* On wide screens, fix content width to a max value. */
 @media (min-width: 1000px) {
   .franklin-content {
-    width: 1000px;
+    width: 760px;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+/* On tablet/laptop, use fluid width with comfortable padding. */
+@media (min-width: 481px) and (max-width: 999px) {
+  .franklin-content {
+    padding-left: 6%;
+    padding-right: 6%;
   }
 }
 
 /* On narrow device, reduce margins. */
 @media (max-width: 480px) {
   .franklin-content {
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 4%;
+    padding-right: 4%;
   }
 }
 
@@ -333,13 +341,16 @@ td {
     IMAGES in CONTENT
 ================================================================== */
 
-/*
+/* Prevent images from overflowing on small screens. */
 .franklin-content img {
-  width: 70%;
-  text-align: center;
-  padding-left: 10%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/*
 .franklin-content .img-small img {
   width: 50%;
   text-align: center;
