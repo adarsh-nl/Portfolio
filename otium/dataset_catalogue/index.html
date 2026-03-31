@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css">
+   <title>A Comprehensive Catalogue of Datasets for Autonomous Perception in Cars and Drones</title>  
+</head>
+<body>
+  <header>
+<div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+<nav>
+  <ul>
+    <li><a href="/Portfolio/">Home</a></li>
+    <li><a href="/Portfolio/cv/">CV</a></li>
+    <li><a href="/Portfolio/otium/">Otium</a></li>
+    <li><a href="/Portfolio/misc/">Misc</a></li>
+  </ul>
+  <img src="/Portfolio/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+<!-- Content appended here -->
+<div class="franklin-content">
+<div class="main-heading">A Comprehensive Catalogue of Datasets for Autonomous Perception in Cars and Drones</div>
+
+<p><strong>Author:</strong> Adarsh Nanjaiya Latha<br>
+<strong>Last updated:</strong> March 2026 (community contributions welcome!)</p>
+
+<p>I've spent weeks hunting for a single go-to resource covering the most widely used datasets in autonomous perception for cars and drones—especially in cooperative/multi-agent settings. Unsurprisingly, no such one-stop list existed. So here it is: a curated catalogue of key datasets.</p>
+
+<p>The list is not exhaustive (new datasets drop constantly), but it covers the foundational and cutting-edge ones. Please feel free to fork this post on GitHub and add others—or comment below with suggestions!</p>
+
+<p><strong>Categorization:</strong><br>
+By number of platforms (single vs. multi-agent) and modalities (single-sensor vs. multi-sensor fusion).<br>
+<strong>Sub-notes on platforms:</strong> V2V (ground-ground), V2U (ground-air), U2U (air-air), V2I/V2X (vehicle-infra/everything).<br>
+<code>[Real-world]</code> or <code>[Simulation]</code> flag for each.</p>
+
+<p><em>For sensor hardware details (e.g., exact LiDAR models, camera resolutions), check the original papers or project pages—I welcome PRs if anyone wants to expand that here.</em></p>
+
+<h3>1. Single Platform, Single Modality</h3>
+<p>Standard, non-cooperative datasets from one ego vehicle or drone using only one sensor type (typically camera-only or LiDAR-only). Great for baseline semantic segmentation, tracking, or point-cloud benchmarking.</p>
+<ul>
+    <li><strong>Cityscapes (2016)</strong>: Dense pixel-level urban scene understanding from a single ground vehicle. Camera-only. <code>[Real-world]</code> <a href="https://www.cityscapes-dataset.com/">Website</a></li>
+    <li><strong>SYNTHIA (2016)</strong>: Large synthetic urban scenes for semantic segmentation. Pure camera data. <code>[Simulation]</code></li>
+    <li><strong>Stanford Drone Dataset (SDD) (2016)</strong>: 2D object tracking and trajectory prediction from a single overhead drone using video. Camera-only. <code>[Real-world]</code> <a href="http://cvgl.stanford.edu/projects/uav_data/">Website</a></li>
+    <li><strong>LIBRE: LiDAR Benchmarking and Reference (2020)</strong>: Single ground vehicle with 10–12 different LiDAR sensors (various manufacturers/models) for evaluating point-cloud performance across conditions (static, weather, dynamic traffic). LiDAR-only. <code>[Real-world]</code> <a href="#">Project page</a> | <a href="#">arXiv</a></li>
+</ul>
+<p><strong>Additional notable ones:</strong></p>
+<ul>
+    <li><strong>VisDrone (2018–ongoing)</strong>: Drone-mounted camera for object detection/tracking in urban scenes. Camera-only. <code>[Real-world]</code></li>
+    <li><strong>UAVDT (2018)</strong>: Drone camera dataset focused on detection/tracking under varying altitudes/angles. Camera-only. <code>[Real-world]</code></li>
+</ul>
+
+<h3>2. Single Platform, Multi-Modality</h3>
+<p>One ego vehicle or drone equipped with a heterogeneous sensor suite (e.g., cameras + LiDAR + radar/thermal). The classic "full-stack" single-agent perception benchmarks.</p>
+<ul>
+    <li><strong>KITTI (2012)</strong>: Foundational benchmark for autonomous driving. Single vehicle with stereo cameras + LiDAR. <code>[Real-world]</code> <a href="http://www.cvlibs.net/datasets/kitti/">Website</a></li>
+    <li><strong>nuScenes (2019) &amp; Waymo Open Dataset (2019)</strong>: Massive-scale single-vehicle datasets with 360° coverage. Cameras + LiDAR + radar (nuScenes includes radar). <code>[Real-world]</code> <a href="https://www.nuscenes.org/">nuScenes</a> | <a href="https://waymo.com/open/">Waymo</a></li>
+    <li><strong>UAVScenes (2025)</strong>: Multi-modal dataset from a single drone: RGB cameras + thermal imaging + LiDAR. Supports semantic segmentation, depth estimation, localization, and novel-view synthesis. <code>[Real-world]</code> <a href="#">GitHub</a> | <a href="#">arXiv/ICCV 2025 paper</a></li>
+</ul>
+
+<h3>3. Multi-Platform, Single Modality</h3>
+<p>Cooperative/collaborative datasets where multiple vehicles, drones, or infrastructure nodes share data, but only one sensor medium is used. Early steps toward swarm/U2U or pure-LiDAR V2V collaboration.</p>
+<ul>
+    <li><strong>CoPerception-UAV (2022)</strong>: Drone-to-drone (U2U) swarm collaboration for bird's-eye-view semantic segmentation and detection. Pure camera imagery from 5 coordinated UAVs. <code>[Simulation]</code> (CARLA + AirSim) <a href="#">Project page</a></li>
+    <li><strong>UAV3D (2024)</strong>: Large-scale UAV-to-UAV (U2U) benchmark with synchronized camera imagery. 1,000 scenes across diverse towns; supports 3D perception tasks. <code>[Simulation]</code> (CARLA + AirSim) <em>NeurIPS 2024 paper</em></li>
+    <li><strong>V2VLoc (2025)</strong>: Built for cooperative LiDAR localization and detection in GNSS-denied environments. Focuses on shared LiDAR point clouds between vehicles (V2V). <code>[Simulation]</code></li>
+</ul>
+<p><strong>Additional:</strong></p>
+<ul>
+    <li><strong>U2UData (2024)</strong>: Large-scale swarm UAV (U2U) dataset with LiDAR focus (plus some depth/RGB but primarily single-modality benchmarks available). <code>[Simulation]</code> <a href="#">arXiv</a></li>
+</ul>
+
+<h3>4. Multi-Platform, Multi-Modality</h3>
+<p>The cutting edge of cooperative perception: vehicles, drones, and/or smart infrastructure collaborating with fused sensor streams (cameras + LiDAR + radar). These enable V2V, V2U, U2U, and V2I/V2X research at scale.</p>
+<ul>
+    <li><strong>V2U4Real (2025)</strong>: First large-scale real-world dataset explicitly for Vehicle-to-UAV (V2U) cooperative perception. Ground vehicle + drone sharing synchronized multi-view LiDAR + RGB camera streams. <code>[Real-world]</code> <a href="#">arXiv</a></li>
+    <li><strong>AGC-Drive (2025)</strong>: Massive real-world aerial-ground cooperative dataset (V2V + V2U). Two ground vehicles (5 cams + 1 LiDAR each) + one UAV (forward cam + LiDAR). Covers dynamic interactions like cut-ins/lane changes. <code>[Real-world]</code> <a href="#">Project</a> | <em>NeurIPS 2025</em></li>
+    <li><strong>DAIR-V2X (2022)</strong>: First massive real-world Vehicle-to-Infrastructure (V2I) dataset. Synchronized camera + LiDAR from vehicles and roadside units. <code>[Real-world]</code> <a href="#">Website</a></li>
+    <li><strong>TUMTraf-V2X (2024)</strong>: Cooperative 3D object detection, tracking, and maneuver analysis with multi-modal data from roadside units + vehicles (V2I/V2X). <code>[Real-world]</code></li>
+    <li><strong>OPV2V (2022)</strong>: Heavy baseline for multi-vehicle (V2V) cooperative perception. Camera + LiDAR streams. <code>[Simulation]</code> (CARLA) <a href="#">Website</a></li>
+    <li><strong>V2X-Sim (2022)</strong>: Foundational simulated V2X benchmark (vehicles + roadside infrastructure). Synchronized camera + LiDAR. <code>[Simulation]</code> (CARLA + SUMO) <a href="#">Project page</a></li>
+    <li><strong>V2V4Real (2023) &amp; V2X-Real (2024)</strong>: Large-scale real-world V2V / V2X datasets tracking hundreds of km. Camera + LiDAR streams. <code>[Real-world]</code> <a href="#">V2V4Real</a></li>
+    <li><strong>V2X-Radar (2025) / V2X-R (simulation counterpart)</strong>: Newest branch introducing weather-robust 4D Radar alongside cameras and LiDAR for V2X collaboration. Supports roadside + vehicle perception. <code>[Real-world / Simulation]</code> <a href="#">GitHub / Hugging Face</a> | <em>[NeurIPS 2025 Spotlight]</em></li>
+</ul>
+
+<p><strong>Additional cutting-edge ones (highly recommended):</strong></p>
+<ul>
+    <li><strong>HoloVIC (2024)</strong>: Real-world V2I with high-quality LiDAR + camera for 3D detection/tracking. <code>[Real-world]</code></li>
+    <li><strong>Rcooper (2024)</strong>: First large-scale real-world roadside (I2I/V2I) dataset addressing sensor heterogeneity. <code>[Real-world]</code></li>
+    <li><strong>Griffin (2025)</strong>: Aerial-ground cooperative detection and tracking (V2U). <code>[Real-world]</code></li>
+</ul>
+
+<br>
+<p>This catalogue bridges single-agent classics (KITTI, nuScenes) with modern cooperative benchmarks (V2U4Real, AGC-Drive, V2X-Radar). Whether you're working on cars, drones, or hybrid air-ground swarms, these datasets cover the full spectrum.</p>
+
+<p>Want to contribute? Found a new dataset? Reply below or open a PR on the GitHub version.<br>
+Have hardware/sensor details for any entry? Let's add them!<br>
+Need code for loading any of these? Many have official devkits (OpenCOOD, etc.).</p>
+
+<p>Happy researching—let's keep pushing autonomous perception forward!</p>
+
+<div class="page-foot">
+</div>
+</div><!-- CONTENT ENDS HERE -->
+  </body>
+</html>
