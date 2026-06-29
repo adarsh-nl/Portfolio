@@ -172,6 +172,11 @@ instead, display a burger menu.
   }
 }
 
+.franklin-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 table {
   line-height: 1em;
   margin-left: auto;
