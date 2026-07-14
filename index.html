@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="stylesheet" href="/Portfolio/css/franklin.css">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=2">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=2">
 
   <title>Adarsh Nanjaiya Latha</title>
   <meta name="description" content="Adarsh Nanjaiya Latha — Doctoral Candidate in Computer Science at the University of Twente. Research in multi-sensor fusion, autonomous multi-robot perception, and search-and-rescue systems.">
@@ -47,7 +47,20 @@
     </p>
     <h2 class="news-heading">News</h2>
     <ul class="news-list">
-      <li><span class="news-date">Jul 2026</span><span class="news-body">Won the hackathon at the ACM Europe &amp; 4TU.NIRICT Summer School <em>"Systems Meet AI"</em> at TU Delft. <a href="#" class="news-photos" data-gallery="hackathon" aria-haspopup="dialog"><span class="news-photos-icon" aria-hidden="true">&#9634;</span>&nbsp;Photos</a></span></li>
+      <li><span class="news-date">Jul 2026</span><div class="news-body">Won the hackathon at the ACM Europe &amp; 4TU.NIRICT Summer School <em>"Systems Meet AI"</em> at TU Delft.
+        <a href="#" class="news-toggle" aria-expanded="false" aria-controls="hackathon-gallery">Photos<span class="news-caret" aria-hidden="true">&#9656;</span></a>
+        <div class="news-gallery" id="hackathon-gallery">
+          <div class="news-gallery-inner">
+            <div class="news-gallery-grid">
+              <a href="/Portfolio/assets/hackathon/award.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/award.jpg" alt="First prize, Team Code Detectives, at the Systems Meet AI hackathon, TU Delft" loading="lazy"></a>
+              <a href="/Portfolio/assets/hackathon/award-portrait.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/award-portrait.jpg" alt="Receiving the first-prize certificate" loading="lazy"></a>
+              <a href="/Portfolio/assets/hackathon/working.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/working.jpg" alt="Working on Tiny Machine Learning on Microcontrollers during the hackathon" loading="lazy"></a>
+              <a href="/Portfolio/assets/hackathon/group-seated.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/group-seated.jpg" alt="Summer school participants in the lecture hall" loading="lazy"></a>
+              <a href="/Portfolio/assets/hackathon/group-standing.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/group-standing.jpg" alt="Summer school group photo, Delft" loading="lazy"></a>
+            </div>
+          </div>
+        </div>
+      </div></li>
       <li><span class="news-date">Jun 2026</span><span class="news-body">Contributed Griffin (aerial-ground cooperative) dataset support to <a href="https://github.com/kesai-labs/py123d">py123d</a>, implementing both the vehicle-side and drone-side parsers (<a href="https://github.com/kesai-labs/py123d/pull/147">#147</a>, <a href="https://github.com/kesai-labs/py123d/pull/151">#151</a>).</span></li>
     </ul>
 
@@ -57,123 +70,18 @@
     </div>
   </div><!-- CONTENT ENDS HERE -->
 
-  <!-- Lightbox gallery -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" aria-hidden="true">
-    <button class="lb-close" type="button" aria-label="Close gallery">&times;</button>
-    <button class="lb-nav lb-prev" type="button" aria-label="Previous photo">&#8249;</button>
-    <figure class="lb-stage">
-      <img class="lb-img" alt="">
-      <figcaption class="lb-caption"></figcaption>
-    </figure>
-    <button class="lb-nav lb-next" type="button" aria-label="Next photo">&#8250;</button>
-    <div class="lb-thumbs" role="tablist" aria-label="Photo thumbnails"></div>
-    <div class="lb-counter" aria-hidden="true"></div>
-  </div>
-
   <script>
     (function () {
-      var galleries = {
-        hackathon: [
-          { src: "/Portfolio/assets/hackathon/award.jpg", caption: "First prize — Team “Code Detectives”, ACM Europe &amp; 4TU.NIRICT Summer School, TU Delft." },
-          { src: "/Portfolio/assets/hackathon/award-portrait.jpg", caption: "Receiving the certificate of achievement." },
-          { src: "/Portfolio/assets/hackathon/working.jpg", caption: "Hacking on “Tiny Machine Learning on Microcontrollers”." },
-          { src: "/Portfolio/assets/hackathon/group-seated.jpg", caption: "Summer School on “Systems Meet AI” — participants." },
-          { src: "/Portfolio/assets/hackathon/group-standing.jpg", caption: "Summer School group photo, Delft." }
-        ]
-      };
-
-      var lb = document.getElementById("lightbox");
-      var img = lb.querySelector(".lb-img");
-      var caption = lb.querySelector(".lb-caption");
-      var thumbs = lb.querySelector(".lb-thumbs");
-      var counter = lb.querySelector(".lb-counter");
-      var items = [], index = 0, lastFocus = null;
-
-      function preload(i) {
-        if (items[i]) { var p = new Image(); p.src = items[i].src; }
-      }
-
-      function show(i, animate) {
-        index = (i + items.length) % items.length;
-        var it = items[index];
-        if (animate) {
-          img.classList.add("is-swapping");
-          setTimeout(function () { swap(it); }, 120);
-        } else {
-          swap(it);
-        }
-        Array.prototype.forEach.call(thumbs.children, function (t, k) {
-          t.classList.toggle("is-active", k === index);
-          t.setAttribute("aria-selected", k === index ? "true" : "false");
-        });
-        counter.textContent = (index + 1) + " / " + items.length;
-        preload(index + 1); preload(index - 1);
-      }
-
-      function swap(it) {
-        img.onload = function () { img.classList.remove("is-swapping"); };
-        img.src = it.src;
-        caption.innerHTML = it.caption;
-        img.alt = it.caption.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/g, " ");
-      }
-
-      function open(name) {
-        items = galleries[name];
-        if (!items) return;
-        lastFocus = document.activeElement;
-        thumbs.innerHTML = "";
-        items.forEach(function (it, k) {
-          var b = document.createElement("button");
-          b.type = "button";
-          b.className = "lb-thumb";
-          b.setAttribute("role", "tab");
-          b.setAttribute("aria-label", "Photo " + (k + 1));
-          b.style.backgroundImage = "url('" + it.src + "')";
-          b.addEventListener("click", function () { show(k, true); });
-          thumbs.appendChild(b);
-        });
-        show(0, false);
-        lb.classList.add("is-open");
-        lb.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        lb.querySelector(".lb-close").focus();
-      }
-
-      function close() {
-        lb.classList.remove("is-open");
-        lb.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-        if (lastFocus) lastFocus.focus();
-      }
-
-      document.querySelectorAll("[data-gallery]").forEach(function (el) {
-        el.addEventListener("click", function (e) {
+      document.querySelectorAll(".news-toggle").forEach(function (toggle) {
+        var gallery = document.getElementById(toggle.getAttribute("aria-controls"));
+        if (!gallery) return;
+        toggle.addEventListener("click", function (e) {
           e.preventDefault();
-          open(el.getAttribute("data-gallery"));
+          var open = gallery.classList.toggle("is-open");
+          toggle.classList.toggle("is-open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
         });
       });
-
-      lb.querySelector(".lb-close").addEventListener("click", close);
-      lb.querySelector(".lb-prev").addEventListener("click", function () { show(index - 1, true); });
-      lb.querySelector(".lb-next").addEventListener("click", function () { show(index + 1, true); });
-      lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-stage")) close(); });
-
-      document.addEventListener("keydown", function (e) {
-        if (!lb.classList.contains("is-open")) return;
-        if (e.key === "Escape") close();
-        else if (e.key === "ArrowLeft") show(index - 1, true);
-        else if (e.key === "ArrowRight") show(index + 1, true);
-      });
-
-      // Touch swipe
-      var startX = null;
-      lb.querySelector(".lb-stage").addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
-      lb.querySelector(".lb-stage").addEventListener("touchend", function (e) {
-        if (startX === null) return;
-        var dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1), true);
-        startX = null;
-      }, { passive: true });
     })();
   </script>
 

@@ -245,207 +245,103 @@ table tbody tr td {
 }
 
 /* ==================================================================
-    NEWS PHOTOS TRIGGER
+    NEWS INLINE PHOTO GALLERY
 ================================================================== */
 
-.news-photos {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.15em;
-  margin-left: 0.35em;
-  padding: 0.05em 0.5em;
-  border: 1px solid #d8d8d8;
-  border-radius: 999px;
-  font-size: 0.82em;
-  line-height: 1.6;
+.news-toggle {
+  font-size: 0.85em;
   color: #555555;
   text-decoration: none;
+  border-bottom: 1px dotted #999999;
   white-space: nowrap;
-  vertical-align: baseline;
-  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.news-photos:hover,
-.news-photos:focus-visible {
-  background-color: #000000;
-  border-color: #000000;
-  color: #ffffff;
+.news-toggle:hover,
+.news-toggle:focus-visible {
+  color: #000000;
+  border-bottom-color: #000000;
 }
 
-.news-photos-icon {
-  font-size: 0.9em;
+.news-caret {
+  display: inline-block;
+  margin-left: 0.3em;
+  font-size: 0.75em;
+  color: #888888;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ==================================================================
-    LIGHTBOX GALLERY
-================================================================== */
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3.5rem 1rem 1rem;
-  background: rgba(15, 15, 17, 0.92);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+.news-toggle.is-open .news-caret {
+  transform: rotate(90deg);
 }
 
-.lightbox.is-open {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.28s ease;
+/* Collapsible container: grid-rows 0fr -> 1fr gives a smooth,
+   content-sized height animation with no fixed max-height hacks. */
+.news-gallery {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.lb-stage {
-  margin: 0;
-  flex: 1 1 auto;
+.news-gallery.is-open {
+  grid-template-rows: 1fr;
+}
+
+.news-gallery-inner {
+  overflow: hidden;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+}
+
+.news-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 0.9em 0 0.3em;
+}
+
+.news-gallery-grid a {
+  display: block;
+  border-bottom: none;
+}
+
+.news-gallery-grid img {
+  display: block;
   width: 100%;
-  max-width: 1100px;
-}
-
-.lb-img {
-  max-width: 100%;
-  max-height: calc(100vh - 12rem);
-  width: auto;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.lightbox.is-open .lb-img {
-  animation: lb-pop 0.32s ease;
-}
-
-.lb-img.is-swapping {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #dddddd;
   opacity: 0;
-  transform: scale(0.98);
+  transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s ease, filter 0.3s ease;
 }
 
-@keyframes lb-pop {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: scale(1); }
-}
+/* Staggered reveal once the container opens */
+.news-gallery.is-open img { opacity: 1; transform: none; }
+.news-gallery.is-open a:nth-child(1) img { transition-delay: 0.12s, 0.12s, 0s; }
+.news-gallery.is-open a:nth-child(2) img { transition-delay: 0.2s, 0.2s, 0s; }
+.news-gallery.is-open a:nth-child(3) img { transition-delay: 0.28s, 0.28s, 0s; }
+.news-gallery.is-open a:nth-child(4) img { transition-delay: 0.36s, 0.36s, 0s; }
+.news-gallery.is-open a:nth-child(5) img { transition-delay: 0.44s, 0.44s, 0s; }
 
-.lb-caption {
-  margin-top: 0.9rem;
-  max-width: 640px;
-  color: #d7d7d7;
-  font-size: 0.9rem;
-  line-height: 1.45;
-  text-align: center;
-}
-
-.lb-close,
-.lb-nav {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.18s ease, transform 0.18s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.lb-close:hover,
-.lb-nav:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.lb-close {
-  top: 1rem;
-  right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 1.7rem;
-  line-height: 1;
-}
-
-.lb-nav {
-  top: 50%;
-  width: 3rem;
-  height: 3rem;
-  margin-top: -3rem;
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.lb-nav:active { transform: scale(0.92); }
-.lb-prev { left: 1rem; }
-.lb-next { right: 1rem; }
-
-.lb-thumbs {
-  flex: 0 0 auto;
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  padding: 0.25rem;
-  max-width: 100%;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.lb-thumb {
-  flex: 0 0 auto;
-  width: 68px;
-  height: 46px;
-  padding: 0;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  opacity: 0.55;
-  transition: opacity 0.18s ease, border-color 0.18s ease;
-}
-
-.lb-thumb:hover { opacity: 0.85; }
-
-.lb-thumb.is-active {
-  opacity: 1;
-  border-color: #ffffff;
-}
-
-.lb-counter {
-  flex: 0 0 auto;
-  margin-top: 0.6rem;
-  color: #9a9a9a;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+.news-gallery-grid a:hover img,
+.news-gallery-grid a:focus-visible img {
+  filter: brightness(1.06);
+  border-color: #bbbbbb;
 }
 
 @media (max-width: 600px) {
-  .lb-nav { width: 2.5rem; height: 2.5rem; font-size: 1.6rem; margin-top: -2.5rem; }
-  .lb-prev { left: 0.5rem; }
-  .lb-next { right: 0.5rem; }
-  .lb-img { max-height: calc(100vh - 11rem); }
-  .lb-thumb { width: 56px; height: 40px; }
+  .news-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lightbox,
-  .lb-img,
-  .lb-close,
-  .lb-nav,
-  .lb-thumb { transition: none; }
-  .lightbox.is-open .lb-img { animation: none; }
+  .news-gallery,
+  .news-gallery-grid img,
+  .news-caret {
+    transition: none;
+  }
 }
+
