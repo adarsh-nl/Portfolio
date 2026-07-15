@@ -1,0 +1,54 @@
+name: Update CV from Google Docs
+
+# Re-exports the Google Doc CV to PDF and commits it when it changes, so the
+# copy served at /Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf stays in sync.
+#
+# Requires the Google Doc to be shared as "Anyone with the link -> Viewer".
+# The manual "Run workflow" button (workflow_dispatch) publishes an update
+# immediately; the schedule is the background safety net.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # daily at 06:00 UTC
+  workflow_dispatch: {}    # manual "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cv
+  cancel-in-progress: false
+
+jobs:
+  update-cv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download latest CV PDF
+        env:
+          DOC_ID: 1_Gsi7RLiiILrfQvVyTb6xCmT6PdbGEgyI_BJZ4Dhe2E
+        run: |
+          set -euo pipefail
+          curl -sSL "https://docs.google.com/document/d/${DOC_ID}/export?format=pdf" -o cv_new.pdf
+          # A private doc returns an HTML sign-in page instead of a PDF.
+          if [ "$(head -c 4 cv_new.pdf)" != "%PDF" ]; then
+            echo "::error::Export did not return a PDF. Set the Google Doc to 'Anyone with the link -> Viewer'."
+            head -c 300 cv_new.pdf || true
+            exit 1
+          fi
+          mv cv_new.pdf assets/Adarsh_Nanjaiya_Latha_CV.pdf
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- assets/Adarsh_Nanjaiya_Latha_CV.pdf; then
+            echo "CV unchanged; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/Adarsh_Nanjaiya_Latha_CV.pdf
+          git commit -m "Auto-update CV from Google Docs"
+          git push
