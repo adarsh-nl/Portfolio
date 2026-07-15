@@ -185,11 +185,11 @@ body {
     TITLES
 ================================================================== */
 
-.franklin-content h1 { font-size: 32px; }
-.franklin-content h2 { font-size: 32px; }
-.franklin-content h3 { font-size: 30px; }
-.franklin-content h4 { font-size: 26px; }
-.franklin-content h5 { font-size: 22px; }
+.franklin-content h1 { font-size: 22px; }
+.franklin-content h2 { font-size: 20px; }
+.franklin-content h3 { font-size: 18px; }
+.franklin-content h4 { font-size: 17px; }
+.franklin-content h5 { font-size: 16px; }
 .franklin-content h6 { font-size: 1em; }
 
 .franklin-content h1,
@@ -460,10 +460,16 @@ code {
 }
 
 .main-heading {
-  text-align: center;
-  padding: 1em;
-  font-size: 2.5em;
-  border-bottom: 3px double lightgrey;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #333333;
+  padding: 0 0 0.45em 0;
+  margin-top: 0.6em;
+  margin-bottom: 1.3em;
+  border-bottom: 1px solid lightgrey;
 }
 
 .proof{
