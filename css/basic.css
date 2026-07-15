@@ -191,20 +191,25 @@ instead, display a burger menu.
 
 .profile-photo {
   float: right;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 160px;
+  height: 200px;
+  border-radius: 8px;
   object-fit: cover;
-  margin: 0.2em 0 1em 1.6em;
+  margin: 0.3em 0 1em 1.8em;
   border: 1px solid #e2e2e2;
 }
 
 @media (max-width: 500px) {
   .profile-photo {
-    width: 108px;
-    height: 108px;
-    margin: 0.1em 0 0.7em 1em;
+    width: 120px;
+    height: 150px;
+    margin: 0.2em 0 0.7em 1.1em;
   }
+}
+
+.cv-updated {
+  color: #999999;
+  font-size: 0.82em;
 }
 
 .franklin-content h2.news-heading {
@@ -539,6 +544,10 @@ html[data-theme="dark"] .news-toggle:hover {
 
 html[data-theme="dark"] .news-caret {
   color: #8a8a8a;
+}
+
+html[data-theme="dark"] .cv-updated {
+  color: #888888;
 }
 
 html[data-theme="dark"] .bib-toggle {

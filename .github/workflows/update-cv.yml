@@ -47,8 +47,9 @@ jobs:
             echo "CV unchanged; nothing to commit."
             exit 0
           fi
+          printf '{"updated":"%s"}\n' "$(date -u +%Y-%m-%d)" > assets/cv-meta.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/Adarsh_Nanjaiya_Latha_CV.pdf
+          git add assets/Adarsh_Nanjaiya_Latha_CV.pdf assets/cv-meta.json
           git commit -m "Auto-update CV from Google Docs"
           git push

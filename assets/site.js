@@ -42,6 +42,21 @@
     });
   });
 
+  // ---- CV "last updated" note (homepage) ----
+  var cvEl = document.getElementById("cv-updated");
+  if (cvEl) {
+    fetch("/Portfolio/assets/cv-meta.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.updated) return;
+        var dt = new Date(d.updated + "T00:00:00");
+        if (isNaN(dt)) return;
+        var s = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+        cvEl.textContent = " (updated " + s + ")";
+      })
+      .catch(function () {});
+  }
+
   // ---- Mobile nav toggle (replaces fragile :hover on touch) ----
   var icon = document.getElementById("menu-icon");
   var nav = icon ? icon.closest("nav") : null;
