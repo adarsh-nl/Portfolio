@@ -189,6 +189,24 @@ instead, display a burger menu.
   height: auto;
 }
 
+.profile-photo {
+  float: right;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0.2em 0 1em 1.6em;
+  border: 1px solid #e2e2e2;
+}
+
+@media (max-width: 500px) {
+  .profile-photo {
+    width: 108px;
+    height: 108px;
+    margin: 0.1em 0 0.7em 1em;
+  }
+}
+
 .franklin-content h2.news-heading {
   font-size: 18px;
   font-weight: bold;
@@ -533,7 +551,8 @@ html[data-theme="dark"] .bib-toggle:hover {
   border-bottom-color: #ffffff;
 }
 
-html[data-theme="dark"] .news-gallery-grid img {
+html[data-theme="dark"] .news-gallery-grid img,
+html[data-theme="dark"] .profile-photo {
   border-color: #333333;
 }
 
