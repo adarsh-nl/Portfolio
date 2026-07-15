@@ -2,147 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://adarshnl.github.io/fanalysis/index.html</loc>
-    <lastmod>2022-08-31</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/cv/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/teaching/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/otium/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/misc/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/otium/how_to_write_blog/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/otium/mdp/index.html</loc>
-    <lastmod>2024-11-21</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/otium/dataset_catalogue/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/notes/conformal_prediction/index.html</loc>
-    <lastmod>2023-05-30</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/notes/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/otium/lisprob/index.html</loc>
-    <lastmod>2022-09-01</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/notes/conformal_prediction/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/index.html</loc>
-    <lastmod>2024-01-28</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/notes/interest_rate_products/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/otium/upper-lower/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/fanalysis/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/otium/equilibrium/index.html</loc>
-    <lastmod>2024-11-22</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/fanalysis/chap1/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/notes/interest_rate_products/index.html</loc>
-    <lastmod>2023-05-30</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/tag/code/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
 </url>
 <url>
-    <loc>https://adarshnl.github.io/otium/index.html</loc>
-    <lastmod>2024-11-21</lastmod>
+    <loc>https://adarsh-nl.github.io/Portfolio/tag/syntax/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/kernels0/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/kernels1/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/grlthprcs2/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/regularcondprob/index.html</loc>
-    <lastmod>2022-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/infcoingame/index.html</loc>
-    <lastmod>2022-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/kernels2/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/zorn/index.html</loc>
-    <lastmod>2022-08-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/misc/index.html</loc>
-    <lastmod>2024-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/baire/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/grlthprcs/index.html</loc>
-    <lastmod>2024-10-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/partitions/index.html</loc>
-    <lastmod>2022-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/research/index.html</loc>
-    <lastmod>2022-10-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/notes/index.html</loc>
-    <lastmod>2023-06-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/fanalysis/chap1/index.html</loc>
-    <lastmod>2022-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarshnl.github.io/otium/rlnotes/index.html</loc>
-    <lastmod>2024-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
 </url>
 </urlset>

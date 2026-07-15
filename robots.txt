@@ -1,4 +1,4 @@
-Sitemap: https://adarshnl.github.io/sitemap.xml
+Sitemap: https://adarsh-nl.github.io/Portfolio/sitemap.xml
 
 User-agent: *
 Disallow:
