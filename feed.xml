@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<rss version="2.0"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:media="http://search.yahoo.com/mrss/"
-  xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:georss="http://www.georss.org/georss">
-
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>
-      <![CDATA[  Adarsh N L  ]]>
-    </title>
-    <link> https://adarshnl.github.io/ </link>
-    <description>
-      <![CDATA[  Personal page  ]]>
-    </description>
-    <atom:link
-      href="https://adarshnl.github.io/feed.xml"
-      rel="self"
-      type="application/rss+xml" />
-
-
-<item>
-  <title>
-    <![CDATA[  Research  ]]>
-  </title>
-  <link> https://adarshnl.github.io/research/index.html </link>
-  <guid> https://adarshnl.github.io/research/index.html </guid>
-  <description>
-    <![CDATA[  Adarsh N L&#39;s research.  ]]>
-  </description>  
-    
-  <pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>Adarsh N L</atom:name>
-  </atom:author>
-        
-</item>
-</channel></rss>
+    <title>Adarsh Nanjaiya Latha</title>
+    <link>https://adarsh-nl.github.io/Portfolio/</link>
+    <description>News and updates from Adarsh Nanjaiya Latha — Doctoral Candidate in Computer Science, University of Twente.</description>
+    <language>en</language>
+    <lastBuildDate>Fri, 10 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://adarsh-nl.github.io/Portfolio/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Won the hackathon at the “Systems Meet AI” Summer School, TU Delft</title>
+      <link>https://adarsh-nl.github.io/Portfolio/</link>
+      <description>Won the hackathon at the ACM Europe &amp; 4TU.NIRICT Summer School “Systems Meet AI” at TU Delft.</description>
+      <pubDate>Fri, 10 Jul 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-07-hackathon</guid>
+    </item>
+    <item>
+      <title>Supervised two BSc theses on drone-based perception</title>
+      <link>https://adarsh-nl.github.io/Portfolio/teaching/</link>
+      <description>Two BSc students I supervised completed their theses on drone-based perception (S. S. Birla and D. Buinevičius).</description>
+      <pubDate>Thu, 02 Jul 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-07-supervision</guid>
+    </item>
+    <item>
+      <title>Open-source contribution to py123d</title>
+      <link>https://github.com/kesai-labs/py123d</link>
+      <description>Contributed Griffin (aerial-ground cooperative) dataset support to py123d, implementing the vehicle-side and drone-side parsers.</description>
+      <pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-06-py123d</guid>
+    </item>
+    <item>
+      <title>Organising team for the Computer Science PhD Day</title>
+      <link>https://adarsh-nl.github.io/Portfolio/</link>
+      <description>Part of the organising team for the Computer Science PhD Day, University of Twente.</description>
+      <pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-06-phd-day</guid>
+    </item>
+  </channel>
+</rss>

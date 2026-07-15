@@ -15,6 +15,7 @@
 ================================================================== */
 
 @font-face {
+    font-display: swap;
     font-family: 'Computer Modern Serif';
     src: url('../assets/cms/cmunrm.eot');
     src: url('../assets/cms/cmunrm.eot?#iefix') format('embedded-opentype'),
@@ -27,6 +28,7 @@
 
 
 @font-face {
+    font-display: swap;
     font-family: 'Computer Modern Serif';
     src: url('../assets/cms/cmunbx.eot');
     src: url('../assets/cms/cmunbx.eot?#iefix') format('embedded-opentype'),
@@ -38,6 +40,7 @@
 }
 
 @font-face {
+    font-display: swap;
     font-family: 'Computer Modern Serif';
     src: url('../assets/cms/cmunti.eot');
     src: url('../assets/cms/cmunti.eot?#iefix') format('embedded-opentype'),
@@ -50,6 +53,7 @@
 
 
 @font-face {
+    font-display: swap;
     font-family: 'Computer Modern Serif';
     src: url('../assets/cms/cmunbi.eot');
     src: url('../assets/cms/cmunbi.eot?#iefix') format('embedded-opentype'),
