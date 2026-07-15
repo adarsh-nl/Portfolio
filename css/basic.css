@@ -6,12 +6,14 @@ nav {
   flex: 1;
   display: inline-block;
   text-align: right;
+  white-space: nowrap;
 }
 
 nav ul {
   padding-left: 0;
   margin-top: 0;
   margin-bottom: 0;
+  display: inline;
 }
 
 nav li {
@@ -131,12 +133,19 @@ instead, display a burger menu.
 
   header .blog-name {
     display: inline-block;
-    width: 70%;
+    width: 62%;
+    font-size: 19px;
   }
 
   nav {
     display: inline-block;
-    width: 27%;
+    width: 36%;
+  }
+
+  .theme-toggle {
+    font-size: 16px;
+    padding: 4px;
+    margin-left: 0;
   }
 
   nav ul,
@@ -163,7 +172,7 @@ instead, display a burger menu.
   header li a { border-bottom: none; }
   header li a:hover { border-bottom: none; }
 
-  nav:hover ul {
+  nav.open ul {
     display: block;
   }
 
@@ -171,6 +180,7 @@ instead, display a burger menu.
     display: inline-block;
     margin-right: 10px;
     margin-top: 5px;
+    cursor: pointer;
   }
 }
 
@@ -343,5 +353,240 @@ table tbody tr td {
   .news-caret {
     transition: none;
   }
+}
+
+/* ==================================================================
+    BIBTEX TOGGLE (Research page)
+================================================================== */
+
+.bib-toggle {
+  font-size: 0.82em;
+  color: #888888;
+  text-decoration: none;
+  border-bottom: 1px dotted #bbbbbb;
+  white-space: nowrap;
+  margin-left: 0.15em;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.bib-toggle:hover,
+.bib-toggle:focus-visible {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+
+.bibtex-wrap {
+  display: none;
+  position: relative;
+  margin-top: 0.6em;
+}
+
+.bibtex-wrap.open {
+  display: block;
+}
+
+.bibtex {
+  margin: 0;
+  background: var(--block-background);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0.85em 1em;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.72em;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.bib-copy {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  color: #555555;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.bib-copy:hover {
+  color: #000000;
+  border-color: #999999;
+}
+
+/* ==================================================================
+    THEME TOGGLE
+================================================================== */
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888888;
+  font-size: 18px;
+  line-height: 1;
+  padding: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+  color: #000000;
+}
+
+/* ==================================================================
+    DARK THEME
+    Keyed only on [data-theme="dark"] so the toggle always wins over the
+    OS preference (the no-flash script in <head> seeds it from either).
+    Code blocks are deliberately left light so highlight.js stays legible.
+================================================================== */
+
+html[data-theme="dark"] {
+  background-color: #17181b;
+  color: #d8d8d6;
+}
+
+html[data-theme="dark"] body {
+  background-color: #17181b;
+}
+
+html[data-theme="dark"] .blog-name a {
+  color: #ececec;
+}
+
+html[data-theme="dark"] nav li a {
+  color: #9a9a9a;
+  border-bottom-color: #4a4a4a;
+}
+
+html[data-theme="dark"] header li a:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+html[data-theme="dark"] .theme-toggle {
+  color: #9a9a9a;
+}
+
+html[data-theme="dark"] .theme-toggle:hover {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .main-heading {
+  color: #e2e2e2;
+  border-bottom-color: #333333;
+}
+
+html[data-theme="dark"] .franklin-content h1,
+html[data-theme="dark"] .franklin-content h2 {
+  border-bottom-color: #333333;
+}
+
+html[data-theme="dark"] .news-heading {
+  color: #9a9a9a;
+}
+
+html[data-theme="dark"] .news-date {
+  color: #8a8a8a;
+}
+
+html[data-theme="dark"] .franklin-content a {
+  color: #a9a9a9;
+}
+
+/* Catch-all so any link (e.g. auto-generated tag pages) stays legible in dark */
+html[data-theme="dark"] a {
+  color: #a9a9a9;
+}
+
+html[data-theme="dark"] a:visited {
+  color: #9d9d9d;
+}
+
+html[data-theme="dark"] .news-toggle {
+  color: #9a9a9a;
+  border-bottom-color: #666666;
+}
+
+html[data-theme="dark"] .news-toggle:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+html[data-theme="dark"] .news-caret {
+  color: #8a8a8a;
+}
+
+html[data-theme="dark"] .bib-toggle {
+  color: #9a9a9a;
+  border-bottom-color: #666666;
+}
+
+html[data-theme="dark"] .bib-toggle:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+html[data-theme="dark"] .news-gallery-grid img {
+  border-color: #333333;
+}
+
+html[data-theme="dark"] .news-gallery-grid a:hover img,
+html[data-theme="dark"] .news-gallery-grid a:focus-visible img {
+  border-color: #555555;
+}
+
+/* Content borders and rules */
+html[data-theme="dark"] .franklin-content blockquote {
+  border-left-color: #555555;
+}
+
+html[data-theme="dark"] hr,
+html[data-theme="dark"] .page-foot {
+  border-color: #333333;
+}
+
+/* Tables */
+html[data-theme="dark"] table,
+html[data-theme="dark"] tr,
+html[data-theme="dark"] th,
+html[data-theme="dark"] td,
+html[data-theme="dark"] table tbody tr td {
+  border-color: #333333;
+}
+
+html[data-theme="dark"] tr:first-of-type {
+  background: #26272c;
+}
+
+/* Code stays on a light card (so highlight.js remains legible); force
+   dark text inside so inline code like the email is readable. */
+html[data-theme="dark"] code,
+html[data-theme="dark"] pre {
+  color: #1a1a1a;
+}
+
+/* Mobile dropdown menu panel (only when the dropdown is actually used) */
+@media (max-width: 500px) {
+  html[data-theme="dark"] nav ul,
+  html[data-theme="dark"] nav.open ul {
+    background: #1e1f22;
+    border-color: #444444;
+  }
+}
+
+/* Smooth theme change */
+html {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { transition: none; }
 }
 
