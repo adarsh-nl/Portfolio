@@ -193,6 +193,7 @@ instead, display a burger menu.
 .profile-card {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 1.4em;
   padding: 1.3em 1.5em;
   margin: 0.4em 0 1.6em;
@@ -201,12 +202,16 @@ instead, display a burger menu.
   background: #fafafa;
 }
 
-.profile-card-photo {
+/* Selector is specific enough to beat Franklin's `.franklin-content img`
+   rule, which sets `margin: auto` and would otherwise push the photo to the
+   centre of the flex row (leaving a big gap before the text). */
+.profile-card .profile-card-photo {
   flex: 0 0 auto;
   width: 118px;
   height: 118px;
   border-radius: 10px;
   object-fit: cover;
+  margin: 0;
 }
 
 .profile-card-info {
@@ -258,7 +263,7 @@ instead, display a burger menu.
     gap: 0.9em;
     padding: 1.4em 1.2em;
   }
-  .profile-card-photo { width: 132px; height: 132px; }
+  .profile-card .profile-card-photo { width: 132px; height: 132px; }
   .profile-card-links { justify-content: center; }
   .loc-full { display: none; }
   .loc-abbr { display: inline; }
@@ -404,6 +409,13 @@ table tbody tr td {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.45s ease, transform 0.45s ease, filter 0.3s ease;
+}
+
+/* Single-photo entry: show the whole image at its natural aspect ratio
+   (no 4:3 crop, which would cut a portrait group photo). */
+.news-gallery-grid.single img {
+  aspect-ratio: auto;
+  height: auto;
 }
 
 /* Staggered reveal once the container opens */
