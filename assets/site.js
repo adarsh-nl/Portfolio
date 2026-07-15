@@ -52,7 +52,7 @@
         var dt = new Date(d.updated + "T00:00:00");
         if (isNaN(dt)) return;
         var s = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-        cvEl.textContent = " (updated " + s + ")";
+        cvEl.textContent = "updated " + s;
       })
       .catch(function () {});
   }

@@ -189,27 +189,79 @@ instead, display a burger menu.
   height: auto;
 }
 
-.profile-photo {
-  float: right;
-  width: 160px;
-  height: 200px;
-  border-radius: 8px;
-  object-fit: cover;
-  margin: 0.3em 0 1em 1.8em;
-  border: 1px solid #e2e2e2;
+/* ---- Profile card (homepage hero) ---- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.4em;
+  padding: 1.3em 1.5em;
+  margin: 0.4em 0 1.6em;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fafafa;
 }
 
-@media (max-width: 500px) {
-  .profile-photo {
-    width: 120px;
-    height: 150px;
-    margin: 0.2em 0 0.7em 1.1em;
-  }
+.profile-card-photo {
+  flex: 0 0 auto;
+  width: 118px;
+  height: 118px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.profile-card-info {
+  min-width: 0;
+}
+
+.profile-card-name {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+.profile-card-title {
+  font-size: 17px;
+  margin-top: 0.2em;
+}
+
+.profile-card-affil {
+  font-size: 0.82em;
+  color: #888888;
+  margin-top: 0.15em;
+}
+
+.profile-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15em 1.1em;
+  margin-top: 0.75em;
+}
+
+.profile-card-links a {
+  font-size: 0.92em;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .cv-updated {
-  color: #999999;
-  font-size: 0.82em;
+  color: #aaaaaa;
+  font-size: 0.75em;
+}
+
+.loc-abbr { display: none; }
+
+@media (max-width: 500px) {
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.9em;
+    padding: 1.4em 1.2em;
+  }
+  .profile-card-photo { width: 132px; height: 132px; }
+  .profile-card-links { justify-content: center; }
+  .loc-full { display: none; }
+  .loc-abbr { display: inline; }
 }
 
 .franklin-content h2.news-heading {
@@ -330,6 +382,11 @@ table tbody tr td {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding: 0.9em 0 0.3em;
+}
+
+/* Single-photo news entry: one larger image instead of a thumbnail grid */
+.news-gallery-grid.single {
+  grid-template-columns: min(340px, 100%);
 }
 
 .news-gallery-grid a {
@@ -463,6 +520,11 @@ table tbody tr td {
   color: #000000;
 }
 
+/* Clean mobile header: no toggle chip (mobile follows the OS light/dark preference). */
+@media (max-width: 500px) {
+  .theme-toggle { display: none; }
+}
+
 /* ==================================================================
     DARK THEME
     Keyed only on [data-theme="dark"] so the toggle always wins over the
@@ -560,9 +622,17 @@ html[data-theme="dark"] .bib-toggle:hover {
   border-bottom-color: #ffffff;
 }
 
-html[data-theme="dark"] .news-gallery-grid img,
-html[data-theme="dark"] .profile-photo {
+html[data-theme="dark"] .news-gallery-grid img {
   border-color: #333333;
+}
+
+html[data-theme="dark"] .profile-card {
+  background: #1e1f22;
+  border-color: #2e2f33;
+}
+
+html[data-theme="dark"] .profile-card-affil {
+  color: #9a9a9a;
 }
 
 html[data-theme="dark"] .news-gallery-grid a:hover img,
