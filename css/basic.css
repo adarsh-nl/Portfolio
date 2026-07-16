@@ -742,19 +742,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Quiet entrance. The resting state is already opacity:1, so if the
-   animation never runs the content is still visible — it can't hide content. */
-.franklin-content {
-  animation: content-in 0.4s ease-out;
-}
-
-@keyframes content-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-
 /* Underlines that draw themselves left-to-right on hover, instead of
    snapping on. currentColor keeps them correct in both themes. */
 .franklin-content a {
@@ -791,7 +778,6 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .franklin-content { animation: none; }
   .franklin-content a,
   .profile-card { transition: none; }
 }
