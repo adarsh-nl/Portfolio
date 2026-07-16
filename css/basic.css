@@ -64,7 +64,7 @@ nav li a {
   margin-left: 7px;
   margin-right: 7px;
   border-bottom: 2px solid #555555;/*#4c9cf1;*/
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 header {
@@ -728,5 +728,71 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   html { transition: none; }
+}
+
+/* ==================================================================
+    MOTION
+    Restrained by design: a quiet entrance, underlines that draw
+    themselves, and smooth anchor jumps. Nothing loops, nothing bounces.
+    All of it collapses to zero under prefers-reduced-motion.
+================================================================== */
+
+/* Smooth anchor jumps (skip link, header anchors) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Quiet entrance. The resting state is already opacity:1, so if the
+   animation never runs the content is still visible — it can't hide content. */
+.franklin-content {
+  animation: content-in 0.4s ease-out;
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Underlines that draw themselves left-to-right on hover, instead of
+   snapping on. currentColor keeps them correct in both themes. */
+.franklin-content a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.28s ease, color 0.2s ease;
+}
+
+.franklin-content a:hover,
+.franklin-content a:focus-visible {
+  background-size: 100% 1px;
+  text-decoration: none; /* the gradient is the underline */
+}
+
+/* Links that already carry their own affordance opt out of the sliding rule */
+.franklin-content .profile-card-links a,
+.franklin-content .news-toggle,
+.franklin-content .bib-toggle,
+.franklin-content .news-gallery-grid a,
+.franklin-content .page-foot a {
+  background-image: none;
+}
+
+.franklin-content .profile-card-links a:hover {
+  text-decoration: underline; /* keep its own static underline */
+}
+
+/* Theme switches shouldn't snap on the card either */
+.profile-card {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .franklin-content { animation: none; }
+  .franklin-content a,
+  .profile-card { transition: none; }
 }
 
