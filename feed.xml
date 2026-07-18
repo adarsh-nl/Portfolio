@@ -5,8 +5,15 @@
     <link>https://adarsh-nl.github.io/Portfolio/</link>
     <description>News and updates from Adarsh Nanjaiya Latha — Doctoral Candidate in Computer Science, University of Twente.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 10 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://adarsh-nl.github.io/Portfolio/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>New post: Adaptive Spatiotemporal Graph Learning for Drone Swarms</title>
+      <link>https://adarsh-nl.github.io/Portfolio/otium/graph_learning_swarms/</link>
+      <description>A short review of recent work on learning over time-evolving graphs for swarm situational awareness — and its two open gaps.</description>
+      <pubDate>Fri, 17 Jul 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-post-2026-07-graph-learning-swarms</guid>
+    </item>
     <item>
       <title>Won the hackathon at the “Systems Meet AI” Summer School, TU Delft</title>
       <link>https://adarsh-nl.github.io/Portfolio/</link>

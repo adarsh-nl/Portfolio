@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=18">
+   <title>Adaptive Spatiotemporal Graph Learning for Drone Swarms — Adarsh Nanjaiya Latha</title>
+  <meta name="description" content="A short review of recent (2024–2026) work on adaptive spatiotemporal graph learning for situational awareness in drone swarms — what it does well, and the two things it still doesn't: node-level robustness to degraded inputs, and explainability.">
+  <meta property="og:title" content="Adaptive Spatiotemporal Graph Learning for Drone Swarms">
+  <meta property="og:description" content="A short review of recent work on adaptive spatiotemporal graph learning for situational awareness in drone swarms — its strengths, and its two open gaps.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/otium/graph_learning_swarms/">
+<!-- seo:meta -->
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/otium/graph_learning_swarms/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image:alt" content="Adarsh Nanjaiya Latha — Doctoral Candidate in Computer Science, University of Twente.">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta name="twitter:title" content="Adaptive Spatiotemporal Graph Learning for Drone Swarms">
+  <meta name="twitter:description" content="A short review of recent work on adaptive spatiotemporal graph learning for situational awareness in drone swarms — its strengths, and its two open gaps.">
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+  <link rel="alternate" type="application/rss+xml" title="Adarsh Nanjaiya Latha" href="/Portfolio/feed.xml">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+<div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+<nav>
+  <ul>
+    <li><a href="/Portfolio/">Home</a></li>
+    <li><a href="/Portfolio/cv/">Research</a></li>
+    <li><a href="/Portfolio/teaching/">Teaching</a></li>
+    <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+    <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+  </ul>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+  <img src="/Portfolio/assets/hamburger.svg" id="menu-icon">
+</nav>
+</header>
+<!-- Content appended here -->
+<div class="franklin-content" id="main" tabindex="-1">
+<div class="main-heading">Adaptive Spatiotemporal Graph Learning for Drone Swarms</div>
+
+<p><em>A short review of recent (2024&ndash;2026) work on learning over time-evolving graphs for situational awareness in drone swarms &mdash; what it does well, and the two things it still doesn't. It grew out of my PhD research on multi-sensor fusion for autonomous swarms.</em></p>
+
+<p>Situational awareness &mdash; perceiving an environment, understanding how it is changing, and predicting near-future conditions &mdash; is the core problem in human&ndash;swarm teaming for rapid response. One slice of it is this: individual drones in a swarm sense the same objects from different vantage points at different moments, over communication links that shift as the formation moves, and the resulting data can be sparse, delayed, or corrupted. The task is to agglomerate that stream into a single consistent picture for the human operator, and to do so resiliently. Adaptive <em>spatiotemporal graph learning</em> (STGL) is a natural tool for this, because it can represent both the evolving relationships between drones and the evolving relationships between their measurements.</p>
+
+<p>This post reviews nine recent works and asks how well each serves three properties that matter in the field: robustness to degraded inputs, real-time feasibility on small drones, and a path toward explainability. I group them into a <em>core</em> set that performs graph-based fusion or forecasting on time-evolving topologies (ATGN-MUAVOP&nbsp;<a href="#ref-9">[9]</a>, DynAGS&nbsp;<a href="#ref-5">[5]</a>, I-DIDA&nbsp;<a href="#ref-6">[6]</a>, CAS-GNN&nbsp;<a href="#ref-8">[8]</a>, and an over-squashing analysis&nbsp;<a href="#ref-1">[1]</a>) and an <em>adjacent</em> set that uses graphs for multi-agent coordination (GA-MATR&nbsp;<a href="#ref-7">[7]</a>, MAGEC&nbsp;<a href="#ref-3">[3]</a>, MAGNNET&nbsp;<a href="#ref-4">[4]</a>, ORION&nbsp;<a href="#ref-2">[2]</a>). Each reference below was checked against its primary source; four identifiers that were wrong in my original source list have been corrected.</p>
+
+<h2 class="news-heading">Why adaptive spatiotemporal graphs</h2>
+
+<p>A swarm is relational, so a graph represents it directly: nodes for drones or detected objects, edges for the interactions that matter at a given instant. There are really two topologies to reason over at once. The <em>information-exchange topology</em> describes how drones communicate, and depends on the mission, the formation, and local link conditions. The <em>measurement topology</em> describes how the telemetries collected by different drones relate to one another. Both change continuously as drones move, are lost, or fall out of contact.</p>
+
+<p>The word <em>adaptive</em> is what distinguishes the recent work. Early models assumed a fixed adjacency matrix &mdash; a fixed communication graph or a fixed sensor layout &mdash; and that assumption fails in the field the moment a swarm loses members or a link is jammed. Adaptive STGL instead learns the structure from data and lets it evolve over time, typically pairing a spatial branch (a GCN or an attention-based GAT) with a temporal branch (a TCN, a graph recurrent network, or temporal attention). Describing the data this way lets the model use the topology &mdash; the relational closeness between measurements &mdash; to infer missing values or forecast a neighbour's next state without an extra communication round. That inference-under-missingness property is precisely why the technique suits degraded swarm conditions.</p>
+
+<h2 class="news-heading">Anticipation and shifting topologies</h2>
+
+<p><strong>ATGN-MUAVOP</strong>&nbsp;<a href="#ref-9">[9]</a> addresses obstacle prediction for multi-UAV navigation. It uses a GCN to encode the spatial arrangement of obstacles and an attention-enhanced TCN to model how that arrangement evolves, so the drone can anticipate rather than merely react. The transferable idea is anticipation: a model that predicts where obstacles or neighbours will be shortens the reaction loop, which matters at UAV speeds and reduces the communication needed to stay coordinated.</p>
+
+<p><strong>GA-MATR</strong>&nbsp;<a href="#ref-7">[7]</a> tackles trajectory design and resource assignment across cooperating UAV base stations. Its contribution is a graph recurrent network that handles a communication topology which reshapes constantly as the drones move, with an attention mechanism weighting the messages passed between agents so that each decision reflects who is actually relevant. The lesson is that the graph over agents is itself a moving target, and modelling that movement improves the shared picture.</p>
+
+<p><strong>MAGEC</strong>&nbsp;<a href="#ref-3">[3]</a> studies resilience explicitly: how a multi-robot team keeps coordinating when agents are lost to attrition or when communication is disturbed or only partial. It combines a GNN actor with multi-agent PPO under a centralised-training, decentralised-execution scheme, and the resulting policy degrades gracefully instead of collapsing when the team is damaged. This is exactly the operating regime a resilient swarm must survive &mdash; agents jammed, spoofed, or destroyed while the swarm stays at operational capacity &mdash; and it is the clearest demonstration in the set that graph-based coordination can be made robust to a shrinking, noisy graph.</p>
+
+<h2 class="news-heading">Fusion and robustness on dynamic graphs</h2>
+
+<p><strong>CAS-GNN</strong>&nbsp;<a href="#ref-8">[8]</a> couples a segmentation front end with a GNN for collaborative path planning among several vehicles. Its notable component is a <em>dynamic edge-weight update</em> module, which continuously adjusts how strongly each neighbour influences a given agent. Demonstrated on ground vehicles, the design principle transfers directly to a swarm: edge weights, not just node features, should be time-varying, because a neighbour's influence grows and shrinks as geometry and intent change.</p>
+
+<p><strong>I-DIDA</strong>&nbsp;<a href="#ref-6">[6]</a> speaks directly to robustness under changing conditions. Its target is out-of-distribution generalisation: it disentangles <em>invariant</em> patterns &mdash; relationships that stay stable across environments &mdash; from <em>variant</em> ones that do not, and promotes reliance on the invariant part. For a swarm that must operate across urban canyons, open terrain, and degraded conditions it was never trained on, this is the difference between a fusion model that keeps working under distribution shift and one that silently fails. It offers a principled mechanism rather than mere data augmentation.</p>
+
+<p><strong>DynAGS</strong>&nbsp;<a href="#ref-5">[5]</a> is the efficiency-oriented framework and the most literal instance of adaptive STGL in the set. It generates dynamic sparse graphs through a lightweight module, so agents avoid exchanging or processing a full dense graph at every step, matching or beating denser baselines while cutting communication and compute sharply. For tiny drones on a strict energy budget this is the practical enabler: a fusion scheme is only useful if it runs in real time on the hardware the swarm actually carries.</p>
+
+<h2 class="news-heading">A theoretical limit worth stating</h2>
+
+<p><strong>Over-squashing in spatiotemporal GNNs</strong>&nbsp;<a href="#ref-1">[1]</a>, accepted at NeurIPS 2025, is the theoretical anchor of the set. Over-squashing is the phenomenon where information from distant nodes is compressed through graph bottlenecks and effectively disappears from the model's representation. The paper shows that the temporal dimension does not merely add to this problem but compounds it, because messages must cross rapidly expanding receptive fields in both space and time &mdash; and it finds, counterintuitively, that convolutional STGNNs become <em>more</em> sensitive to information far apart in time.</p>
+
+<p>The practical reading is direct: a distant but important drone, or an observation several seconds old, can silently drop out of the fused picture, and simply enlarging the graph or the time window does not fix it if the other dimension stays bottlenecked. It is a limitation to design around &mdash; and to state honestly &mdash; whenever a fusion framework claims to give the operator a complete view of the swarm.</p>
+
+<h2 class="news-heading">Where the gaps are</h2>
+
+<p>Read against the goal of a resilient fused picture, these methods play two roles. The core STGL methods supply the machinery for fusion on time-evolving topologies and for inferring missing values from the relational structure. The adjacent coordination methods supply the resilience and neighbour-forecasting ideas that let a swarm decide how to move and what to share. The over-squashing result bounds how far either can reach across space and time.</p>
+
+<p>Two gaps stand out, and both are open problems rather than solved ones. The first is <strong>node-level robustness to degraded inputs</strong>. Almost every method above takes clean node features as given and reasons over the graph above them, whereas the premise for real swarms is that the inputs themselves are missing, mislabelled, or corrupted. How a fusion model should behave when a modality drops out (a plausible model is Bernoulli sensor dropout) or when frames arrive out of sync (temporal misalignment) is rarely modelled &mdash; and it is a property a fusion framework should be <em>evaluated</em> on rather than assumed. The second gap is <strong>explainability</strong>: none of the reviewed methods produce a fused result a human operator can interrogate. A fused picture that cannot be explained is of limited use in a setting where a decision may have to be justified after the fact.</p>
+
+<h2 class="news-heading">References</h2>
+
+<ol class="refs">
+<li id="ref-1">I. Marisca, J. Bamberger, C. Alippi, and M. M. Bronstein. <em>Over-squashing in Spatiotemporal Graph Neural Networks.</em> Accepted at NeurIPS 2025. <a href="https://arxiv.org/abs/2506.15507">arXiv:2506.15507</a>.</li>
+<li id="ref-2">S. Zhang, J. Liang, Z. Zhou, S. Ye, Y. Wang, D. M. S. Tan, J. Chiun, Y. Cao, and G. Sartoretti. <em>ORION: Option-Regularized Deep Reinforcement Learning for Cooperative Multi-Agent Online Navigation.</em> <a href="https://arxiv.org/abs/2601.01155">arXiv:2601.01155</a>, 2026.</li>
+<li id="ref-3">A. Goeckner, Y. Sui, N. Martinet, X. Li, and Q. Zhu. <em>Graph Neural Network-based Multi-agent Reinforcement Learning for Resilient Distributed Coordination of Multi-Robot Systems.</em> IEEE/RSJ IROS 2024. <a href="https://arxiv.org/abs/2403.13093">arXiv:2403.13093</a>.</li>
+<li id="ref-4">L. Ratnabala, A. Fedoseev, R. Peter, and D. Tsetserukou. <em>MAGNNET: Multi-Agent Graph Neural Network-based Efficient Task Allocation for Autonomous Vehicles with Deep Reinforcement Learning.</em> <a href="https://arxiv.org/abs/2502.02311">arXiv:2502.02311</a>, 2025.</li>
+<li id="ref-5">W. Duan, S. Guo, W. Huang, H. Rao, and X. He. <em>Dynamic Localisation of Spatial-Temporal Graph Neural Network (DynAGS).</em> ACM SIGKDD 2025. <a href="https://arxiv.org/abs/2501.04239">arXiv:2501.04239</a>.</li>
+<li id="ref-6">Z. Zhang, X. Wang, Z. Zhang, H. Li, and W. Zhu. <em>Out-of-Distribution Generalized Dynamic Graph Neural Network with Disentangled Intervention and Invariance Promotion (I-DIDA).</em> <a href="https://arxiv.org/abs/2311.14255">arXiv:2311.14255</a>, 2023.</li>
+<li id="ref-7">Z. Feng, D. Wu, M. Huang, and C. Yuen. <em>Graph Attention-based Reinforcement Learning for Trajectory Design and Resource Assignment in Multi-UAV Assisted Communication (GA-MATR).</em> IEEE Transactions on Cognitive Communications and Networking. <a href="https://arxiv.org/abs/2401.17880">arXiv:2401.17880</a>, 2024.</li>
+<li id="ref-8">Y. Ji, R. Sun, Y. Wang, Z. Zhu, and Z. Liu. <em>Dynamic Path Planning for Unmanned Autonomous Vehicles Based on CAS-UNet and Graph Neural Networks (CAS-GNN).</em> Sensors, 25(14), 4283, 2025. <a href="https://doi.org/10.3390/s25144283">doi:10.3390/s25144283</a>.</li>
+<li id="ref-9"><em>An Attention-Based Temporal Graph Neural Network for Enhanced Multi-Unmanned Aerial Vehicle Obstacle Prediction (ATGN-MUAVOP).</em> Engineering, Technology &amp; Applied Science Research, 16(2), pp. 32907&ndash;32912, 2026. <a href="https://www.etasr.com/index.php/ETASR/article/view/16356">ETASR 16356</a>.</li>
+</ol>
+
+<div class="page-foot">
+</div>
+</div><!-- CONTENT ENDS HERE -->
+
+</body>
+</html>
