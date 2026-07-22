@@ -1,0 +1,660 @@
+/* ==================================================================
+   Collaborative Drift Compensation — project page styles.
+   Inherits the site theme (Computer Modern serif, light default,
+   html[data-theme="dark"] toggle). All visualization colors live in
+   CSS variables so canvas/SVG code can read them via getComputedStyle
+   and repaint on theme change.
+================================================================== */
+
+:root {
+  /* categorical series (validated palette, light steps) */
+  --viz-s1: #2a78d6;   /* blue    — CLMA / base cohort */
+  --viz-s2: #eb6834;   /* orange  — FedDrift / cohort 2 */
+  --viz-s3: #1baf7a;   /* aqua    — FedAvg / cohort 3 */
+  --viz-s4: #eda100;   /* yellow  — cohort 4 */
+  --viz-s5: #e87ba4;   /* magenta — cohort 5 */
+  --viz-s6: #4a3aa7;   /* violet  — cohort 6 */
+  --viz-s7: #008300;   /* green   — cohort 7 */
+  --viz-s8: #e34948;   /* red     — cohort 8 */
+  --viz-crit: #d03b3b; /* drift flag */
+  --viz-good: #0ca30c;
+  --viz-warn: #c98500;
+  --viz-ink:   #141414;
+  --viz-ink2:  #52514e;
+  --viz-muted: #898781;
+  --viz-grid:  #e7e6e1;
+  --viz-axis:  #c3c2b7;
+  --viz-surface: #fafafa;  /* widget card, matches .profile-card */
+  --viz-surface2: #f0efec; /* inset panels */
+  --viz-border: #e6e6e6;
+  --viz-halo: rgba(42, 120, 214, 0.12);
+}
+
+html[data-theme="dark"] {
+  --viz-s1: #3987e5;
+  --viz-s2: #d95926;
+  --viz-s3: #199e70;
+  --viz-s4: #c98500;
+  --viz-s5: #d55181;
+  --viz-s6: #9085e9;
+  --viz-s7: #008300;
+  --viz-s8: #e66767;
+  --viz-crit: #d03b3b;
+  --viz-good: #0ca30c;
+  --viz-warn: #fab219;
+  --viz-ink:   #d8d8d6;
+  --viz-ink2:  #b8b8b2;
+  --viz-muted: #898781;
+  --viz-grid:  #2c2c2a;
+  --viz-axis:  #45454a;
+  --viz-surface: #1e1f22;  /* matches dark .profile-card */
+  --viz-surface2: #26272c;
+  --viz-border: #2e2f33;
+  --viz-halo: rgba(57, 135, 229, 0.18);
+}
+
+/* ------------------------------------------------------------------
+   Layout: keep the site's 760px column; let big figures breathe wider.
+------------------------------------------------------------------ */
+
+.clma-section { margin-top: 4.5em; }
+
+.clma-wide { position: relative; }
+@media (min-width: 1060px) {
+  .clma-wide {
+    width: min(980px, calc(100vw - 32px));
+    left: calc((760px - min(980px, calc(100vw - 32px))) / 2);
+  }
+}
+
+/* ------------------------------------------------------------------
+   In-page nav (sticky chip bar)
+------------------------------------------------------------------ */
+
+.clma-toc {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--viz-border);
+}
+html[data-theme="dark"] .clma-toc { background: rgba(23, 24, 27, 0.88); }
+
+.clma-toc-inner {
+  max-width: min(980px, 100vw);
+  margin: 0 auto;
+  padding: 0.45em 2%;
+  display: flex;
+  gap: 0.25em;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.clma-toc-inner::-webkit-scrollbar { display: none; }
+
+.clma-toc a {
+  font-size: 13px;
+  color: var(--viz-muted);
+  text-decoration: none;
+  padding: 0.25em 0.7em;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.clma-toc a:hover { color: var(--viz-ink); }
+.clma-toc a.is-active {
+  color: var(--viz-ink);
+  border-color: var(--viz-border);
+  background: var(--viz-surface);
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------ */
+
+.clma-hero {
+  text-align: center;
+  padding-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.clma-hero-canvas-wrap { position: relative; height: 240px; margin-bottom: 0.6em; }
+#hero-net { width: 100%; height: 100%; display: block; }
+
+.clma-venue {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--viz-muted);
+  margin-bottom: 0.4em;
+}
+
+.clma .clma-title {
+  font-size: 40px;
+  line-height: 1.1;
+  border-bottom: none;
+  margin: 0 0 0.35em;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.clma-tagline {
+  font-size: 1.12em;
+  color: var(--viz-ink2);
+  max-width: 34em;
+  margin: 0 auto 1.2em;
+}
+
+.clma-authors { margin-bottom: 0.25em; font-size: 1.02em; }
+.clma-author { margin: 0 0.8em; white-space: nowrap; }
+.clma-affils { color: var(--viz-muted); font-size: 0.85em; margin-top: 0; line-height: 1.5; }
+.clma-affil-note { font-size: 0.85em; }
+
+.clma-hero-links { margin: 1.4em 0 0.6em; }
+
+.clma-btn {
+  display: inline-block;
+  margin: 0.25em 0.3em;
+  padding: 0.4em 1.1em;
+  border: 1px solid var(--viz-axis);
+  border-radius: 99px;
+  font-size: 0.86em;
+  color: var(--viz-ink) !important;
+  background: var(--viz-surface);
+  background-image: none !important;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.clma-btn:hover {
+  border-color: var(--viz-ink);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.clma-hero-hint {
+  font-size: 0.78em;
+  font-style: italic;
+  color: var(--viz-muted);
+  margin-top: 1.6em;
+}
+
+/* ------------------------------------------------------------------
+   Typography helpers
+------------------------------------------------------------------ */
+
+.clma-kicker {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--viz-muted);
+  margin-bottom: 0.2em;
+}
+
+.clma .clma-h2 {
+  font-size: 27px;
+  border-bottom: none;
+  margin-top: 0.2em;
+  padding-bottom: 0;
+}
+
+.clma .clma-h3 { font-size: 20px; margin-top: 1.8em; }
+
+.clma-punch {
+  font-size: 1.08em;
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.9em;
+  margin: 1.6em 0;
+}
+
+.clma-callout {
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-left: 3px solid var(--viz-s1);
+  border-radius: 8px;
+  padding: 0.9em 1.2em;
+  margin: 1.5em 0;
+}
+.clma-callout p { margin: 0; }
+
+.clma-note {
+  font-size: 0.82em;
+  color: var(--viz-muted);
+  margin: 0.5em 0 0;
+}
+
+.clma-disclaimer {
+  font-size: 0.78em;
+  color: var(--viz-muted);
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------------
+   Widget cards
+------------------------------------------------------------------ */
+
+.clma-widget {
+  display: block;
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-radius: 12px;
+  padding: 1.1em 1.2em 0.9em;
+  margin: 1.6em 0;
+  text-align: left;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.clma-widget canvas { width: 100%; display: block; }
+.clma-widget svg { max-width: 100%; display: block; }
+
+.clma-widget-head { margin-bottom: 0.7em; }
+.clma-widget-title {
+  display: block;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+.clma-widget-sub {
+  display: block;
+  font-size: 0.8em;
+  color: var(--viz-muted);
+  margin-top: 0.1em;
+}
+
+/* ------------------------------------------------------------------
+   Controls
+------------------------------------------------------------------ */
+
+.clma-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em 1em;
+  margin-top: 0.8em;
+  padding-top: 0.7em;
+  border-top: 1px dashed var(--viz-border);
+}
+
+.clma-ctl {
+  background: none;
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  color: var(--viz-ink);
+  font-size: 14px;
+  line-height: 1;
+  width: 34px;
+  height: 30px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.clma-ctl:hover { border-color: var(--viz-ink); }
+.clma-ctl-play { width: 44px; }
+.clma-ctl-play.is-playing { background: var(--viz-halo); }
+
+.clma-ctl-text {
+  background: none;
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  color: var(--viz-ink);
+  font-family: inherit;
+  font-size: 0.82em;
+  padding: 0.35em 0.9em;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.clma-ctl-text:hover { border-color: var(--viz-ink); }
+
+.clma-steps { display: flex; flex-wrap: wrap; gap: 0.3em; }
+.clma-steps button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 0.25em 0.75em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.clma-steps button:hover { color: var(--viz-ink); }
+.clma-steps button[aria-selected="true"] {
+  color: var(--viz-ink);
+  border-color: var(--viz-s1);
+  background: var(--viz-halo);
+}
+
+.clma-slider-row {
+  display: block;
+  font-size: 0.82em;
+  color: var(--viz-ink2);
+  margin: 0.55em 0;
+}
+.clma-slider-row input[type="range"] {
+  display: block;
+  width: 100%;
+  margin-top: 0.25em;
+  accent-color: var(--viz-s1);
+}
+.clma-slider-inline { flex: 1 1 220px; margin: 0; }
+
+.clma-stat { margin-top: 1em; }
+.clma-stat-label {
+  display: block;
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--viz-muted);
+}
+.clma-stat-value {
+  font-size: 1.9em;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+.clma-stat-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--viz-grid);
+  margin-top: 4px;
+  overflow: hidden;
+}
+.clma-stat-bar > div {
+  height: 100%;
+  width: 100%;
+  background: var(--viz-good);
+  border-radius: 2px;
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.clma-stat-inline { font-size: 0.85em; color: var(--viz-ink2); }
+.clma-stat-inline strong { font-variant-numeric: tabular-nums; }
+
+.clma-presets { display: flex; flex-wrap: wrap; gap: 0.35em; margin-top: 1em; }
+.clma-presets button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 0.28em 0.8em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.clma-presets button:hover { color: var(--viz-ink); border-color: var(--viz-ink); }
+
+.clma-speed { font-size: 0.8em; color: var(--viz-ink2); }
+.clma-speed select {
+  font-family: inherit;
+  font-size: 1em;
+  margin-left: 0.3em;
+  background: var(--viz-surface);
+  color: var(--viz-ink);
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  padding: 0.15em 0.3em;
+}
+
+.clma-legend { display: inline-flex; flex-wrap: wrap; gap: 0.9em; font-size: 0.8em; color: var(--viz-ink2); }
+.clma-legend .swatch {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  margin-right: 0.35em;
+  vertical-align: baseline;
+}
+
+/* ------------------------------------------------------------------
+   Tabs
+------------------------------------------------------------------ */
+
+.clma-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  margin: 1.2em 0 0.9em;
+}
+.clma-tabs button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 0.35em 1em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.clma-tabs button:hover { color: var(--viz-ink); }
+.clma-tabs button[aria-selected="true"] {
+  color: var(--viz-ink);
+  border-color: var(--viz-s1);
+  background: var(--viz-halo);
+}
+.clma-tabs-small { margin: 0.6em 0; }
+.clma-tabs-small button { font-size: 12.5px; padding: 0.25em 0.8em; }
+
+.clma-tabpanel { animation: clma-fade 0.3s ease; }
+@keyframes clma-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------------
+   Drift playground
+------------------------------------------------------------------ */
+
+.clma-drift-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr);
+  gap: 1.2em;
+  align-items: start;
+}
+#drift-canvas { width: 100%; height: auto; }
+@media (max-width: 700px) {
+  .clma-drift-grid { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------------------------------------------
+   Simulator
+------------------------------------------------------------------ */
+
+.clma-sim-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr);
+  gap: 1.2em;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .clma-sim-grid { grid-template-columns: 1fr; }
+}
+
+#sim-canvas { width: 100%; height: auto; }
+
+.clma-sim-controls { flex-wrap: wrap; }
+.clma-sim-round {
+  margin-left: auto;
+  font-size: 0.82em;
+  color: var(--viz-ink2);
+  font-variant-numeric: tabular-nums;
+}
+
+.clma-sim-params {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0 1.2em;
+  align-items: end;
+  margin-top: 0.4em;
+  padding-top: 0.4em;
+}
+@media (max-width: 700px) {
+  .clma-sim-params { grid-template-columns: 1fr; }
+}
+
+.clma-sim-log-wrap { margin-top: 0.7em; }
+.clma-sim-log {
+  height: 108px;
+  overflow-y: auto;
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 8px;
+  padding: 0.5em 0.8em;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--viz-ink2);
+}
+.clma-sim-log .log-round { color: var(--viz-s1); font-weight: bold; }
+.clma-sim-log .log-drift { color: var(--viz-crit); }
+.clma-sim-log .log-cohort { color: var(--viz-s2); }
+
+.clma-code-tabs { display: flex; gap: 0.3em; margin-bottom: 0.5em; }
+.clma-code-tabs button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+}
+.clma-code-tabs button[aria-selected="true"] { color: var(--viz-ink); background: var(--viz-surface2); }
+
+.clma-code {
+  margin: 0;
+  max-width: calc(100vw - 3.5em);
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 0 8px 8px 8px;
+  padding: 0.8em 0.9em;
+  font-size: 11.5px;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--viz-ink2);
+}
+.clma-code code { background: none; padding: 0; font-size: inherit; color: inherit; }
+.clma-code span { display: block; border-radius: 4px; padding: 0 0.4em; margin: 0 -0.4em; transition: background 0.2s ease, color 0.2s ease; }
+.clma-code span.is-live {
+  background: var(--viz-halo);
+  color: var(--viz-ink);
+}
+
+.clma-sim-inset-label {
+  margin-top: 0.7em;
+  font-size: 0.82em;
+  color: var(--viz-ink2);
+  min-height: 3.2em;
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.8em;
+}
+
+/* ------------------------------------------------------------------
+   Charts (SVG line chart)
+------------------------------------------------------------------ */
+
+#f1-chart svg, #cohort-svg { width: 100%; height: auto; }
+
+.clma-chart-legend { display: flex; flex-wrap: wrap; gap: 0.4em; margin: 0.3em 0 0.5em; }
+.clma-chart-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-ink2);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 0.22em 0.8em;
+  cursor: pointer;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+.clma-chart-legend button .swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.clma-chart-legend button[aria-pressed="false"] { opacity: 0.4; }
+
+.clma-tooltip {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  background: var(--viz-ink);
+  color: var(--viz-surface);
+  font-size: 12px;
+  line-height: 1.45;
+  border-radius: 6px;
+  padding: 0.4em 0.65em;
+  max-width: 240px;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+html[data-theme="dark"] .clma-tooltip { background: #f0f0ee; color: #17181b; }
+.clma-tooltip.is-visible { opacity: 0.96; transform: none; }
+.clma-tooltip .tt-title { font-weight: bold; }
+
+/* ------------------------------------------------------------------
+   Takeaway cards
+------------------------------------------------------------------ */
+
+.clma-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9em;
+  margin: 1.4em 0;
+}
+@media (max-width: 640px) { .clma-cards { grid-template-columns: 1fr; } }
+
+.clma-card {
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-radius: 10px;
+  padding: 1em 1.1em;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.clma .clma-card h3 {
+  font-size: 16px;
+  margin: 0 0 0.4em;
+}
+.clma-card p { font-size: 0.86em; margin: 0; color: var(--viz-ink2); }
+
+/* ------------------------------------------------------------------
+   Resources
+------------------------------------------------------------------ */
+
+.clma-resources { padding-left: 1.2em; }
+.clma-resources li { margin: 0.5em 0; }
+
+.clma-bibbox { position: relative; margin-top: 1em; }
+.clma-bibbox .bibtex {
+  background: var(--viz-surface2);
+  border-color: var(--viz-border);
+  max-width: calc(100vw - 3.5em);
+  box-sizing: border-box;
+}
+html[data-theme="dark"] .clma-bibbox .bibtex { color: var(--viz-ink); }
+html[data-theme="dark"] .clma-bibbox .bib-copy {
+  background: var(--viz-surface);
+  border-color: var(--viz-axis);
+  color: var(--viz-ink2);
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal (collapses under reduced motion)
+------------------------------------------------------------------ */
+
+.clma-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.clma-reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .clma-reveal { opacity: 1; transform: none; transition: none; }
+  .clma-tabpanel { animation: none; }
+  .clma-btn, .clma-toc a, .clma-tooltip { transition: none; }
+}
+
+/* KaTeX inline snippets shouldn't blow up line height */
+.clma-math .katex { font-size: 1em !important; }

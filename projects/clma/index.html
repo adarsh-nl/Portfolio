@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
+  <link rel="stylesheet" href="/Portfolio/projects/clma/clma.css?v=1">
+  <title>Collaborative Drift Compensation — Interactive Project Page</title>
+  <meta name="description" content="An interactive explanation of CLMA (Collaborative Drift Compensation, CODS-COMAD 2024): how federated models detect data drift from model weights alone, and adapt collaboratively by cohorting similarly drifted clients.">
+  <meta property="og:title" content="Collaborative Drift Compensation — Interactive Project Page">
+  <meta property="og:description" content="How federated models can notice when the world changes — and adapt together. An interactive walkthrough of the CLMA algorithm (CODS-COMAD 2024).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/clma/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/clma/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image:alt" content="Collaborative Drift Compensation — interactive project page.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Collaborative Drift Compensation — Interactive Project Page">
+  <meta name="twitter:description" content="How federated models can notice when the world changes — and adapt together. An interactive walkthrough of the CLMA algorithm.">
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul>
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <img src="/Portfolio/assets/hamburger.svg" id="menu-icon" alt="">
+    </nav>
+  </header>
+
+  <!-- In-page navigation -->
+  <nav class="clma-toc" aria-label="On this page">
+    <div class="clma-toc-inner">
+      <a href="#motivation">Motivation</a>
+      <a href="#problem">The problem</a>
+      <a href="#baselines">Prior work</a>
+      <a href="#insight">Our insight</a>
+      <a href="#algorithm">Algorithm</a>
+      <a href="#math">The math</a>
+      <a href="#results">Results</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#resources">Resources</a>
+    </div>
+  </nav>
+
+  <div class="franklin-content clma" id="main" tabindex="-1">
+
+    <!-- ================================================================
+         HERO
+    ================================================================= -->
+    <section class="clma-hero" id="hero">
+      <div class="clma-hero-canvas-wrap">
+        <canvas id="hero-net" aria-hidden="true"></canvas>
+      </div>
+      <p class="clma-venue">CODS-COMAD 2024 &middot; Jodhpur, India &middot; ACM</p>
+      <h1 class="clma-title">Collaborative Drift Compensation</h1>
+      <p class="clma-tagline">Teaching federated models to notice when the world changes &mdash; and to adapt <em>together</em>, using nothing but their own weights.</p>
+      <p class="clma-authors">
+        <span class="clma-author"><a href="/Portfolio/">Adarsh&nbsp;N&nbsp;L</a><sup>1,*</sup></span>
+        <span class="clma-author">Madapu&nbsp;Amarlingam<sup>2</sup></span>
+        <span class="clma-author">Divyasheel&nbsp;Sharma<sup>2</sup></span>
+      </p>
+      <p class="clma-affils"><sup>1</sup>IIIT Sri City &nbsp;&nbsp; <sup>2</sup>ABB Corporate Research Center, Bengaluru<br>
+      <span class="clma-affil-note"><sup>*</sup>Work done during an internship at ABB Corporate Research.</span></p>
+      <p class="clma-hero-links">
+        <a class="clma-btn" href="https://doi.org/10.1145/3703323.3703341" target="_blank" rel="noopener">Paper (DOI)</a>
+        <a class="clma-btn" href="#resources" id="hero-bib-btn">BibTeX</a>
+        <a class="clma-btn" href="https://doi.org/10.1016/j.jprocont.2019.04.009" target="_blank" rel="noopener">PRONTO dataset</a>
+      </p>
+      <p class="clma-hero-hint" aria-hidden="true">Everything below is interactive &mdash; drag, press play, break things.</p>
+    </section>
+
+    <!-- ================================================================
+         1 · MOTIVATION
+    ================================================================= -->
+    <section id="motivation" class="clma-section">
+      <p class="clma-kicker">01 &middot; Motivation</p>
+      <h2 class="clma-h2">Factories want shared models. They can't share data.</h2>
+      <p>Process industries &mdash; mining, oil &amp; gas, chemicals, manufacturing &mdash; run on machine-learning models for predictive maintenance and anomaly detection. But any single plant has <strong>too little data</strong> to train a good model, and its data is <strong>too sensitive</strong> (and too heavy) to ship elsewhere.</p>
+      <p><strong>Federated learning (FL)</strong> squares that circle: every plant trains locally on its private data, and only the <em>model weights</em> travel. A central server averages them into one shared global model. Step through one round below.</p>
+
+      <figure class="clma-widget" id="w-fl">
+        <div class="clma-widget-head">
+          <span class="clma-widget-title">One round of federated learning</span>
+          <span class="clma-widget-sub" id="fl-caption">Press play, or step through the four phases.</span>
+        </div>
+        <svg id="fl-svg" viewBox="0 0 640 300" role="img" aria-label="Animated diagram of one federated learning round: the server broadcasts the global model to four clients, clients train locally on private data, clients upload their updated weights, and the server aggregates them into a new global model."></svg>
+        <div class="clma-controls">
+          <button class="clma-ctl" id="fl-back" aria-label="Previous phase">&#9198;</button>
+          <button class="clma-ctl clma-ctl-play" id="fl-play" aria-label="Play">&#9654;</button>
+          <button class="clma-ctl" id="fl-fwd" aria-label="Next phase">&#9197;</button>
+          <div class="clma-steps" id="fl-steps" role="tablist" aria-label="Round phases">
+            <button role="tab" data-step="0">1&nbsp;Broadcast</button>
+            <button role="tab" data-step="1">2&nbsp;Local training</button>
+            <button role="tab" data-step="2">3&nbsp;Upload</button>
+            <button role="tab" data-step="3">4&nbsp;Aggregate</button>
+          </div>
+        </div>
+      </figure>
+
+      <p>This loop rests on a quiet assumption: that every client's data looks <em>statistically the same</em>, and <em>stays</em> the same. In an industrial plant, neither is true. Seasons change, valves wear out, sensors get recalibrated, operators relabel faults. The data <strong>drifts</strong> &mdash; and the shared model starts to rot.</p>
+    </section>
+
+    <!-- ================================================================
+         2 · THE PROBLEM
+    ================================================================= -->
+    <section id="problem" class="clma-section">
+      <p class="clma-kicker">02 &middot; The problem</p>
+      <h2 class="clma-h2">Drift: when the data moves under a frozen model</h2>
+      <p>Drift comes in two flavours. <strong>Covariate drift</strong> changes the inputs, <span class="clma-math">\(P(x)\)</span> &mdash; the same faults, measured under new operating conditions. <strong>Concept drift</strong> changes the answer key, <span class="clma-math">\(P(y\,|\,x)\)</span> &mdash; the same measurements now <em>mean</em> something else. Try both on a live classifier trained on the original data:</p>
+
+      <figure class="clma-widget clma-wide" id="w-drift">
+        <div class="clma-widget-head">
+          <span class="clma-widget-title">Drift playground</span>
+          <span class="clma-widget-sub">Two process variables from a two-phase flow separator; the frozen model's decision boundary is the dashed line.</span>
+        </div>
+        <div class="clma-drift-grid">
+          <canvas id="drift-canvas" role="img" aria-label="Scatter plot of air flow rate versus water flow rate with two classes, Normal and Slugging, separated by a frozen decision boundary. Sliders shift the data (covariate drift) or move the true boundary (concept drift), and the model's F1 score falls as drift grows."></canvas>
+          <div class="clma-drift-side">
+            <label class="clma-slider-row">Covariate drift &mdash; shift <span class="clma-math">\(P(x)\)</span>
+              <input type="range" id="drift-cov" min="0" max="100" value="0">
+            </label>
+            <label class="clma-slider-row">Concept drift &mdash; move <span class="clma-math">\(P(y|x)\)</span>
+              <input type="range" id="drift-con" min="0" max="100" value="0">
+            </label>
+            <label class="clma-slider-row">Label noise
+              <input type="range" id="drift-noise" min="0" max="100" value="0">
+            </label>
+            <div class="clma-stat">
+              <span class="clma-stat-label">Frozen model F1</span>
+              <span class="clma-stat-value" id="drift-f1">1.00</span>
+              <div class="clma-stat-bar"><div id="drift-f1-bar"></div></div>
+            </div>
+            <div class="clma-presets" role="group" aria-label="Presets">
+              <button data-preset="none">No drift</button>
+              <button data-preset="cov">Covariate</button>
+              <button data-preset="con">Concept</button>
+              <button data-preset="both">Both</button>
+            </div>
+            <p class="clma-note" id="drift-note">The model is perfect on the data it was trained on.</p>
+          </div>
+        </div>
+      </figure>
+
+      <p>Now the part that breaks existing methods: in a fleet of clients, drift is <strong>staggered in time and in space</strong>. Different plants drift at different rounds, in different directions. Press play to watch a fleet of ten clients live through ten training rounds:</p>
+
+      <figure class="clma-widget" id="w-stagger">
+        <div class="clma-widget-head">
+          <span class="clma-widget-title">Drift is staggered across time and space</span>
+          <span class="clma-widget-sub">Rows are clients, columns are communication rounds. Hover any cell.</span>
+        </div>
+        <svg id="stagger-svg" viewBox="0 0 640 320" role="img" aria-label="A grid of ten clients by ten rounds. Drift events of different types appear at rounds three, five, seven and nine on eight of the ten clients, while two clients never drift. Different clients experience different drift directions at the same round."></svg>
+        <div class="clma-controls">
+          <button class="clma-ctl clma-ctl-play" id="stagger-play" aria-label="Play">&#9654;</button>
+          <span class="clma-legend" id="stagger-legend"></span>
+        </div>
+      </figure>
+
+      <p class="clma-punch">One global model cannot serve a fleet whose members are living in different worlds. But letting each drifted client fend for itself throws away the whole point of federation. The question the paper answers: <em>who should collaborate with whom, and how do you find out without ever seeing the data?</em></p>
+    </section>
+
+    <!-- ================================================================
+         3 · PRIOR WORK
+    ================================================================= -->
+    <section id="baselines" class="clma-section">
+      <p class="clma-kicker">03 &middot; Prior work</p>
+      <h2 class="clma-h2">Why existing approaches fall short</h2>
+      <p>Each family of prior methods fixes part of the problem and trips over the rest. Click through them &mdash; each card is a working demonstration of the failure mode.</p>
+
+      <div class="clma-tabs" id="bl-tabs" role="tablist" aria-label="Prior methods">
+        <button role="tab" data-tab="fedavg" aria-selected="true">FedAvg</button>
+        <button role="tab" data-tab="cda">CDA-FedAvg</button>
+        <button role="tab" data-tab="fedcond">FedConD</button>
+        <button role="tab" data-tab="feddrift">FedDrift</button>
+      </div>
+
+      <div class="clma-tabpanel" id="bl-fedavg" role="tabpanel">
+        <h3 class="clma-h3">FedAvg &mdash; averaging poisons the healthy</h3>
+        <p>Plain federated averaging folds <em>every</em> client's weights into the global model &mdash; including drifted ones. One bad apple shifts the average for everyone. Drag the drifted client's severity and watch the global model get dragged away from the healthy clients.</p>
+        <figure class="clma-widget">
+          <canvas id="bl-fedavg-canvas" role="img" aria-label="Four client weight vectors shown as points, with their average marked. As one client drifts away, the average moves away from the three healthy clients, degrading the model all of them receive."></canvas>
+          <div class="clma-controls">
+            <label class="clma-slider-row clma-slider-inline">Drift severity of client 4
+              <input type="range" id="bl-fedavg-drift" min="0" max="100" value="0">
+            </label>
+            <span class="clma-stat-inline">Healthy clients' F1: <strong id="bl-fedavg-f1">0.95</strong></span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="clma-tabpanel" id="bl-cda" role="tabpanel" hidden>
+        <h3 class="clma-h3">CDA-FedAvg &mdash; detection by coin flip</h3>
+        <p>CDA-FedAvg detects drift <em>probabilistically</em>: it flags drift when <span class="clma-math">\(e^{-2c_i} &gt; r\)</span> for a random <span class="clma-math">\(r \in [0,1]\)</span>, where <span class="clma-math">\(c_i\)</span> is the model's confidence. A real drift therefore only gets caught <em>with some probability</em> &mdash; and it assumes every client drifts the same way. Run the gate repeatedly on a genuinely drifted client:</p>
+        <figure class="clma-widget">
+          <svg id="bl-cda-svg" viewBox="0 0 640 220" role="img" aria-label="A probabilistic drift gate. Each trial draws a random threshold; sometimes a genuine drift is flagged, sometimes it slips through undetected."></svg>
+          <div class="clma-controls">
+            <button class="clma-ctl-text" id="bl-cda-run">Run 20 trials</button>
+            <span class="clma-stat-inline">Missed detections: <strong id="bl-cda-missed">&mdash;</strong></span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="clma-tabpanel" id="bl-fedcond" role="tabpanel" hidden>
+        <h3 class="clma-h3">FedConD &mdash; a knife-edge significance level</h3>
+        <p>FedConD runs a statistical test on performance drops and reacts by adjusting regularisation. Its behaviour hinges on the chosen significance level: too strict and real drifts pass unnoticed, too loose and ordinary noise triggers constant false alarms. Slide the significance level over the same noisy loss trace:</p>
+        <figure class="clma-widget">
+          <svg id="bl-fedcond-svg" viewBox="0 0 640 240" role="img" aria-label="A noisy loss curve with two true drift events. Moving the significance slider changes which events are detected: strict settings miss the true drifts, loose settings flag noise as drift."></svg>
+          <div class="clma-controls">
+            <label class="clma-slider-row clma-slider-inline">Significance level
+              <input type="range" id="bl-fedcond-sig" min="0" max="100" value="50">
+            </label>
+            <span class="clma-stat-inline" id="bl-fedcond-verdict"></span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="clma-tabpanel" id="bl-feddrift" role="tabpanel" hidden>
+        <h3 class="clma-h3">FedDrift &mdash; two different drifts, one identical loss</h3>
+        <p>FedDrift got the diagnosis right &mdash; drift is staggered in time and space, so it clusters drifted clients into separate groups. But it clusters on the <strong>loss value</strong>, a single scalar. Watch two clients undergo <em>completely different</em> drifts and arrive at <em>the same loss</em>:</p>
+        <figure class="clma-widget">
+          <svg id="bl-feddrift-svg" viewBox="0 0 640 300" role="img" aria-label="Two clients with different drift types. Their loss gauges animate to an identical value, so loss-based clustering cannot tell them apart — yet their weight histograms are visibly different."></svg>
+          <div class="clma-controls">
+            <button class="clma-ctl-text" id="bl-feddrift-run">Replay</button>
+            <span class="clma-stat-inline" id="bl-feddrift-verdict"></span>
+          </div>
+        </figure>
+        <p class="clma-note">Loss is a shadow on the wall: many different drifts cast the same shadow. Whatever can tell them apart must live somewhere richer than a scalar&hellip;</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         4 · OUR INSIGHT
+    ================================================================= -->
+    <section id="insight" class="clma-section">
+      <p class="clma-kicker">04 &middot; Our insight</p>
+      <h2 class="clma-h2">The weights already know</h2>
+      <p>A neural network's weight matrices are a <em>function of the data</em> they were trained on. When a client's data distribution shifts, the shift leaves a <strong>fingerprint in its weights</strong>. And federated learning hands us a free gift: every client starts each round from the <em>same</em> global model &mdash; a perfect common reference. Whatever differs between a client's weights and that reference was caused by that client's data.</p>
+
+      <figure class="clma-widget clma-wide" id="w-insight">
+        <div class="clma-widget-head">
+          <span class="clma-widget-title">Weights are a fingerprint of the data</span>
+          <span class="clma-widget-sub">Shift a client's data and watch its trained weights drift away from the shared reference &mdash; in a <em>direction</em> that mirrors the data shift.</span>
+        </div>
+        <canvas id="insight-canvas" role="img" aria-label="Left: a client's data distribution that can be dragged left or right. Right: the histogram of the client's trained weights, compared against the global reference weights. Shifting the data shifts the weight histogram in a corresponding direction, and the KS statistic between the two weight sets grows with the size of the data shift."></canvas>
+        <div class="clma-controls">
+          <label class="clma-slider-row clma-slider-inline">Client's data shift
+            <input type="range" id="insight-shift" min="-100" max="100" value="0">
+          </label>
+          <span class="clma-stat-inline">KS statistic vs. reference: <strong id="insight-ks">0.00</strong> <span id="insight-dir"></span></span>
+        </div>
+      </figure>
+
+      <div class="clma-callout">
+        <p><strong>The whole method in one sentence:</strong> compare each client's weights against the shared global model with a statistical test &mdash; no data, no labels, no extra uploads &mdash; and clients whose weights moved <em>the same way</em> are experiencing <em>the same drift</em>, so let them adapt together.</p>
+      </div>
+      <p>Remember the two FedDrift clients with identical losses? Their weight fingerprints point in opposite directions. The scalar collapses the information; the weights preserve it.</p>
+    </section>
+
+    <!-- ================================================================
+         5 · ALGORITHM
+    ================================================================= -->
+    <section id="algorithm" class="clma-section">
+      <p class="clma-kicker">05 &middot; The algorithm</p>
+      <h2 class="clma-h2">CLMA, step by step</h2>
+      <p><strong>CLMA</strong> (Collaborative Model Adaptation) runs as a thin layer on top of federated learning. Each round: clients train and self-check for drift with a loss test; drifted clients are <em>quarantined</em> out of their cohort; the server splits them by the <em>direction</em> of their weight shift (KS test), compresses their flattened weights (eigen-projection), clusters them (k-means), and spins up each cluster as a <strong>new cohort</strong> that continues federated learning among its own kind.</p>
+      <p>The simulator below runs the full pipeline on 10 clients &times; 10 rounds, with drifts injected exactly as in the paper's experiments. The pseudocode on the right is the paper's; the executing line lights up.</p>
+
+      <figure class="clma-widget clma-wide" id="w-sim">
+        <div class="clma-sim-grid">
+          <div class="clma-sim-left">
+            <canvas id="sim-canvas" role="img" aria-label="Simulation of the CLMA algorithm: ten clients arranged around a server, colored by cohort. Drifted clients raise flags, are quarantined, split by KS-test sign, projected, clustered by k-means, and regrouped into new cohorts that continue federated learning together."></canvas>
+            <div class="clma-controls clma-sim-controls">
+              <button class="clma-ctl" id="sim-reset" aria-label="Reset" title="Reset">&#8634;</button>
+              <button class="clma-ctl" id="sim-back" aria-label="Step back" title="Step back">&#9198;</button>
+              <button class="clma-ctl clma-ctl-play" id="sim-play" aria-label="Play" title="Play / pause">&#9654;</button>
+              <button class="clma-ctl" id="sim-fwd" aria-label="Step forward" title="Step forward">&#9197;</button>
+              <label class="clma-speed">Speed
+                <select id="sim-speed" aria-label="Playback speed">
+                  <option value="0.5">0.5&times;</option>
+                  <option value="1" selected>1&times;</option>
+                  <option value="2">2&times;</option>
+                  <option value="4">4&times;</option>
+                </select>
+              </label>
+              <span class="clma-sim-round" id="sim-round">Round 1 / 10</span>
+            </div>
+            <div class="clma-sim-params">
+              <label class="clma-slider-row">Drift threshold <span class="clma-math">\(\gamma\)</span> = <span id="sim-gamma-val">0.10</span>
+                <input type="range" id="sim-gamma" min="2" max="30" value="10">
+              </label>
+              <label class="clma-slider-row">Drifted clients: <span id="sim-ndrift-val">8</span> / 10
+                <input type="range" id="sim-ndrift" min="0" max="10" value="8">
+              </label>
+              <label class="clma-speed">Drift type
+                <select id="sim-mix">
+                  <option value="mixed" selected>Mixed directions</option>
+                  <option value="cov">Covariate only</option>
+                  <option value="con">Concept only</option>
+                </select>
+              </label>
+            </div>
+            <div class="clma-sim-log-wrap">
+              <div class="clma-sim-log" id="sim-log" aria-live="polite" aria-label="Event log"></div>
+            </div>
+          </div>
+          <div class="clma-sim-right">
+            <div class="clma-code-tabs" role="tablist" aria-label="Pseudocode">
+              <button role="tab" data-algo="a1" aria-selected="true">Alg. 1 &middot; CLMA</button>
+              <button role="tab" data-algo="a2">Alg. 2 &middot; Client</button>
+              <button role="tab" data-algo="a3">Alg. 3 &middot; Cohorting</button>
+            </div>
+            <pre class="clma-code" id="algo-a1"><code><span data-l="a1-loop">for c &larr; 1 to C do</span>
+<span data-l="a1-init">  if c = 1: init cohorts H, quarantine W&#773;, model W</span>
+<span data-l="a1-train1">  (W&#8345;, F) &larr; ClientLocalTraining(W, n, c)  &forall;n</span>
+<span data-l="a1-agg1">  W &larr; Aggregate({W&#8345;});  H&#8342; &larr; first cohort</span>
+<span data-l="a1-train">  for each cohort H&#8342;, each n &isin; H&#8342;:</span>
+<span data-l="a1-train2">    (W&#8342;&#8345;, F) &larr; ClientLocalTraining(W&#8342;, n, c)</span>
+<span data-l="a1-quar">    if F: W&#773; &larr; W&#773; &cup; W&#8342;&#8345;;  H&#8342; &larr; H&#8342; &minus; {n}</span>
+<span data-l="a1-agg">  W&#8342; &larr; Aggregate(M&#8342;); send W&#8342; to cohort H&#8342;</span>
+<span data-l="a1-cohort">  if W&#773; &ne; &empty;: H&prime; &larr; DriftCompensateCohorting(W&#773;, W&#8342;)</span>
+<span data-l="a1-union">  H &larr; H &cup; H&prime;</span>
+<span data-l="a1-end">end</span></code></pre>
+            <pre class="clma-code" id="algo-a2" hidden><code><span data-l="a2-init">if c = 1: L&#8331;&#8321;, L&#8339; = &infin;; F = False; &gamma; = 0.1</span>
+<span data-l="a2-data">D&#8345; &larr; updated local data</span>
+<span data-l="a2-train">W&#8345; &larr; W &minus; &alpha;&nabla;G&#8345;(W)      # local gradient steps</span>
+<span data-l="a2-loss">L&#8339; &larr; G&#8345;(D&#8345;; W&#8345;)         # loss on fresh data</span>
+<span data-l="a2-detect">if L&#8339; &gt; L&#8339;&#8331;&#8321; + &gamma;: F &larr; True   # drift!</span>
+<span data-l="a2-store">L&#8339;&#8331;&#8321; &larr; L&#8339;</span>
+<span data-l="a2-return">return W&#8345;, F to server</span></code></pre>
+            <pre class="clma-code" id="algo-a3" hidden><code><span data-l="a3-init">S&#8314;, S&#8315; &larr; &empty;</span>
+<span data-l="a3-ks">for each drifted W&#7522;: T &larr; KSTest(W&#7522;, W&#8342;)</span>
+<span data-l="a3-split">  if T &gt; 0: S&#8314; &larr; S&#8314; &cup; Flatten(W&#7522;)</span>
+<span data-l="a3-split2">  else:     S&#8315; &larr; S&#8315; &cup; Flatten(W&#7522;)</span>
+<span data-l="a3-eig">&lambda;, V &larr; eig(S&#7511;S);  keep T largest (95% var.)</span>
+<span data-l="a3-cluster">H&#8314; &larr; KMeans(V&prime;S&#8314;);  H&#8315; &larr; KMeans(V&prime;S&#8315;)</span>
+<span data-l="a3-return">return H&prime; = H&#8314; &cup; H&#8315;</span></code></pre>
+            <div class="clma-sim-inset-label" id="sim-stage-label">Waiting to start&hellip;</div>
+          </div>
+        </div>
+      </figure>
+
+      <p>Three properties are worth pausing on. <strong>Privacy-free detection:</strong> the server only ever sees weights and a boolean flag &mdash; exactly what vanilla FL already sends. <strong>Drift-agnostic:</strong> nothing in the pipeline asks <em>what kind</em> of drift happened, only <em>which clients' weights moved together</em>. <strong>Two deployment modes:</strong> the same loss test runs during training (Algorithm 2) and after deployment on live inference data (Algorithm 4), so a fielded model can call itself back for adaptation.</p>
+    </section>
+
+    <!-- ================================================================
+         6 · THE MATH
+    ================================================================= -->
+    <section id="math" class="clma-section">
+      <p class="clma-kicker">06 &middot; The math, animated</p>
+      <h2 class="clma-h2">Three small ideas doing the heavy lifting</h2>
+
+      <h3 class="clma-h3">6.1 &nbsp;Drift detection: a loss tripwire</h3>
+      <p>A client flags drift when its fresh-data loss jumps by more than a threshold: <span class="clma-math">\(L_c &gt; L_{c-1} + \gamma\)</span>. The threshold trades sensitivity against false alarms &mdash; feel the trade-off yourself:</p>
+      <figure class="clma-widget" id="w-gamma">
+        <svg id="gamma-svg" viewBox="0 0 640 260" role="img" aria-label="A noisy loss curve over communication rounds with two true drift events. A gamma slider raises or lowers the detection threshold band; low gamma flags noise as drift, high gamma misses true drifts."></svg>
+        <div class="clma-controls">
+          <label class="clma-slider-row clma-slider-inline">Threshold <span class="clma-math">\(\gamma\)</span> = <span id="gamma-val">0.10</span>
+            <input type="range" id="gamma-slider" min="1" max="40" value="10">
+          </label>
+          <span class="clma-stat-inline" id="gamma-verdict"></span>
+        </div>
+      </figure>
+
+      <h3 class="clma-h3">6.2 &nbsp;Direction of drift: the KS test on weights</h3>
+      <p>The Kolmogorov&ndash;Smirnov statistic is the biggest vertical gap between two cumulative distributions. Applied to <em>weight values</em> &mdash; client vs. global reference &mdash; its <strong>signed</strong> statistic tells us which way the client's weights shifted. Positive shifts go to <span class="clma-math">\(S^{+}\)</span>, negative to <span class="clma-math">\(S^{-}\)</span>:</p>
+      <figure class="clma-widget" id="w-ks">
+        <svg id="ks-svg" viewBox="0 0 640 280" role="img" aria-label="Two cumulative distribution functions: the global reference weights and a drifted client's weights. The maximum vertical gap between the curves, the KS statistic, is highlighted, and its sign shows the direction of the shift."></svg>
+        <div class="clma-controls">
+          <label class="clma-slider-row clma-slider-inline">Client weight shift
+            <input type="range" id="ks-slider" min="-100" max="100" value="45">
+          </label>
+          <span class="clma-stat-inline">D = <strong id="ks-d">0.00</strong> &rarr; <strong id="ks-group">S&#8314;</strong></span>
+        </div>
+      </figure>
+
+      <h3 class="clma-h3">6.3 &nbsp;Grouping: eigen-projection, then k-means</h3>
+      <p>A flattened weight vector has thousands of dimensions; comparing clients there is noisy and slow. CLMA keeps only the eigenvectors explaining 95% of the variance &mdash; the directions along which clients actually <em>differ</em> &mdash; then runs k-means in that small space. Step through the pipeline:</p>
+      <figure class="clma-widget" id="w-eig">
+        <canvas id="eig-canvas" role="img" aria-label="A cloud of flattened client weight vectors. Principal axes are found, the points are projected onto the leading eigenvectors, and k-means then groups them into cohorts of similarly drifted clients."></canvas>
+        <div class="clma-controls">
+          <div class="clma-steps" id="eig-steps" role="tablist" aria-label="Pipeline stages">
+            <button role="tab" data-step="0">1&nbsp;Weight cloud</button>
+            <button role="tab" data-step="1">2&nbsp;Eigen-axes</button>
+            <button role="tab" data-step="2">3&nbsp;Project</button>
+            <button role="tab" data-step="3">4&nbsp;k-means</button>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         7 · RESULTS
+    ================================================================= -->
+    <section id="results" class="clma-section">
+      <p class="clma-kicker">07 &middot; Experiments &amp; results</p>
+      <h2 class="clma-h2">Does it work? Ten clients, real industrial data</h2>
+      <p>Experiments use <a href="https://doi.org/10.1016/j.jprocont.2019.04.009" target="_blank" rel="noopener">PRONTO</a>, an industrial benchmark from a multiphase-flow facility: 17 process variables, five classes (Normal + four faults), split across 10 clients. Drifts are injected at rounds 3, 5, 7 and 9 on 8 of the 10 clients &mdash; covariate drift by shifting feature statistics, concept drift by moving the labelling boundary. A 1D-CNN classifies faults; the metric is F1.</p>
+
+      <h3 class="clma-h3">7.1 &nbsp;Who gets grouped with whom</h3>
+      <p>The heatmap shows each client's cohort at every round. CLMA resolves <em>distinct</em> cohorts per drift direction per round; FedDrift only ever separates "drifted" from "not drifted".</p>
+      <figure class="clma-widget clma-wide" id="w-cohorts">
+        <div class="clma-tabs clma-tabs-small" id="cohort-algo-tabs" role="tablist" aria-label="Algorithm">
+          <button role="tab" data-tab="clma" aria-selected="true">CLMA (ours)</button>
+          <button role="tab" data-tab="feddrift">FedDrift</button>
+        </div>
+        <div class="clma-tabs clma-tabs-small" id="cohort-drift-tabs" role="tablist" aria-label="Drift type">
+          <button role="tab" data-tab="cov" aria-selected="true">Covariate drift</button>
+          <button role="tab" data-tab="con">Concept drift</button>
+        </div>
+        <svg id="cohort-svg" role="img" aria-label="Cohort assignment heatmap: rounds on the horizontal axis, clients on the vertical axis, cell color showing cohort membership. CLMA forms multiple distinct cohorts matching each drift event; FedDrift only distinguishes drifted from non-drifted clients."></svg>
+        <p class="clma-note" id="cohort-note"></p>
+      </figure>
+
+      <h3 class="clma-h3">7.2 &nbsp;Client-level performance</h3>
+      <p>F1 over communication rounds. Dashed vertical lines mark drift injections. Toggle methods in the legend; hover for exact values; switch views to see the three stories the paper tells.</p>
+      <figure class="clma-widget clma-wide" id="w-f1">
+        <div class="clma-tabs clma-tabs-small" id="f1-view-tabs" role="tablist" aria-label="View">
+          <button role="tab" data-tab="drifted" aria-selected="true">Drifted client</button>
+          <button role="tab" data-tab="clean">Non-drifted client</button>
+          <button role="tab" data-tab="infer">After deployment</button>
+        </div>
+        <div class="clma-tabs clma-tabs-small" id="f1-drift-tabs" role="tablist" aria-label="Drift type">
+          <button role="tab" data-tab="cov" aria-selected="true">Covariate drift</button>
+          <button role="tab" data-tab="con">Concept drift</button>
+        </div>
+        <div id="f1-chart"></div>
+        <p class="clma-note" id="f1-note"></p>
+      </figure>
+      <p class="clma-disclaimer">Charts are interactive reconstructions of the paper's figures; values are illustrative of the reported trends &mdash; see the <a href="https://doi.org/10.1145/3703323.3703341" target="_blank" rel="noopener">paper</a> for the measured curves.</p>
+    </section>
+
+    <!-- ================================================================
+         8 · TAKEAWAYS
+    ================================================================= -->
+    <section id="takeaways" class="clma-section">
+      <p class="clma-kicker">08 &middot; Takeaways</p>
+      <h2 class="clma-h2">What this changes</h2>
+      <div class="clma-cards">
+        <div class="clma-card">
+          <h3>Drift handling without data sharing</h3>
+          <p>Detection, diagnosis and adaptation all run on model parameters the server already receives. Nothing new leaves the plant &mdash; privacy and bandwidth constraints stay intact.</p>
+        </div>
+        <div class="clma-card">
+          <h3>Direction, not just degree</h3>
+          <p>By testing weights instead of watching a scalar loss, CLMA distinguishes <em>which</em> drift a client is experiencing &mdash; the failure that limited loss-based clustering in FedDrift.</p>
+        </div>
+        <div class="clma-card">
+          <h3>Collaboration survives drift</h3>
+          <p>Drifted clients aren't abandoned to solo fine-tuning; they are re-federated with peers drifting the same way, keeping the data-efficiency benefits of FL during adaptation.</p>
+        </div>
+        <div class="clma-card">
+          <h3>Works in the field</h3>
+          <p>The same tripwire runs after deployment (Algorithm 4): a fielded model that starts degrading calls the server and triggers re-adaptation &mdash; no human in the loop.</p>
+        </div>
+      </div>
+      <p>Where this matters: fleets of similar assets under different conditions &mdash; compressor stations across climates, production lines across factories, turbines across wind farms. Anywhere "one global model" meets "many local realities".</p>
+      <p><strong>Open directions</strong> from the paper: adaptive (rather than fixed) thresholds <span class="clma-math">\(\gamma\)</span>, richer statistical tests, stronger clustering methods, and validation on messier real-world asset data.</p>
+    </section>
+
+    <!-- ================================================================
+         9 · RESOURCES
+    ================================================================= -->
+    <section id="resources" class="clma-section">
+      <p class="clma-kicker">09 &middot; Resources</p>
+      <h2 class="clma-h2">Paper &amp; citation</h2>
+      <ul class="clma-resources">
+        <li><strong>Paper:</strong> <a href="https://doi.org/10.1145/3703323.3703341" target="_blank" rel="noopener">Collaborative Drift Compensation &mdash; ACM DL (doi:10.1145/3703323.3703341)</a></li>
+        <li><strong>Venue:</strong> 8th International Conference on Data Science and Management of Data (12th ACM IKDD CODS &amp; 30th COMAD), December 2024.</li>
+        <li><strong>Dataset:</strong> <a href="https://doi.org/10.1016/j.jprocont.2019.04.009" target="_blank" rel="noopener">PRONTO multiphase-flow benchmark</a> (Stief et al., 2019).</li>
+        <li><strong>Built with:</strong> TensorFlow and the <a href="https://flower.ai" target="_blank" rel="noopener">Flower</a> federated-learning framework.</li>
+      </ul>
+      <div class="clma-bibbox" id="bibbox">
+        <button class="bib-copy" type="button" id="bib-copy">copy</button>
+        <pre class="bibtex">@inproceedings{latha2024drift,
+  author    = {Nanjaiya Latha, Adarsh and Amarlingam, Madapu and Sharma, Divyasheel},
+  title     = {Collaborative Drift Compensation},
+  booktitle = {Proc. 6th Joint International Conference on Data Science and Management of Data (CODS-COMAD)},
+  year      = {2024},
+  doi       = {10.1145/3703323.3703341}
+}</pre>
+      </div>
+    </section>
+
+    <div class="page-foot"></div>
+  </div><!-- CONTENT ENDS HERE -->
+
+  <noscript>
+    <style>.clma-widget .clma-controls, .clma-hero-hint { display: none; }</style>
+    <p style="text-align:center; font-size: 0.85em;">The interactive figures on this page require JavaScript. The full paper is available at <a href="https://doi.org/10.1145/3703323.3703341">doi:10.1145/3703323.3703341</a>.</p>
+  </noscript>
+
+  <script src="/Portfolio/assets/site.js?v=3"></script>
+  <script defer src="/Portfolio/libs/katex/katex.min.js"></script>
+  <script defer src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
+  <script defer src="/Portfolio/projects/clma/clma-core.js?v=1"></script>
+  <script defer src="/Portfolio/projects/clma/clma-widgets.js?v=1"></script>
+  <script defer src="/Portfolio/projects/clma/clma-sim.js?v=1"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
