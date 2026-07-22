@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/projects/uxv/uxv.css?v=3">
+  <title>The UxV Ecosystem — Interactive Project Page</title>
+  <meta name="description" content="An interactive explanation of the UxV Ecosystem Architecture (WMNC 2025): why unmanned aerial, ground and sea vehicles must stop evolving in silos, and how mission-level information fusion turns heterogeneous swarms into one goal-oriented collective.">
+  <meta property="og:title" content="The UxV Ecosystem — Interactive Project Page">
+  <meta property="og:description" content="Why drones, ground robots and autonomous vessels must stop evolving in silos — an interactive walkthrough of the UxV Ecosystem Architecture (WMNC 2025).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/uxv/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/uxv/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image:alt" content="The UxV Ecosystem — interactive project page.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The UxV Ecosystem — Interactive Project Page">
+  <meta name="twitter:description" content="Why drones, ground robots and autonomous vessels must stop evolving in silos — an interactive walkthrough of the UxV Ecosystem Architecture (WMNC 2025).">
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul>
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <img src="/Portfolio/assets/hamburger.svg" id="menu-icon" alt="">
+    </nav>
+  </header>
+
+  <!-- In-page navigation -->
+  <nav class="uxv-toc" aria-label="On this page">
+    <div class="uxv-toc-inner">
+      <a href="#motivation">Motivation</a>
+      <a href="#problem">The problem</a>
+      <a href="#fusion">Fusion hierarchy</a>
+      <a href="#sota">Prior work</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#mechanisms">Mechanisms</a>
+      <a href="#simulator">Simulator</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#resources">Resources</a>
+    </div>
+  </nav>
+
+  <div class="franklin-content uxv" id="main" tabindex="-1">
+
+    <!-- ================================================================
+         HERO
+    ================================================================= -->
+    <section class="uxv-hero" id="hero">
+      <div class="uxv-hero-canvas-wrap">
+        <canvas id="hero-scene" aria-hidden="true"></canvas>
+      </div>
+      <p class="uxv-venue">16th IFIP Wireless and Mobile Networking Conference (WMNC 2025) &middot; Leuven, Belgium</p>
+      <h1 class="uxv-title">Where Do We Go from Here?<br>Charting the Future of Unmanned Vehicles</h1>
+      <p class="uxv-tagline">Drones, ground robots and autonomous vessels are each getting smarter &mdash; separately. This paper argues they should stop evolving in silos and start acting as <em>one ecosystem</em>, and proposes the architecture to make that happen.</p>
+      <p class="uxv-authors">
+        <span class="uxv-author"><a href="/Portfolio/">Adarsh&nbsp;Nanjaiya&nbsp;Latha</a></span>
+        <span class="uxv-author">Sabari&nbsp;Nathan&nbsp;Anbalagan</span>
+        <span class="uxv-author">Alessandro&nbsp;Chiumento</span>
+        <span class="uxv-author">Jan&nbsp;Laarhuis</span>
+      </p>
+      <p class="uxv-affils">Pervasive Systems, University of Twente, Enschede, The Netherlands</p>
+      <p class="uxv-hero-links">
+        <a class="uxv-btn" href="https://doi.org/10.23919/WMNC67099.2025.11299247" target="_blank" rel="noopener">Paper (DOI)</a>
+        <a class="uxv-btn" href="https://opendl.ifip-tc6.org/db/conf/wmnc/wmnc2025/1571185519.pdf" target="_blank" rel="noopener">PDF (open access)</a>
+        <a class="uxv-btn" href="#resources" id="hero-bib-btn">BibTeX</a>
+      </p>
+      <p class="uxv-hero-hint" aria-hidden="true">Everything below is interactive &mdash; press play, click modules, break things.</p>
+    </section>
+
+    <!-- ================================================================
+         01 · MOTIVATION
+    ================================================================= -->
+    <section id="motivation" class="uxv-section">
+      <p class="uxv-kicker">01 &middot; Motivation</p>
+      <h2 class="uxv-h2">A booming field, growing in three separate directions</h2>
+      <p>Unmanned vehicles operate without a human onboard &mdash; remotely piloted or fully autonomous. They come in three flavours, one per element:
+        <span class="uxv-chip air">UAV &mdash; air</span>
+        <span class="uxv-chip ground">UGV &mdash; ground</span>
+        <span class="uxv-chip sea">USV &mdash; sea</span>.
+      The money is real and accelerating &mdash; drag the year:</p>
+
+      <figure class="uxv-widget" id="w-market">
+        <div class="uxv-market">
+          <div>
+            <span class="uxv-market-value" id="market-value">$29.3B</span>
+            <span class="uxv-market-label">combined UxV market, <span id="market-year-label">2025</span></span>
+          </div>
+          <svg id="market-bars" viewBox="0 0 380 130" role="img" aria-label="Bar chart of the combined unmanned-systems market growing from 29.3 billion dollars in 2025 to more than 46 billion dollars by 2030."></svg>
+        </div>
+        <div class="uxv-controls">
+          <label class="uxv-slider-row uxv-slider-inline">Year
+            <input type="range" id="market-year" min="2025" max="2030" value="2025" step="1">
+          </label>
+          <span class="uxv-stat-inline">Grand View Research forecast, 2025&ndash;2030</span>
+        </div>
+      </figure>
+
+      <p>Each platform already earns its keep across four sectors. Explore the application landscape from the paper &mdash; click any cell:</p>
+
+      <figure class="uxv-widget" id="w-apps">
+        <div class="uxv-widget-head">
+          <span class="uxv-widget-title">The application landscape</span>
+          <span class="uxv-widget-sub">Three platforms &times; four sectors (Table I of the paper). Click a cell for concrete deployments.</span>
+        </div>
+        <div class="uxv-matrix" id="apps-matrix" role="group" aria-label="Application matrix: platforms by sectors"></div>
+        <p class="uxv-matrix-detail" id="apps-detail">Pick a cell &mdash; e.g. <strong>UAV &times; Transport</strong> &mdash; to see what flies, drives or sails there today.</p>
+      </figure>
+
+      <p class="uxv-punch">Here is the catch: research on each platform optimizes <em>that platform</em>. UAV work makes UAVs more efficient; USV work makes USVs more capable. But real missions &mdash; military, manufacturing, disaster response &mdash; almost never involve just one category. The platforms can <strong>complement</strong>, <strong>compound</strong>, or outright <strong>contradict</strong> each other. Operational efficiency in isolation is the wrong objective.</p>
+    </section>
+
+    <!-- ================================================================
+         02 · THE PROBLEM
+    ================================================================= -->
+    <section id="problem" class="uxv-section">
+      <p class="uxv-kicker">02 &middot; The problem</p>
+      <h2 class="uxv-h2">Watch the silo fail</h2>
+      <p>Take the paper's first scenario: a <strong>forest wildfire</strong>, goal: find and evacuate everyone. UGVs can carry supplies and escort people &mdash; but from the ground, <em>finding</em> them is brutally slow. A UAV swarm sees the whole forest from above &mdash; but can't carry anyone. Below, the <em>same</em> fire, the <em>same</em> trapped civilians, the <em>same</em> vehicles. The only difference: on the left the domains don't talk; on the right the UAVs feed every sighting to the UGVs. Press play and let them race.</p>
+
+      <figure class="uxv-widget uxv-wide" id="w-race">
+        <div class="uxv-widget-head">
+          <span class="uxv-widget-title">Wildfire evacuation: silos vs. ecosystem</span>
+          <span class="uxv-widget-sub">Identical worlds, identical fleets, identical time budget. Grey forest = unexplored; dots = civilians (dim until discovered); red = fire.</span>
+        </div>
+        <div class="uxv-race-grid">
+          <div class="uxv-race-pane">
+            <h4>Siloed &mdash; UGVs search blind</h4>
+            <canvas id="race-silo" role="img" aria-label="Simulation of unaided ground vehicles searching a burning forest at random, finding civilians slowly while the fire spreads."></canvas>
+            <div class="uxv-race-stats">
+              <span>Rescued <strong id="race-silo-rescued">0/8</strong></span>
+              <span>Found <strong id="race-silo-found">0</strong></span>
+              <span>Burned <strong id="race-silo-burn">0%</strong></span>
+            </div>
+          </div>
+          <div class="uxv-race-pane">
+            <h4>Ecosystem &mdash; UAVs scout for UGVs</h4>
+            <canvas id="race-eco" role="img" aria-label="The same simulation with aerial vehicles scouting ahead and sharing civilian locations, so ground vehicles drive straight to victims and rescue nearly everyone."></canvas>
+            <div class="uxv-race-stats">
+              <span>Rescued <strong id="race-eco-rescued">0/8</strong></span>
+              <span>Found <strong id="race-eco-found">0</strong></span>
+              <span>Burned <strong id="race-eco-burn">0%</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="uxv-controls">
+          <button class="uxv-ctl uxv-ctl-play" id="race-play" aria-label="Play">&#9654;</button>
+          <button class="uxv-ctl" id="race-reset" aria-label="Reset" title="Reset">&#8634;</button>
+          <button class="uxv-ctl-text" id="race-reseed">New forest</button>
+          <span class="uxv-race-verdict" id="race-verdict">Same hardware. The only variable is whether information crosses the domain boundary.</span>
+        </div>
+      </figure>
+
+      <p>The second scenario is <strong>maritime security</strong>: neutralize a hostile vessel before it reaches the harbour. A USV alone <em>can</em> do it &mdash; sonar works &mdash; but every minute of late detection is a minute closer to the harbour. Step through what each extra domain buys:</p>
+
+      <figure class="uxv-widget" id="w-maritime">
+        <div class="uxv-widget-head">
+          <span class="uxv-widget-title">Maritime threat response, domain by domain</span>
+          <span class="uxv-widget-sub">The bar tracks time-to-neutralization as coverage grows.</span>
+        </div>
+        <canvas id="maritime-canvas" role="img" aria-label="Storyboard of a hostile boat approaching a harbour. With only a surface vehicle, detection happens late via sonar. Adding aerial surveillance detects the threat far earlier; adding coastal ground vehicles and underwater tracking compounds the response and cuts time to neutralization."></canvas>
+        <div class="uxv-controls">
+          <button class="uxv-ctl uxv-ctl-play" id="maritime-play" aria-label="Play">&#9654;</button>
+          <div class="uxv-steps" id="maritime-steps" role="tablist" aria-label="Scenario stages">
+            <button role="tab" data-step="0" aria-selected="true">1&nbsp;USV alone</button>
+            <button role="tab" data-step="1">2&nbsp;+ UAV eyes</button>
+            <button role="tab" data-step="2">3&nbsp;+ UGV coast</button>
+            <button role="tab" data-step="3">4&nbsp;Compound</button>
+          </div>
+        </div>
+        <p class="uxv-story-caption" id="maritime-caption"></p>
+      </figure>
+
+      <p class="uxv-punch">These failures look like communication problems. They are not. The vehicles could exchange radio packets all day &mdash; the real bottleneck is the <strong>fusion model</strong>: nothing in today's stacks can merge what a sonar ping, an aerial image and a ground patrol <em>mean</em> for the mission. The paper names the missing capability <strong>Cross-domain Mission Intelligence</strong>.</p>
+    </section>
+
+    <!-- ================================================================
+         03 · FUSION HIERARCHY
+    ================================================================= -->
+    <section id="fusion" class="uxv-section">
+      <p class="uxv-kicker">03 &middot; The core idea</p>
+      <h2 class="uxv-h2">Information fusion is a ladder &mdash; and everyone is stuck on rung two</h2>
+      <p>Fusion is not one monolithic process; it is a hierarchy of increasing abstraction. Each level answers a bigger question than the last. Click the levels of the pyramid &mdash; each comes with a live demonstration of what that level actually computes:</p>
+
+      <figure class="uxv-widget uxv-wide" id="w-fusion">
+        <div class="uxv-fusion-grid">
+          <svg id="fusion-pyramid" class="uxv-pyramid" viewBox="0 0 300 250" role="tablist" aria-label="Three-level fusion hierarchy pyramid: intra-vehicle at the base, intra-swarm in the middle, mission-level at the top"></svg>
+          <div class="uxv-fusion-right">
+            <canvas id="fusion-demo" role="img" aria-label="Animated demonstration of the selected fusion level."></canvas>
+            <p class="uxv-fusion-caption" id="fusion-caption"></p>
+          </div>
+        </div>
+      </figure>
+
+      <p>Rung one and rung two are well-studied: Kalman filters, SLAM, collaborative multi-object tracking, covariance intersection. But they are <em>syntactic and geometric</em> &mdash; they answer &ldquo;what&rdquo; and &ldquo;where&rdquo;, never &ldquo;why&rdquo; or &ldquo;so what?&rdquo;. Mission-level fusion trades states for <strong>intent, capability and causality</strong>: resolving competing objectives, reasoning about missing capabilities, predicting cross-domain impacts. That leap needs new primitives &mdash; structured world models that capture dependencies among agents, tasks and environments. Building toward it is the core of this paper.</p>
+    </section>
+
+    <!-- ================================================================
+         04 · PRIOR WORK
+    ================================================================= -->
+    <section id="sota" class="uxv-section">
+      <p class="uxv-kicker">04 &middot; Prior work</p>
+      <h2 class="uxv-h2">Everyone solved a fragment</h2>
+      <p>The dream of cross-domain swarms is not new. But every prior attempt solved one slice and stopped. This is the paper's comparison table made explorable &mdash; <strong>click a row</strong> to see exactly where each approach hits its ceiling, as a working sketch:</p>
+
+      <figure class="uxv-widget uxv-wide" id="w-sota">
+        <div class="uxv-sota">
+          <table id="sota-table" aria-label="Comparative summary of cross-domain unmanned vehicle systems">
+            <thead>
+              <tr><th scope="col">Work</th><th scope="col">UVs</th><th scope="col">Collab.</th><th scope="col">Info sharing</th><th scope="col">Info fusion</th><th scope="col">General</th><th scope="col">Semantic</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="uxv-sota-detail">
+          <div>
+            <h4 id="sota-title"></h4>
+            <p id="sota-desc"></p>
+          </div>
+          <canvas id="sota-demo" role="img" aria-label="Animated sketch of the selected prior work's limitation."></canvas>
+        </div>
+      </figure>
+
+      <p class="uxv-punch">Simplified multi-swarm partitioning, syntactic messaging standards, abstract game theory, task-specific physical coordination &mdash; fragments. What is missing is a <strong>holistic architecture</strong> that lets heterogeneous swarms reason <em>collectively</em> about multi-objective missions. That is the gap the UxV Ecosystem Architecture aims at.</p>
+    </section>
+
+    <!-- ================================================================
+         05 · ARCHITECTURE
+    ================================================================= -->
+    <section id="architecture" class="uxv-section">
+      <p class="uxv-kicker">05 &middot; The proposal</p>
+      <h2 class="uxv-h2">The UxV Ecosystem Architecture</h2>
+      <p>Four layers, three design principles: <strong>layered abstraction</strong> to separate concerns, <strong>decentralization</strong> so nothing is a single point of failure, and <strong>service-oriented design</strong> for plug-and-play modularity. Every box below is clickable. Then press the flow buttons to watch a mission travel <em>down</em> the stack &mdash; and sensor reality travel back <em>up</em>.</p>
+
+      <figure class="uxv-widget uxv-wide" id="w-arch">
+        <div class="uxv-arch-grid">
+          <div>
+            <svg id="arch-svg" role="group" aria-label="Interactive diagram of the four-layer UxV Ecosystem Architecture. Layer 4: mission and human interface. Layer 3: collaborative intelligence with the distributed world model and collaborative task engine. Layer 2: ecosystem fabric with the decentralized communication bus and service directory. Layer 1: heterogeneous assets, each with a gateway, local intelligence core, and platform abstraction layer."></svg>
+            <div class="uxv-controls">
+              <button class="uxv-ctl-text" id="arch-flow-down">&#9660; Command flow: mission &rarr; vehicles</button>
+              <button class="uxv-ctl-text" id="arch-flow-up">&#9650; Data flow: sensors &rarr; operator</button>
+            </div>
+          </div>
+          <div class="uxv-arch-panel" id="arch-panel" aria-live="polite"></div>
+        </div>
+      </figure>
+
+      <p>Four working assumptions keep the blueprint honest: every vehicle keeps enough <em>local</em> intelligence to stay safe on its own; every vehicle is swarm-enabled with a Gateway to the ecosystem; connectivity may be disturbed but not permanently severed; and the assigned mission is within the fleet's collective capability. The architecture's job is to <em>unlock</em> that capability, not to conjure it.</p>
+    </section>
+
+    <!-- ================================================================
+         06 · MECHANISMS
+    ================================================================= -->
+    <section id="mechanisms" class="uxv-section">
+      <p class="uxv-kicker">06 &middot; Mechanisms, animated</p>
+      <h2 class="uxv-h2">Four moving parts that make it work</h2>
+
+      <h3 class="uxv-h3">6.1 &nbsp;Delay-tolerant messaging: no connection, no problem</h3>
+      <p>The communication bus is publish&ndash;subscribe, so producers and consumers never couple directly &mdash; and it speaks <strong>Delay-Tolerant Networking</strong>: store-and-forward messaging for communication-denied environments. Watch a UAV fly beyond radio range: its observations buffer on board, and the moment it reconnects, everything syncs into the shared world model. Shrink the radio range and try to break it.</p>
+      <figure class="uxv-widget" id="w-dtn">
+        <canvas id="dtn-canvas" role="img" aria-label="A UAV orbits in and out of a ground station's radio range. Outside the range its detections accumulate in an onboard buffer; on re-entering range the buffered messages stream to the distributed world model, so no observation is lost."></canvas>
+        <div class="uxv-controls">
+          <label class="uxv-slider-row uxv-slider-inline">Radio range
+            <input type="range" id="dtn-range" min="20" max="100" value="58">
+          </label>
+          <span class="uxv-stat-inline">Buffered: <strong id="dtn-buffer">0</strong></span>
+          <span class="uxv-stat-inline">Delivered to DWM: <strong id="dtn-delivered">0</strong> &middot; lost: <strong>0, always</strong></span>
+        </div>
+      </figure>
+
+      <h3 class="uxv-h3">6.2 &nbsp;Service directory: the fleet's yellow pages</h3>
+      <p>Capabilities live in a <strong>distributed hash table</strong>: when a vehicle joins, its Gateway registers what it can do against a service ontology. Any vehicle can then discover, at mission time, who can fulfil a need it cannot. Step through the paper's example &mdash; a UGV inspecting a power plant stumbles on a chemical spill:</p>
+      <figure class="uxv-widget" id="w-dir">
+        <svg id="dir-svg" viewBox="0 0 640 270" role="img" aria-label="Step-by-step animation: a ground vehicle finds a chemical spill it cannot analyse, queries the distributed service directory for chemical sensing capability, the directory resolves a nearby specialized aerial vehicle, and that UAV flies to the spill."></svg>
+        <div class="uxv-controls">
+          <button class="uxv-ctl uxv-ctl-play" id="dir-play" aria-label="Play">&#9654;</button>
+          <div class="uxv-steps" id="dir-steps" role="tablist" aria-label="Query stages">
+            <button role="tab" data-step="0" aria-selected="true">1&nbsp;Anomaly</button>
+            <button role="tab" data-step="1">2&nbsp;Query</button>
+            <button role="tab" data-step="2">3&nbsp;Resolve</button>
+            <button role="tab" data-step="3">4&nbsp;Fulfil</button>
+          </div>
+        </div>
+        <p class="uxv-story-caption" id="dir-caption"></p>
+      </figure>
+
+      <h3 class="uxv-h3">6.3 &nbsp;Spatio-temporal fusion: two mediocre sensors, one sharp track</h3>
+      <p>Inside the Distributed World Model, the fusion engine performs <strong>data association</strong> (are these two detections the same boat?) and <strong>state fusion</strong> (merge them into one track). Each sensor alone is noisy in its own way &mdash; radar is precise in range but sloppy in bearing; a camera is the opposite. Toggle them and watch the fused uncertainty collapse below either sensor's own:</p>
+      <figure class="uxv-widget" id="w-ft">
+        <canvas id="fusiontrack-canvas" role="img" aria-label="A boat moves across the water observed by a surface vehicle's radar and an aerial vehicle's camera. Each sensor's uncertainty is drawn as an ellipse elongated in a different direction. When both are enabled, the fused estimate's ellipse is far smaller than either sensor's alone, and it tracks the true position closely."></canvas>
+        <div class="uxv-controls">
+          <button class="uxv-ctl-text" id="ft-radar" aria-pressed="true">USV radar</button>
+          <button class="uxv-ctl-text" id="ft-cam" aria-pressed="true">UAV camera</button>
+          <label class="uxv-slider-row uxv-slider-inline">Sensor noise
+            <input type="range" id="ft-noise" min="10" max="100" value="45">
+          </label>
+          <span class="uxv-stat-inline">Fused uncertainty area: <strong id="ft-area">&mdash;</strong></span>
+        </div>
+      </figure>
+
+      <h3 class="uxv-h3">6.4 &nbsp;Task allocation: the market decides, then re-decides</h3>
+      <p>The Collaborative Task Engine decomposes a mission (<code>Evacuate&nbsp;Area</code> &rarr; <code>search grid A</code>, <code>guide to exit 1</code>, &hellip;) and auctions each task: vehicles bid their estimated cost in energy and time. A task needing aerial imagery draws cheap bids from UAVs and absurd ones from UGVs &mdash; allocation happens naturally, no central planner. And when a winner dies mid-mission, the engine simply re-runs the auction. Try it:</p>
+      <figure class="uxv-widget uxv-wide" id="w-auction">
+        <div class="uxv-auction-grid">
+          <canvas id="auction-canvas" role="img" aria-label="A field with aerial, ground and surface vehicles and a task site. When a task is announced each vehicle shows its bid; the cheapest capable vehicle wins and moves to the task. Disabling the winner triggers an automatic re-auction and the next-best vehicle takes over."></canvas>
+          <div class="uxv-auction-bids">
+            <div class="uxv-auction-task" id="auction-task">&mdash;</div>
+            <div id="auction-bids"></div>
+            <div class="uxv-controls" style="border-top:none;padding-top:0.2em">
+              <label class="uxv-speed">Task
+                <select id="auction-type">
+                  <option value="aerial">Aerial imagery of grid B</option>
+                  <option value="delivery">Deliver med-kit inland</option>
+                  <option value="water">Sample water quality</option>
+                </select>
+              </label>
+              <button class="uxv-ctl-text" id="auction-new">Announce task</button>
+              <button class="uxv-ctl-text uxv-danger" id="auction-kill" disabled>Disable winner</button>
+            </div>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         07 · SIMULATOR
+    ================================================================= -->
+    <section id="simulator" class="uxv-section">
+      <p class="uxv-kicker">07 &middot; Put it all together</p>
+      <h2 class="uxv-h2">Run the ecosystem yourself</h2>
+      <p>Everything above, in one sandbox: the wildfire mission with the full ecosystem loop &mdash; UAVs scout and publish to the world model, the task engine auctions every discovered civilian to the cheapest UGV, the USV ferries anyone rescued near the river, and re-tasking is continuous. Then <strong>sabotage it</strong>: jam communications (watch DTN buffers grow), or click any vehicle to kill it (watch its tasks re-auction). Flip back to siloed mode to remind yourself what all this machinery buys.</p>
+
+      <figure class="uxv-widget uxv-wide" id="w-sim">
+        <div class="uxv-sim-grid">
+          <div>
+            <canvas id="sim-canvas" role="img" aria-label="Full mission simulation of a wildfire evacuation. Aerial vehicles sweep the forest revealing terrain, fire and civilians; ground vehicles receive auctioned rescue tasks and escort civilians to the exit; a surface vehicle patrols the river to ferry nearby civilians. Fire spreads over time. Communications can be jammed and vehicles disabled by clicking them."></canvas>
+            <div class="uxv-controls">
+              <button class="uxv-ctl" id="sim-reset" aria-label="Reset" title="Reset">&#8634;</button>
+              <button class="uxv-ctl uxv-ctl-play" id="sim-play" aria-label="Play" title="Play / pause">&#9654;</button>
+              <button class="uxv-ctl" id="sim-step" aria-label="Step forward" title="Step one tick">&#9197;</button>
+              <label class="uxv-speed">Speed
+                <select id="sim-speed" aria-label="Simulation speed">
+                  <option value="0.5">0.5&times;</option>
+                  <option value="1" selected>1&times;</option>
+                  <option value="2">2&times;</option>
+                  <option value="4">4&times;</option>
+                </select>
+              </label>
+              <button class="uxv-ctl-text uxv-danger" id="sim-jam" aria-pressed="false">Jam comms</button>
+              <span class="uxv-stat-inline">&hellip;or click a vehicle to disable it</span>
+            </div>
+            <div class="uxv-sim-params">
+              <label class="uxv-slider-row">UAV scouts: <span id="sim-uavs-val">3</span>
+                <input type="range" id="sim-uavs" min="0" max="6" value="3">
+              </label>
+              <label class="uxv-slider-row">Fire spread rate
+                <input type="range" id="sim-fire" min="0" max="100" value="40">
+              </label>
+            </div>
+            <div class="uxv-tabs uxv-tabs-small" id="sim-mode-tabs" role="tablist" aria-label="Coordination mode">
+              <button role="tab" data-tab="eco" aria-selected="true">Ecosystem mode</button>
+              <button role="tab" data-tab="silo">Siloed mode</button>
+            </div>
+          </div>
+          <div class="uxv-sim-side">
+            <div class="uxv-sim-metrics">
+              <div class="uxv-sim-metric"><span class="m-label">Rescued</span><span class="m-value" id="m-rescued">0 / 10</span></div>
+              <div class="uxv-sim-metric"><span class="m-label">Located</span><span class="m-value" id="m-found">0</span></div>
+              <div class="uxv-sim-metric"><span class="m-label">Forest mapped</span><span class="m-value" id="m-mapped">0%</span></div>
+              <div class="uxv-sim-metric"><span class="m-label">Burned</span><span class="m-value" id="m-burned">0%</span></div>
+            </div>
+            <div class="uxv-sim-log" id="sim-log" aria-live="polite" aria-label="Mission event log"></div>
+            <p class="uxv-note">The log is the architecture speaking: <span style="color:var(--viz-air)">UAV</span> discoveries publish to the DWM, auctions assign <span style="color:var(--viz-ground)">UGV</span>s, failures trigger re-auctions, jamming triggers DTN buffering.</p>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         08 · CHALLENGES & ROADMAP
+    ================================================================= -->
+    <section id="roadmap" class="uxv-section">
+      <p class="uxv-kicker">08 &middot; Challenges &amp; roadmap</p>
+      <h2 class="uxv-h2">What stands between blueprint and reality</h2>
+      <div class="uxv-cards uxv-cards-3">
+        <div class="uxv-card">
+          <h3>Scalability &amp; synchronization</h3>
+          <p>A consistent, low-latency Distributed World Model across dozens of agents demands fusion algorithms and protocols that scale &mdash; you felt the latency cost in the simulator's jammed mode.</p>
+        </div>
+        <div class="uxv-card">
+          <h3>Adversarial resilience</h3>
+          <p>Jamming, spoofing and intermittent links are the operating condition, not the exception. DTN is a start; robust coordination under attack is open.</p>
+        </div>
+        <div class="uxv-card">
+          <h3>Trust, security &amp; verification</h3>
+          <p>Decentralization invites data poisoning and malicious agents. Verifiable task execution, secure sharing and distributed trust models are critical.</p>
+        </div>
+      </div>
+
+      <p>And five directions the paper calls the community toward &mdash; click through:</p>
+      <div class="uxv-roadmap" id="w-roadmap">
+        <div class="uxv-roadmap-track" id="roadmap-track" role="tablist" aria-label="Future research directions"></div>
+        <p class="uxv-roadmap-detail" id="roadmap-detail"></p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         09 · TAKEAWAYS
+    ================================================================= -->
+    <section id="takeaways" class="uxv-section">
+      <p class="uxv-kicker">09 &middot; Takeaways</p>
+      <h2 class="uxv-h2">What this paper changes</h2>
+      <div class="uxv-cards">
+        <div class="uxv-card">
+          <h3>Names the real bottleneck</h3>
+          <p>Not bandwidth, not standards: the <em>fusion model</em>. Intra-vehicle and intra-swarm fusion answer &ldquo;what/where&rdquo;; missions need &ldquo;why/so what&rdquo; &mdash; Cross-domain Mission Intelligence.</p>
+        </div>
+        <div class="uxv-card">
+          <h3>A blueprint, not a bolt-on</h3>
+          <p>Four layers with clean seams: assets keep local safety, the fabric decentralizes discovery and messaging, the intelligence layer fuses and allocates, humans command strategy &mdash; not joysticks.</p>
+        </div>
+        <div class="uxv-card">
+          <h3>Synergy is measurable</h3>
+          <p>In every scenario the ecosystem beats the silo on mission metrics &mdash; time-to-rescue, time-to-neutralization &mdash; using <em>identical hardware</em>. The gain comes purely from shared intelligence.</p>
+        </div>
+        <div class="uxv-card">
+          <h3>A call to action</h3>
+          <p>This is a position paper by design: a conceptual foundation plus a research agenda &mdash; the tools, standards and algorithms for mission-level autonomy are still to be built. That is the invitation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         10 · RESOURCES
+    ================================================================= -->
+    <section id="resources" class="uxv-section">
+      <p class="uxv-kicker">10 &middot; Resources</p>
+      <h2 class="uxv-h2">Paper &amp; citation</h2>
+      <ul class="uxv-resources">
+        <li><strong>Paper:</strong> <a href="https://doi.org/10.23919/WMNC67099.2025.11299247" target="_blank" rel="noopener">Where Do We Go from Here? Charting the Future of Unmanned Vehicles &mdash; IEEE Xplore (doi:10.23919/WMNC67099.2025.11299247)</a></li>
+        <li><strong>Open access PDF:</strong> <a href="https://opendl.ifip-tc6.org/db/conf/wmnc/wmnc2025/1571185519.pdf" target="_blank" rel="noopener">IFIP Open Digital Library</a></li>
+        <li><strong>Venue:</strong> 16th IFIP Wireless and Mobile Networking Conference (WMNC 2025), Leuven, Belgium, pp. 176&ndash;181.</li>
+        <li><strong>Funding:</strong> part of the STEADFAST project (NWO KiC programme), partly financed by the Dutch Research Council (NWO).</li>
+      </ul>
+      <div class="uxv-bibbox" id="bibbox">
+        <button class="bib-copy" type="button" id="bib-copy">copy</button>
+        <pre class="bibtex">@inproceedings{latha2025unmanned,
+  author    = {Nanjaiya Latha, Adarsh and Anbalagan, Sabari Nathan and Chiumento, Alessandro and Laarhuis, Jan},
+  title     = {Where Do We Go from Here? Charting the Future of Unmanned Vehicles},
+  booktitle = {Proc. 16th IFIP Wireless and Mobile Networking Conference (WMNC)},
+  address   = {Leuven, Belgium},
+  pages     = {176--181},
+  year      = {2025},
+  doi       = {10.23919/WMNC67099.2025.11299247}
+}</pre>
+      </div>
+      <p class="uxv-disclaimer">The animations on this page are conceptual reconstructions built to teach the paper's ideas; scenario dynamics are illustrative, not experimental data.</p>
+    </section>
+
+    <div class="page-foot"></div>
+  </div><!-- CONTENT ENDS HERE -->
+
+  <noscript>
+    <style>.uxv-widget .uxv-controls, .uxv-hero-hint { display: none; }</style>
+    <p style="text-align:center; font-size: 0.85em;">The interactive figures on this page require JavaScript. The full paper is available open access at the <a href="https://opendl.ifip-tc6.org/db/conf/wmnc/wmnc2025/1571185519.pdf">IFIP Open Digital Library</a>.</p>
+  </noscript>
+
+  <script src="/Portfolio/assets/site.js?v=3"></script>
+  <script defer src="/Portfolio/projects/uxv/uxv-core.js?v=2"></script>
+  <script defer src="/Portfolio/projects/uxv/uxv-widgets.js?v=2"></script>
+  <script defer src="/Portfolio/projects/uxv/uxv-arch.js?v=2"></script>
+  <script defer src="/Portfolio/projects/uxv/uxv-sim.js?v=2"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,932 @@
+/* ==================================================================
+   UxV Ecosystem — project page styles.
+   Inherits the site theme (Computer Modern serif, light default,
+   html[data-theme="dark"] toggle). All visualization colors live in
+   CSS variables so canvas/SVG code can read them via getComputedStyle
+   and repaint on theme change.
+================================================================== */
+
+:root {
+  /* categorical series (validated palette, light steps) */
+  --viz-s1: #2a78d6;   /* blue    */
+  --viz-s2: #eb6834;   /* orange  */
+  --viz-s3: #1baf7a;   /* aqua    */
+  --viz-s4: #eda100;   /* yellow  */
+  --viz-s5: #e87ba4;   /* magenta */
+  --viz-s6: #4a3aa7;   /* violet  */
+  --viz-s7: #008300;   /* green   */
+  --viz-s8: #e34948;   /* red     */
+  /* domain colors — used consistently for the three vehicle classes */
+  --viz-air:    #2a78d6;  /* UAV — sky blue     */
+  --viz-ground: #eb6834;  /* UGV — earth orange */
+  --viz-sea:    #0f9bb5;  /* USV — sea teal     */
+  --viz-fire:   #e34948;
+  --viz-crit: #d03b3b;
+  --viz-good: #0ca30c;
+  --viz-warn: #c98500;
+  --viz-ink:   #141414;
+  --viz-ink2:  #52514e;
+  --viz-muted: #898781;
+  --viz-grid:  #e7e6e1;
+  --viz-axis:  #c3c2b7;
+  --viz-surface: #fafafa;  /* widget card, matches .profile-card */
+  --viz-surface2: #f0efec; /* inset panels */
+  --viz-border: #e6e6e6;
+  --viz-halo: rgba(42, 120, 214, 0.12);
+}
+
+html[data-theme="dark"] {
+  --viz-s1: #3987e5;
+  --viz-s2: #d95926;
+  --viz-s3: #199e70;
+  --viz-s4: #c98500;
+  --viz-s5: #d55181;
+  --viz-s6: #9085e9;
+  --viz-s7: #008300;
+  --viz-s8: #e66767;
+  --viz-air:    #3987e5;
+  --viz-ground: #d95926;
+  --viz-sea:    #26aec7;
+  --viz-fire:   #e66767;
+  --viz-crit: #d03b3b;
+  --viz-good: #0ca30c;
+  --viz-warn: #fab219;
+  --viz-ink:   #d8d8d6;
+  --viz-ink2:  #b8b8b2;
+  --viz-muted: #898781;
+  --viz-grid:  #2c2c2a;
+  --viz-axis:  #45454a;
+  --viz-surface: #1e1f22;
+  --viz-surface2: #26272c;
+  --viz-border: #2e2f33;
+  --viz-halo: rgba(57, 135, 229, 0.18);
+}
+
+/* ------------------------------------------------------------------
+   Layout: keep the site's 760px column; let big figures breathe wider.
+------------------------------------------------------------------ */
+
+.uxv-section { margin-top: 4.5em; }
+
+.uxv-wide { position: relative; }
+@media (min-width: 1060px) {
+  .uxv-wide {
+    width: min(980px, calc(100vw - 32px));
+    left: calc((760px - min(980px, calc(100vw - 32px))) / 2);
+  }
+}
+
+/* ------------------------------------------------------------------
+   In-page nav (sticky chip bar)
+------------------------------------------------------------------ */
+
+.uxv-toc {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--viz-border);
+}
+html[data-theme="dark"] .uxv-toc { background: rgba(23, 24, 27, 0.88); }
+
+.uxv-toc-inner {
+  max-width: min(980px, 100vw);
+  margin: 0 auto;
+  padding: 0.45em 2%;
+  display: flex;
+  gap: 0.25em;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.uxv-toc-inner::-webkit-scrollbar { display: none; }
+
+.uxv-toc a {
+  font-size: 13px;
+  color: var(--viz-muted);
+  text-decoration: none;
+  padding: 0.25em 0.7em;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.uxv-toc a:hover { color: var(--viz-ink); }
+.uxv-toc a.is-active {
+  color: var(--viz-ink);
+  border-color: var(--viz-border);
+  background: var(--viz-surface);
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------ */
+
+.uxv-hero {
+  text-align: center;
+  padding-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.uxv-hero-canvas-wrap { position: relative; height: 260px; margin-bottom: 0.6em; }
+#hero-scene { width: 100%; height: 100%; display: block; border-radius: 12px; }
+
+.uxv-venue {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--viz-muted);
+  margin-bottom: 0.4em;
+}
+
+.uxv .uxv-title {
+  font-size: 38px;
+  line-height: 1.12;
+  border-bottom: none;
+  margin: 0 0 0.35em;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.uxv-tagline {
+  font-size: 1.12em;
+  color: var(--viz-ink2);
+  max-width: 36em;
+  margin: 0 auto 1.2em;
+}
+
+.uxv-authors { margin-bottom: 0.25em; font-size: 1.02em; }
+.uxv-author { margin: 0 0.8em; white-space: nowrap; }
+.uxv-affils { color: var(--viz-muted); font-size: 0.85em; margin-top: 0; line-height: 1.5; }
+
+.uxv-hero-links { margin: 1.4em 0 0.6em; }
+
+.uxv-btn {
+  display: inline-block;
+  margin: 0.25em 0.3em;
+  padding: 0.4em 1.1em;
+  border: 1px solid var(--viz-axis);
+  border-radius: 99px;
+  font-size: 0.86em;
+  color: var(--viz-ink) !important;
+  background: var(--viz-surface);
+  background-image: none !important;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.uxv-btn:hover {
+  border-color: var(--viz-ink);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.uxv-hero-hint {
+  font-size: 0.78em;
+  font-style: italic;
+  color: var(--viz-muted);
+  margin-top: 1.6em;
+}
+
+/* ------------------------------------------------------------------
+   Typography helpers
+------------------------------------------------------------------ */
+
+.uxv-kicker {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--viz-muted);
+  margin-bottom: 0.2em;
+}
+
+.uxv .uxv-h2 {
+  font-size: 27px;
+  border-bottom: none;
+  margin-top: 0.2em;
+  padding-bottom: 0;
+}
+
+.uxv .uxv-h3 { font-size: 20px; margin-top: 1.8em; }
+
+.uxv-punch {
+  font-size: 1.08em;
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.9em;
+  margin: 1.6em 0;
+}
+
+.uxv-callout {
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-left: 3px solid var(--viz-s1);
+  border-radius: 8px;
+  padding: 0.9em 1.2em;
+  margin: 1.5em 0;
+}
+.uxv-callout p { margin: 0; }
+
+.uxv-note {
+  font-size: 0.82em;
+  color: var(--viz-muted);
+  margin: 0.5em 0 0;
+}
+
+.uxv-disclaimer {
+  font-size: 0.78em;
+  color: var(--viz-muted);
+  font-style: italic;
+}
+
+/* domain chips used inline in prose */
+.uxv-chip {
+  display: inline-block;
+  font-size: 0.78em;
+  border-radius: 99px;
+  padding: 0.05em 0.6em;
+  border: 1px solid var(--viz-border);
+  white-space: nowrap;
+}
+.uxv-chip::before {
+  content: "";
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 0.4em;
+}
+.uxv-chip.air::before { background: var(--viz-air); }
+.uxv-chip.ground::before { background: var(--viz-ground); }
+.uxv-chip.sea::before { background: var(--viz-sea); }
+
+/* ------------------------------------------------------------------
+   Widget cards
+------------------------------------------------------------------ */
+
+.uxv-widget {
+  display: block;
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-radius: 12px;
+  padding: 1.1em 1.2em 0.9em;
+  margin: 1.6em 0;
+  text-align: left;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.uxv-widget canvas { width: 100%; display: block; }
+.uxv-widget svg { max-width: 100%; display: block; }
+
+.uxv-widget-head { margin-bottom: 0.7em; }
+.uxv-widget-title {
+  display: block;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+.uxv-widget-sub {
+  display: block;
+  font-size: 0.8em;
+  color: var(--viz-muted);
+  margin-top: 0.1em;
+}
+
+/* ------------------------------------------------------------------
+   Controls
+------------------------------------------------------------------ */
+
+.uxv-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em 1em;
+  margin-top: 0.8em;
+  padding-top: 0.7em;
+  border-top: 1px dashed var(--viz-border);
+}
+
+.uxv-ctl {
+  background: none;
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  color: var(--viz-ink);
+  font-size: 14px;
+  line-height: 1;
+  width: 34px;
+  height: 30px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.uxv-ctl:hover { border-color: var(--viz-ink); }
+.uxv-ctl-play { width: 44px; }
+.uxv-ctl-play.is-playing { background: var(--viz-halo); }
+
+.uxv-ctl-text {
+  background: none;
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  color: var(--viz-ink);
+  font-family: inherit;
+  font-size: 0.82em;
+  padding: 0.35em 0.9em;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.uxv-ctl-text:hover { border-color: var(--viz-ink); }
+.uxv-ctl-text[aria-pressed="true"] {
+  background: var(--viz-halo);
+  border-color: var(--viz-s1);
+}
+.uxv-ctl-text.uxv-danger[aria-pressed="true"] {
+  background: rgba(211, 59, 59, 0.14);
+  border-color: var(--viz-crit);
+}
+
+.uxv-steps { display: flex; flex-wrap: wrap; gap: 0.3em; }
+.uxv-steps button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 0.25em 0.75em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.uxv-steps button:hover { color: var(--viz-ink); }
+.uxv-steps button[aria-selected="true"] {
+  color: var(--viz-ink);
+  border-color: var(--viz-s1);
+  background: var(--viz-halo);
+}
+
+.uxv-slider-row {
+  display: block;
+  font-size: 0.82em;
+  color: var(--viz-ink2);
+  margin: 0.55em 0;
+}
+.uxv-slider-row input[type="range"] {
+  display: block;
+  width: 100%;
+  margin-top: 0.25em;
+  accent-color: var(--viz-s1);
+}
+.uxv-slider-inline { flex: 1 1 200px; margin: 0; }
+
+.uxv-stat-inline { font-size: 0.85em; color: var(--viz-ink2); }
+.uxv-stat-inline strong { font-variant-numeric: tabular-nums; }
+
+.uxv-speed { font-size: 0.8em; color: var(--viz-ink2); }
+.uxv-speed select {
+  font-family: inherit;
+  font-size: 1em;
+  margin-left: 0.3em;
+  background: var(--viz-surface);
+  color: var(--viz-ink);
+  border: 1px solid var(--viz-axis);
+  border-radius: 6px;
+  padding: 0.15em 0.3em;
+}
+
+.uxv-legend { display: inline-flex; flex-wrap: wrap; gap: 0.9em; font-size: 0.8em; color: var(--viz-ink2); }
+.uxv-legend .swatch {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  margin-right: 0.35em;
+  vertical-align: baseline;
+}
+
+/* ------------------------------------------------------------------
+   Tabs
+------------------------------------------------------------------ */
+
+.uxv-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  margin: 1.2em 0 0.9em;
+}
+.uxv-tabs button {
+  background: none;
+  border: 1px solid var(--viz-border);
+  border-radius: 99px;
+  color: var(--viz-muted);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 0.35em 1em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.uxv-tabs button:hover { color: var(--viz-ink); }
+.uxv-tabs button[aria-selected="true"] {
+  color: var(--viz-ink);
+  border-color: var(--viz-s1);
+  background: var(--viz-halo);
+}
+.uxv-tabs-small { margin: 0.6em 0; }
+.uxv-tabs-small button { font-size: 12.5px; padding: 0.25em 0.8em; }
+
+.uxv-tabpanel { animation: uxv-fade 0.3s ease; }
+@keyframes uxv-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------------
+   Market widget
+------------------------------------------------------------------ */
+
+.uxv-market {
+  display: grid;
+  grid-template-columns: minmax(160px, auto) 1fr;
+  gap: 1.4em;
+  align-items: center;
+}
+@media (max-width: 560px) { .uxv-market { grid-template-columns: 1fr; } }
+
+.uxv-market-value {
+  font-size: 3em;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.uxv-market-label {
+  display: block;
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--viz-muted);
+  margin-top: 0.45em;
+}
+#market-bars { width: 100%; height: auto; }
+
+/* ------------------------------------------------------------------
+   Application landscape matrix (Table I)
+------------------------------------------------------------------ */
+
+.uxv-matrix {
+  display: grid;
+  grid-template-columns: auto repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 0.4em;
+}
+.uxv-matrix-corner { }
+.uxv-matrix-head {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--viz-muted);
+  text-align: center;
+  align-self: end;
+  padding-bottom: 4px;
+}
+.uxv-matrix-row-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.85em;
+  padding-right: 0.6em;
+  font-weight: bold;
+}
+.uxv-matrix-row-head svg { width: 26px; height: 26px; flex: none; }
+.uxv-matrix button {
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 8px;
+  min-height: 46px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--viz-ink2);
+  padding: 0.3em 0.4em;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.uxv-matrix button:hover { transform: translateY(-1px); }
+.uxv-matrix button[aria-pressed="true"] {
+  border-width: 2px;
+  color: var(--viz-ink);
+}
+.uxv-matrix button.air[aria-pressed="true"] { border-color: var(--viz-air); background: color-mix(in srgb, var(--viz-air) 10%, var(--viz-surface)); }
+.uxv-matrix button.ground[aria-pressed="true"] { border-color: var(--viz-ground); background: color-mix(in srgb, var(--viz-ground) 10%, var(--viz-surface)); }
+.uxv-matrix button.sea[aria-pressed="true"] { border-color: var(--viz-sea); background: color-mix(in srgb, var(--viz-sea) 10%, var(--viz-surface)); }
+
+.uxv-matrix-detail {
+  margin-top: 0.9em;
+  min-height: 3.4em;
+  border-left: 3px solid var(--viz-axis);
+  padding-left: 0.9em;
+  font-size: 0.88em;
+  color: var(--viz-ink2);
+}
+.uxv-matrix-detail strong { color: var(--viz-ink); }
+
+@media (max-width: 620px) {
+  .uxv-matrix { grid-template-columns: auto repeat(2, 1fr); }
+  .uxv-matrix-head:nth-of-type(n+4) { display: none; }
+  /* On small screens the matrix falls back to a simple 2-col layout;
+     hidden header cells are re-labelled inside the buttons. */
+  .uxv-matrix button::after { content: attr(data-domain); display: block; font-size: 10px; color: var(--viz-muted); }
+}
+
+/* ------------------------------------------------------------------
+   Split-screen race (siloed vs ecosystem)
+------------------------------------------------------------------ */
+
+.uxv-race-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+@media (max-width: 700px) { .uxv-race-grid { grid-template-columns: 1fr; } }
+
+.uxv-race-pane { min-width: 0; }
+.uxv-race-pane h4 {
+  margin: 0 0 0.4em;
+  font-size: 0.9em;
+  text-align: center;
+}
+.uxv-race-pane canvas {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--viz-border);
+}
+
+.uxv-race-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6em;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: var(--viz-ink2);
+}
+.uxv-race-stats strong { font-variant-numeric: tabular-nums; font-size: 1.25em; }
+.uxv-race-verdict {
+  margin-top: 0.8em;
+  font-size: 0.88em;
+  min-height: 2.4em;
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.8em;
+  color: var(--viz-ink2);
+}
+
+/* ------------------------------------------------------------------
+   Maritime storyboard
+------------------------------------------------------------------ */
+
+#maritime-canvas { width: 100%; height: auto; border-radius: 8px; }
+.uxv-story-caption {
+  min-height: 3.2em;
+  margin-top: 0.7em;
+  font-size: 0.88em;
+  color: var(--viz-ink2);
+  border-left: 3px solid var(--viz-sea);
+  padding-left: 0.8em;
+}
+
+/* ------------------------------------------------------------------
+   Fusion hierarchy
+------------------------------------------------------------------ */
+
+.uxv-fusion-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.4fr);
+  gap: 1.2em;
+  align-items: start;
+}
+@media (max-width: 760px) { .uxv-fusion-grid { grid-template-columns: 1fr; } }
+
+.uxv-pyramid { width: 100%; height: auto; }
+.uxv-pyramid .pyr-level { cursor: pointer; }
+.uxv-pyramid .pyr-level rect,
+.uxv-pyramid .pyr-level path { transition: opacity 0.2s ease, stroke-width 0.2s ease; }
+
+.uxv-fusion-right { min-width: 0; }
+#fusion-demo { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--viz-border); }
+.uxv-fusion-caption {
+  min-height: 4.5em;
+  margin-top: 0.6em;
+  font-size: 0.85em;
+  color: var(--viz-ink2);
+}
+.uxv-fusion-caption strong { color: var(--viz-ink); }
+
+/* ------------------------------------------------------------------
+   Prior work (Table II as interactive rows)
+------------------------------------------------------------------ */
+
+.uxv-sota { overflow-x: auto; max-width: calc(100vw - 3.5em); }
+.uxv-sota table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+  margin: 0;
+}
+.uxv-sota th, .uxv-sota td {
+  border: none;
+  border-bottom: 1px solid var(--viz-border);
+  padding: 0.55em 0.6em;
+  text-align: center;
+  font-size: inherit;
+}
+.uxv-sota th {
+  font-size: 0.85em;
+  color: var(--viz-muted);
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.uxv-sota td:first-child, .uxv-sota th:first-child { text-align: left; }
+.uxv-sota tbody tr { cursor: pointer; transition: background 0.15s ease; }
+.uxv-sota tbody tr:hover { background: var(--viz-surface2); }
+.uxv-sota tbody tr[aria-selected="true"] { background: var(--viz-halo); }
+.uxv-sota tbody tr.uxv-ours { font-weight: bold; }
+.uxv-sota .yes { color: var(--viz-good); }
+.uxv-sota .no { color: var(--viz-muted); opacity: 0.5; }
+.uxv-sota .partial { color: var(--viz-warn); font-size: 0.85em; }
+
+.uxv-sota-detail {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+  gap: 1.1em;
+  align-items: center;
+}
+@media (max-width: 700px) { .uxv-sota-detail { grid-template-columns: 1fr; } }
+.uxv-sota-detail h4 { margin: 0 0 0.4em; font-size: 1em; }
+.uxv-sota-detail p { font-size: 0.86em; color: var(--viz-ink2); margin: 0; }
+#sota-demo { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--viz-border); }
+
+/* ------------------------------------------------------------------
+   Architecture explorer
+------------------------------------------------------------------ */
+
+.uxv-arch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+  gap: 1.2em;
+  align-items: start;
+}
+@media (max-width: 860px) { .uxv-arch-grid { grid-template-columns: 1fr; } }
+
+#arch-svg { width: 100%; height: auto; }
+#arch-svg .arch-module { cursor: pointer; }
+#arch-svg .arch-module rect { transition: stroke 0.2s ease, stroke-width 0.2s ease, fill-opacity 0.2s ease; }
+#arch-svg .arch-module:hover rect { stroke-width: 2; }
+#arch-svg text { pointer-events: none; user-select: none; }
+
+.uxv-arch-panel {
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 10px;
+  padding: 0.9em 1em;
+  min-height: 16em;
+}
+.uxv-arch-panel .arch-layer-tag {
+  display: inline-block;
+  font-size: 0.68em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 99px;
+  padding: 0.15em 0.7em;
+  border: 1px solid var(--viz-axis);
+  color: var(--viz-ink2);
+  margin-bottom: 0.5em;
+}
+.uxv-arch-panel h4 { margin: 0 0 0.4em; font-size: 1em; }
+.uxv-arch-panel p { font-size: 0.84em; color: var(--viz-ink2); margin: 0 0 0.6em; }
+.uxv-arch-panel .arch-example {
+  font-size: 0.8em;
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.7em;
+  color: var(--viz-ink2);
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------------
+   Mechanism widgets
+------------------------------------------------------------------ */
+
+#dtn-canvas, #fusiontrack-canvas { width: 100%; height: auto; border-radius: 8px; }
+#dir-svg { width: 100%; height: auto; }
+
+.uxv-auction-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr);
+  gap: 1.1em;
+  align-items: start;
+}
+@media (max-width: 700px) { .uxv-auction-grid { grid-template-columns: 1fr; } }
+#auction-canvas { width: 100%; height: auto; border-radius: 8px; }
+
+.uxv-auction-bids { font-size: 0.84em; }
+.uxv-auction-task {
+  background: var(--viz-surface2);
+  border: 1px dashed var(--viz-axis);
+  border-radius: 8px;
+  padding: 0.5em 0.8em;
+  font-size: 0.95em;
+  margin-bottom: 0.8em;
+}
+.uxv-bid-row { display: flex; align-items: center; gap: 0.6em; margin: 0.45em 0; }
+.uxv-bid-name { flex: 0 0 5.2em; white-space: nowrap; }
+.uxv-bid-bar-wrap { flex: 1; height: 12px; border-radius: 6px; background: var(--viz-grid); overflow: hidden; }
+.uxv-bid-bar { height: 100%; border-radius: 6px; width: 0; transition: width 0.6s ease; }
+.uxv-bid-val { flex: 0 0 3.4em; text-align: right; font-variant-numeric: tabular-nums; }
+.uxv-bid-row.is-winner .uxv-bid-name { font-weight: bold; }
+.uxv-bid-row.is-dead { opacity: 0.35; text-decoration: line-through; }
+
+/* ------------------------------------------------------------------
+   Mission simulator
+------------------------------------------------------------------ */
+
+.uxv-sim-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+  gap: 1.2em;
+  align-items: start;
+}
+@media (max-width: 860px) { .uxv-sim-grid { grid-template-columns: 1fr; } }
+
+#sim-canvas { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--viz-border); cursor: crosshair; }
+
+.uxv-sim-side { min-width: 0; }
+
+.uxv-sim-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5em;
+  margin-bottom: 0.8em;
+}
+.uxv-sim-metric {
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 8px;
+  padding: 0.45em 0.7em;
+}
+.uxv-sim-metric .m-label {
+  display: block;
+  font-size: 0.68em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--viz-muted);
+}
+.uxv-sim-metric .m-value {
+  font-size: 1.35em;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.uxv-sim-log {
+  height: 150px;
+  overflow-y: auto;
+  background: var(--viz-surface2);
+  border: 1px solid var(--viz-border);
+  border-radius: 8px;
+  padding: 0.5em 0.8em;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--viz-ink2);
+}
+.uxv-sim-log .log-t { color: var(--viz-muted); }
+.uxv-sim-log .log-uav { color: var(--viz-air); }
+.uxv-sim-log .log-ugv { color: var(--viz-ground); }
+.uxv-sim-log .log-usv { color: var(--viz-sea); }
+.uxv-sim-log .log-crit { color: var(--viz-crit); font-weight: bold; }
+.uxv-sim-log .log-good { color: var(--viz-good); }
+
+.uxv-sim-params {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.2em;
+  align-items: end;
+  margin-top: 0.4em;
+}
+@media (max-width: 700px) { .uxv-sim-params { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------------
+   Challenges & roadmap
+------------------------------------------------------------------ */
+
+.uxv-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9em;
+  margin: 1.4em 0;
+}
+@media (max-width: 640px) { .uxv-cards { grid-template-columns: 1fr; } }
+.uxv-cards.uxv-cards-3 { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 760px) { .uxv-cards.uxv-cards-3 { grid-template-columns: 1fr; } }
+
+.uxv-card {
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-radius: 10px;
+  padding: 1em 1.1em;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.uxv .uxv-card h3 {
+  font-size: 16px;
+  margin: 0 0 0.4em;
+}
+.uxv-card p { font-size: 0.86em; margin: 0; color: var(--viz-ink2); }
+
+/* roadmap: horizontal timeline of future-work items */
+.uxv-roadmap { margin: 1.4em 0 0.4em; }
+.uxv-roadmap-track {
+  display: flex;
+  gap: 0.4em;
+  align-items: stretch;
+}
+.uxv-roadmap-track button {
+  flex: 1;
+  background: var(--viz-surface);
+  border: 1px solid var(--viz-border);
+  border-radius: 8px;
+  color: var(--viz-ink2);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 0.6em 0.4em;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.uxv-roadmap-track button:hover { color: var(--viz-ink); }
+.uxv-roadmap-track button[aria-selected="true"] {
+  border-color: var(--viz-s1);
+  background: var(--viz-halo);
+  color: var(--viz-ink);
+}
+@media (max-width: 640px) { .uxv-roadmap-track { flex-wrap: wrap; } .uxv-roadmap-track button { flex: 1 1 45%; } }
+.uxv-roadmap-detail {
+  margin-top: 0.8em;
+  min-height: 4em;
+  font-size: 0.88em;
+  color: var(--viz-ink2);
+  border-left: 3px solid var(--viz-s1);
+  padding-left: 0.9em;
+}
+.uxv-roadmap-detail strong { color: var(--viz-ink); }
+
+/* ------------------------------------------------------------------
+   Resources
+------------------------------------------------------------------ */
+
+.uxv-resources { padding-left: 1.2em; }
+.uxv-resources li { margin: 0.5em 0; }
+
+.uxv-bibbox { position: relative; margin-top: 1em; }
+.uxv-bibbox .bibtex {
+  background: var(--viz-surface2);
+  border-color: var(--viz-border);
+  max-width: calc(100vw - 3.5em);
+  box-sizing: border-box;
+}
+html[data-theme="dark"] .uxv-bibbox .bibtex { color: var(--viz-ink); }
+html[data-theme="dark"] .uxv-bibbox .bib-copy {
+  background: var(--viz-surface);
+  border-color: var(--viz-axis);
+  color: var(--viz-ink2);
+}
+
+/* ------------------------------------------------------------------
+   Tooltip
+------------------------------------------------------------------ */
+
+.uxv-tooltip {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  background: var(--viz-ink);
+  color: var(--viz-surface);
+  font-size: 12px;
+  line-height: 1.45;
+  border-radius: 6px;
+  padding: 0.4em 0.65em;
+  max-width: 240px;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+html[data-theme="dark"] .uxv-tooltip { background: #f0f0ee; color: #17181b; }
+.uxv-tooltip.is-visible { opacity: 0.96; transform: none; }
+.uxv-tooltip .tt-title { font-weight: bold; }
+
+/* ------------------------------------------------------------------
+   Scroll reveal (collapses under reduced motion)
+------------------------------------------------------------------ */
+
+.uxv-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.uxv-reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .uxv-reveal { opacity: 1; transform: none; transition: none; }
+  .uxv-tabpanel { animation: none; }
+  .uxv-btn, .uxv-toc a, .uxv-tooltip, .uxv-bid-bar { transition: none; }
+}
