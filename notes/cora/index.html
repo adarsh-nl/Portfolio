@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/notes/cora/cora.css?v=1">
+  <title>CoRA, Explained Interactively — an Unofficial Guide</title>
+  <meta name="description" content="An unofficial interactive explainer of CoRA (Chen, Zhang, Lv, Xie — arXiv:2512.13191): why collaborative perception breaks under pose errors, and how a hybrid of intermediate and late fusion decouples performance from robustness.">
+  <meta property="og:title" content="CoRA, Explained Interactively — an Unofficial Guide">
+  <meta property="og:description" content="Why collaborative perception breaks under pose errors — and how CoRA's hybrid fusion fixes it. Interactive explainer of arXiv:2512.13191.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/notes/cora/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/notes/cora/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image:alt" content="CoRA — unofficial interactive explainer.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CoRA, Explained Interactively — an Unofficial Guide">
+  <meta name="twitter:description" content="Why collaborative perception breaks under pose errors — and how CoRA's hybrid fusion fixes it.">
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul>
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <img src="/Portfolio/assets/hamburger.svg" id="menu-icon" alt="">
+    </nav>
+  </header>
+
+  <nav class="cora-toc" aria-label="On this page">
+    <div class="cora-toc-inner">
+      <a href="#why">Why collaborate</a>
+      <a href="#problem">The problem</a>
+      <a href="#insight">The insight</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#cit">Bandwidth: CIT</a>
+      <a href="#pac">Robustness: PAC</a>
+      <a href="#results">Results</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#resources">Resources</a>
+    </div>
+  </nav>
+
+  <div class="franklin-content cora" id="main" tabindex="-1">
+
+    <!-- ================================================================
+         HERO
+    ================================================================= -->
+    <section class="cora-hero" id="hero">
+      <div class="cora-hero-canvas-wrap">
+        <canvas id="hero-scene" aria-hidden="true"></canvas>
+      </div>
+      <p class="cora-venue">arXiv:2512.13191 &middot; December 2025</p>
+      <h1 class="cora-title">CoRA, Explained Interactively</h1>
+      <p class="cora-tagline">Connected cars can see through each other's eyes &mdash; until a noisy radio link makes them disagree about <em>where they are</em>. CoRA's answer: fuse features for accuracy, fuse objects for resilience, and let each branch cover the other's blind spot.</p>
+      <p class="cora-authors">
+        <span class="cora-author">Gong&nbsp;Chen<sup>1</sup></span>
+        <span class="cora-author">Chaokun&nbsp;Zhang<sup>1</sup></span>
+        <span class="cora-author">Pengcheng&nbsp;Lv<sup>1</sup></span>
+        <span class="cora-author">Xiaohui&nbsp;Xie<sup>2</sup></span>
+      </p>
+      <p class="cora-affils"><sup>1</sup>Tianjin University &nbsp;&nbsp; <sup>2</sup>Tsinghua University</p>
+      <p class="cora-hero-links">
+        <a class="cora-btn" href="https://arxiv.org/abs/2512.13191" target="_blank" rel="noopener">arXiv</a>
+        <a class="cora-btn" href="https://arxiv.org/pdf/2512.13191" target="_blank" rel="noopener">PDF</a>
+        <a class="cora-btn" href="#resources" id="hero-bib-btn">BibTeX</a>
+      </p>
+      <div class="cora-attrib">
+        <strong>Not my paper.</strong> This is an unofficial interactive explainer of work by the authors above &mdash; I read it, liked it, and rebuilt its ideas as things you can poke. All credit to the authors; any errors in interpretation are mine. Figures here are conceptual reconstructions; the tables' numbers are from the paper.
+      </div>
+      <p class="cora-hero-hint" aria-hidden="true">Everything below is interactive &mdash; drag the sliders, break the poses.</p>
+    </section>
+
+    <!-- ================================================================
+         01 · WHY COLLABORATE
+    ================================================================= -->
+    <section id="why" class="cora-section">
+      <p class="cora-kicker">01 &middot; Why collaborate</p>
+      <h2 class="cora-h2">One car cannot see around a truck</h2>
+      <p>Autonomous driving perception is bounded by two hard physical limits: <strong>occlusion</strong> and <strong>finite sensing range</strong>. Whatever is behind the truck simply does not exist for the ego vehicle's LiDAR &mdash; a genuine safety risk. Vehicle-to-Everything (V2X) communication offers the obvious fix: let another vehicle, which <em>can</em> see the hidden region, share what it perceives. Drag the truck around; then turn the collaborator on.</p>
+
+      <figure class="cora-widget" id="w-occl">
+        <div class="cora-widget-head">
+          <span class="cora-widget-title">The occlusion problem &mdash; and its collaborative fix</span>
+          <span class="cora-widget-sub">Blue rays: ego LiDAR. The pedestrian and cyclist behind the truck are invisible until a collaborator shares its view.</span>
+        </div>
+        <canvas id="occl-canvas" role="img" aria-label="Top-down street scene. An ego vehicle casts LiDAR rays that are blocked by a truck, hiding a pedestrian and another car. Enabling a collaborator vehicle adds a second set of rays from a different angle that reveal the hidden objects."></canvas>
+        <div class="cora-controls">
+          <label class="cora-slider-row cora-slider-inline">Truck position
+            <input type="range" id="occl-truck" min="0" max="100" value="45">
+          </label>
+          <button class="cora-ctl-text" id="occl-collab" aria-pressed="false">Enable collaborator</button>
+          <span class="cora-stat-inline">Hazards visible to ego: <strong id="occl-count">0 / 2</strong></span>
+        </div>
+      </figure>
+
+      <p>But V2X bandwidth is scarce and links are unreliable, so <em>what</em> you share matters. The field settled on <strong>intermediate fusion</strong>: instead of raw point clouds (early fusion, impossibly heavy) or final detection boxes (late fusion, cheap but lossy), agents exchange neural <em>feature maps</em> &mdash; a sweet spot of accuracy per megabyte. Nearly every state-of-the-art method lives in this paradigm.</p>
+    </section>
+
+    <!-- ================================================================
+         02 · THE PROBLEM
+    ================================================================= -->
+    <section id="problem" class="cora-section">
+      <p class="cora-kicker">02 &middot; The problem</p>
+      <h2 class="cora-h2">Feature fusion assumes everyone knows exactly where they are</h2>
+      <p>To fuse a collaborator's feature map, the ego must first warp it into its own coordinate frame using the collaborator's transmitted <strong>pose</strong>. When unstable channels corrupt that pose, the warp is wrong &mdash; and every shared feature lands displaced and rotated. Feel it yourself:</p>
+
+      <figure class="cora-widget" id="w-misalign">
+        <div class="cora-widget-head">
+          <span class="cora-widget-title">Pose error &rarr; feature misalignment &rarr; ghost objects</span>
+          <span class="cora-widget-sub">Blue blobs: ego features. Orange: collaborator features, warped by its reported pose. The dashed boxes are the true objects.</span>
+        </div>
+        <canvas id="misalign-canvas" role="img" aria-label="A bird's-eye-view feature map. The ego's features and a collaborator's features overlap perfectly when pose error is zero. As translation and rotation error sliders increase, the collaborator's features drift and rotate away from the true object positions, creating ghost detections where the maps disagree."></canvas>
+        <div class="cora-controls">
+          <label class="cora-slider-row cora-slider-inline">Translation error &sigma;<sub>t</sub> = <span id="mis-t-val">0.0</span> m
+            <input type="range" id="mis-t" min="0" max="100" value="0">
+          </label>
+          <label class="cora-slider-row cora-slider-inline">Rotation error &sigma;<sub>r</sub> = <span id="mis-r-val">0.0</span>&deg;
+            <input type="range" id="mis-r" min="0" max="100" value="0">
+          </label>
+          <span class="cora-stat-inline">Feature alignment: <strong id="mis-ap">100%</strong></span>
+        </div>
+        <p class="cora-note" id="mis-note">Perfect poses: the two feature maps reinforce each other. This is the world intermediate fusion was designed for.</p>
+      </figure>
+
+      <p>How bad is it in practice? Below is the paper's opening figure rebuilt from its Table 1 (OPV2V benchmark): every method's accuracy against its communication cost. Flip to <em>high pose error</em> and watch the efficient methods fall &mdash; several land <strong>below the single-agent baseline</strong>, meaning collaboration made perception <em>worse</em>.</p>
+
+      <figure class="cora-widget cora-wide" id="w-fig1">
+        <div class="cora-widget-head">
+          <span class="cora-widget-title">Accuracy vs. communication volume (OPV2V, AP@0.7)</span>
+          <span class="cora-widget-sub">Bubble size &prop; communication volume. Dashed line: single-agent, no collaboration. Hover the bubbles.</span>
+        </div>
+        <div class="cora-tabs cora-tabs-small" id="fig1-tabs" role="tablist" aria-label="Condition">
+          <button role="tab" data-tab="ideal" aria-selected="true">Ideal poses (0 m / 0&deg;)</button>
+          <button role="tab" data-tab="noisy">High pose error (0.6 m / 0.6&deg;)</button>
+        </div>
+        <canvas id="fig1-canvas" role="img" aria-label="Scatter chart of collaborative perception methods, communication volume on the horizontal axis and detection accuracy on the vertical axis. Under ideal poses all methods sit above the single-agent baseline. Under high pose error most methods drop sharply, several below the baseline, while CoRA remains highest with the smallest communication volume."></canvas>
+        <p class="cora-note" id="fig1-note"></p>
+      </figure>
+
+      <p class="cora-punch">This is the gap CoRA targets: not bandwidth alone, but the coupling of <strong>efficiency</strong> and <strong>fragility</strong>. Selecting or compressing features saves megabytes, yet every transmitted feature still rests on one assumption &mdash; a perfectly shared coordinate system &mdash; that real channels routinely break.</p>
+    </section>
+
+    <!-- ================================================================
+         03 · THE INSIGHT
+    ================================================================= -->
+    <section id="insight" class="cora-section">
+      <p class="cora-kicker">03 &middot; The insight</p>
+      <h2 class="cora-h2">Two fusion paradigms, two <em>complementary</em> failure modes</h2>
+      <p>The paper's key move is a re-examination of <em>how</em> each fusion paradigm fails under pose error. Click through &mdash; then press the repair button in each and note which one can be saved:</p>
+
+      <div class="cora-tabs" id="para-tabs" role="tablist" aria-label="Fusion paradigms">
+        <button role="tab" data-tab="inter" aria-selected="true">Intermediate fusion</button>
+        <button role="tab" data-tab="late">Late fusion</button>
+      </div>
+
+      <figure class="cora-widget" id="w-paradigm">
+        <canvas id="paradigm-canvas" role="img" aria-label="Animated comparison of fusion paradigms under pose error. Intermediate fusion: feature maps blend into a corrupted mixture that cannot be disentangled afterward. Late fusion: detection boxes arrive displaced but each box remains intact, so a correction can move them back into place."></canvas>
+        <div class="cora-controls">
+          <label class="cora-slider-row cora-slider-inline">Pose error
+            <input type="range" id="para-err" min="0" max="100" value="55">
+          </label>
+          <button class="cora-ctl-text" id="para-correct">Attempt correction</button>
+          <span class="cora-stat-inline" id="para-verdict"></span>
+        </div>
+        <p class="cora-note" id="para-caption"></p>
+      </figure>
+
+      <div class="cora-callout">
+        <p><strong>The insight in one line:</strong> intermediate fusion has the higher ceiling but corrupts <em>irrecoverably</em> under pose error; late fusion has a lower ceiling but its detections stay <em>intact and correctable</em>. These weaknesses are complementary &mdash; so don't choose. Run both, and let each cover the other.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         04 · ARCHITECTURE
+    ================================================================= -->
+    <section id="architecture" class="cora-section">
+      <p class="cora-kicker">04 &middot; The architecture</p>
+      <h2 class="cora-h2">Two parallel branches, one decoupling</h2>
+      <p>CoRA runs a <strong>feature-level branch</strong> (chasing intermediate fusion's accuracy at minimal bandwidth) in parallel with an <strong>object-level correction branch</strong> (guaranteeing late-fusion-style resilience), then merges them with uncertainty-aware recalibration. Performance and robustness stop being a trade-off because different branches own them. Click any module; then run the flow.</p>
+
+      <figure class="cora-widget cora-wide" id="w-arch">
+        <div class="cora-arch-grid">
+          <div>
+            <svg id="arch-svg" role="group" aria-label="Interactive diagram of the CoRA architecture. A collaborator's sensor data is encoded into features. The feature-level branch uses the Competitive Information Transmission module and the Lightweight Collaboration module. The object-level branch sends the collaborator's detections through the Pose-Aware Correction module. Both branches meet in an adaptive final fusion with non-maximum suppression."></svg>
+            <div class="cora-controls">
+              <button class="cora-ctl-text" id="arch-flow">&#9654; Trace one perception cycle</button>
+            </div>
+          </div>
+          <div class="cora-arch-panel" id="arch-panel" aria-live="polite"></div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         05 · CIT + LC
+    ================================================================= -->
+    <section id="cit" class="cora-section">
+      <p class="cora-kicker">05 &middot; The bandwidth answer</p>
+      <h2 class="cora-h2">CIT: ask for exactly what you cannot see</h2>
+      <p>Prevailing methods are <strong>sender-centric</strong>: every collaborator decides what to broadcast, so the ego's inbox grows with every added car. CIT flips the protocol to <strong>receiver-centric, on-demand</strong>: collaborators send only tiny confidence maps; the ego computes where it is blind, holds a per-pixel <em>competition</em> to pick the single best provider for each region, and requests only those sparse features. Step through the protocol:</p>
+
+      <figure class="cora-widget cora-wide" id="w-cit">
+        <div class="cora-cit-grid">
+          <div>
+            <canvas id="cit-canvas" role="img" aria-label="Step-by-step visualization of the Competitive Information Transmission protocol on a bird's-eye-view grid: collaborators' confidence maps, the ego's demand map computed as one minus its own confidence, per-pixel winner-take-all competition producing an assignment of each cell to one provider, sparse binary request masks, and finally sparse feature transmission only for requested cells."></canvas>
+            <div class="cora-controls">
+              <button class="cora-ctl cora-ctl-play" id="cit-play" aria-label="Play">&#9654;</button>
+              <div class="cora-steps" id="cit-steps" role="tablist" aria-label="Protocol stages">
+                <button role="tab" data-step="0" aria-selected="true">1&nbsp;Confidence</button>
+                <button role="tab" data-step="1">2&nbsp;Demand</button>
+                <button role="tab" data-step="2">3&nbsp;Competition</button>
+                <button role="tab" data-step="3">4&nbsp;Requests</button>
+                <button role="tab" data-step="4">5&nbsp;Transmit</button>
+              </div>
+            </div>
+          </div>
+          <div class="cora-cit-side">
+            <p class="cora-cit-note" id="cit-note"></p>
+            <label class="cora-slider-row">Collaborators: <span id="cit-n-val">3</span>
+              <input type="range" id="cit-n" min="1" max="8" value="3">
+            </label>
+            <div class="cora-comm-bars" id="comm-bars"></div>
+            <p class="cora-note">Request masks are exclusive &mdash; each pixel is served by exactly one provider &mdash; so received volume stays nearly constant no matter how many cars join.</p>
+          </div>
+        </div>
+      </figure>
+
+      <h3 class="cora-h3">LC: fusing the sparse harvest</h3>
+      <p>The requested features arrive sparse and heterogeneous. The Lightweight Collaboration module weighs them by confidence, harmonizes them with attention, models inter-vehicle context with a Mamba-style <strong>Collaborative State Space Model</strong>, and gates what actually enters the ego's representation. During training only, a teacher branch that sees the <em>full dense</em> features distills its knowledge into this sparse pipeline (<span class="cora-math">L<sub>align</sub></span>) &mdash; sparse inputs, dense supervision.</p>
+
+      <figure class="cora-widget" id="w-lc">
+        <canvas id="lc-canvas" role="img" aria-label="Animated pipeline of the Lightweight Collaboration module: ego features and collaborative features are weighted by confidence maps, combined, passed through attention and a state space model, and a gating unit modulates the fused output. A translucent teacher pathway above provides guidance only during training."></canvas>
+        <p class="cora-note">Watch the gate: it opens where collaborator evidence is strong and closes where the ego already knows better.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         06 · PAC
+    ================================================================= -->
+    <section id="pac" class="cora-section">
+      <p class="cora-kicker">06 &middot; The robustness answer</p>
+      <h2 class="cora-h2">PAC: put displaced detections back where they belong</h2>
+      <p>The object branch receives collaborator <em>detections</em> &mdash; and naive late fusion would just paste them in, pose error and all. PAC instead treats correction as a learnable alignment: score each collaborator box by <strong>semantic relevance</strong> to the ego's own view (cross-agent attention over positional-embedded box descriptors), predict a dense <strong>2D offset field</strong> from the disagreement between both detection maps, and resample the collaborator's maps at corrected locations with <strong>deformable convolution</strong>. Crank up the error, then step through the repair:</p>
+
+      <figure class="cora-widget cora-wide" id="w-pac">
+        <canvas id="pac-canvas" role="img" aria-label="Bird's-eye view with the ego's detections drawn as solid boxes and a collaborator's detections displaced by pose error. Step one links corresponding boxes by attention. Step two draws a field of offset arrows over the grid. Step three snaps the displaced boxes onto their true positions via deformable resampling."></canvas>
+        <div class="cora-controls">
+          <label class="cora-slider-row cora-slider-inline">Pose error
+            <input type="range" id="pac-err" min="0" max="100" value="60">
+          </label>
+          <div class="cora-steps" id="pac-steps" role="tablist" aria-label="Correction stages">
+            <button role="tab" data-step="0" aria-selected="true">1&nbsp;Displaced</button>
+            <button role="tab" data-step="1">2&nbsp;Match</button>
+            <button role="tab" data-step="2">3&nbsp;Offset field</button>
+            <button role="tab" data-step="3">4&nbsp;Corrected</button>
+          </div>
+          <span class="cora-stat-inline">Mean box IoU vs. truth: <strong id="pac-iou">&mdash;</strong></span>
+        </div>
+        <p class="cora-note" id="pac-note"></p>
+      </figure>
+
+      <p>Both branches then meet in the <strong>adaptive final fusion</strong>: each branch's confidences are recalibrated by learned uncertainty maps, predictions are pooled, and 3D non-maximum suppression prunes the duplicates. When poses are clean, the feature branch dominates; when they degrade, the corrected object branch holds the line.</p>
+    </section>
+
+    <!-- ================================================================
+         07 · RESULTS
+    ================================================================= -->
+    <section id="results" class="cora-section">
+      <p class="cora-kicker">07 &middot; Results</p>
+      <h2 class="cora-h2">The numbers, explorable</h2>
+      <p>All values below are from the paper's tables (Table 1 &amp; 2). Toggle methods in the legend, switch datasets and metrics, hover for exact numbers. The story to look for: as pose error grows (left &rarr; right), most curves dive; CoRA's stays flat<em>test</em> &mdash; with the smallest communication budget of all (3.80 MB on OPV2V, 2.84 MB on DAIR-V2X).</p>
+
+      <figure class="cora-widget cora-wide" id="w-results">
+        <div class="cora-widget-head">
+          <span class="cora-widget-title">Detection accuracy vs. pose error (Table 1)</span>
+          <span class="cora-widget-sub">Dashed grey: single-agent baseline &mdash; any curve below it means collaboration is hurting.</span>
+        </div>
+        <div class="cora-tabs cora-tabs-small" id="res-ds-tabs" role="tablist" aria-label="Dataset">
+          <button role="tab" data-tab="opv2v" aria-selected="true">OPV2V (simulated V2V)</button>
+          <button role="tab" data-tab="dair" >DAIR-V2X (real-world V2I)</button>
+        </div>
+        <div class="cora-tabs cora-tabs-small" id="res-metric-tabs" role="tablist" aria-label="Metric">
+          <button role="tab" data-tab="ap70" aria-selected="true">AP@0.7 (strict)</button>
+          <button role="tab" data-tab="ap50">AP@0.5</button>
+        </div>
+        <div id="results-chart"></div>
+        <p class="cora-note" id="results-note"></p>
+      </figure>
+
+      <h3 class="cora-h3">Latency on top of noise</h3>
+      <p>Real channels are not just noisy but late. With high pose error fixed (0.6&nbsp;m / 0.6&deg;) and stale messages arriving up to 400&nbsp;ms old, the gap widens further (Table 2):</p>
+      <figure class="cora-widget" id="w-latency">
+        <div class="cora-tabs cora-tabs-small" id="lat-metric-tabs" role="tablist" aria-label="Metric">
+          <button role="tab" data-tab="ap70" aria-selected="true">AP@0.7</button>
+          <button role="tab" data-tab="ap50">AP@0.5</button>
+        </div>
+        <div id="latency-chart"></div>
+      </figure>
+
+      <h3 class="cora-h3">Which module buys what</h3>
+      <p>The ablation (Table 3, DAIR-V2X) cleanly separates the two claims. The feature branch (CIT + LC + <span class="cora-math">L<sub>align</sub></span>) buys the <em>performance</em>; PAC buys the <em>robustness</em>. Click a configuration:</p>
+      <figure class="cora-widget" id="w-ablation">
+        <div class="cora-abl-presets" id="abl-presets" role="tablist" aria-label="Model configurations"></div>
+        <div class="cora-abl-readout">
+          <div class="cora-abl-stat"><span class="m-label">AP@0.7 &middot; ideal poses</span><span class="m-value" id="abl-ideal">&mdash;</span></div>
+          <div class="cora-abl-stat"><span class="m-label">AP@0.7 &middot; noisy (0.4/0.4)</span><span class="m-value" id="abl-noisy">&mdash;</span></div>
+          <div class="cora-abl-bars" id="abl-bars"></div>
+        </div>
+        <p class="cora-note" id="abl-note"></p>
+      </figure>
+
+      <h3 class="cora-h3">Scalability: the receiver-centric dividend</h3>
+      <p>Because CIT's request masks are exclusive, adding cars barely adds compute: from 2 to 15 agents the paper reports core-module GFLOPs growing just <strong>1.4&times;</strong> (vs. 22&times; for V2VNet) and memory <strong>1.72&times;</strong> (vs. 4.72&times; for the next best). Drag the fleet size:</p>
+      <figure class="cora-widget" id="w-scale">
+        <canvas id="scale-canvas" role="img" aria-label="Two growth curves as the number of collaborating vehicles increases from two to fifteen: broadcast-style methods grow steeply in compute and memory, while CoRA's receiver-centric protocol stays nearly flat."></canvas>
+        <div class="cora-controls">
+          <label class="cora-slider-row cora-slider-inline">Number of vehicles: <span id="scale-n-val">5</span>
+            <input type="range" id="scale-n" min="2" max="15" value="5">
+          </label>
+          <span class="cora-stat-inline" id="scale-read"></span>
+        </div>
+        <p class="cora-disclaimer">Curve shapes illustrative of the paper's Fig. 5 trends; endpoints match the reported growth factors.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         08 · TAKEAWAYS
+    ================================================================= -->
+    <section id="takeaways" class="cora-section">
+      <p class="cora-kicker">08 &middot; Takeaways</p>
+      <h2 class="cora-h2">Why this paper is worth your time</h2>
+      <div class="cora-cards">
+        <div class="cora-card">
+          <h3>A trade-off dissolved, not optimized</h3>
+          <p>Everyone else tunes the performance&ndash;robustness dial. CoRA's dual-branch design gives each property its own mechanism &mdash; the rare "have both" that comes from analysis, not brute force.</p>
+        </div>
+        <div class="cora-card">
+          <h3>Receiver-centric communication</h3>
+          <p>Flipping who decides what gets sent &mdash; from senders broadcasting to the ego requesting &mdash; turns per-agent payloads into near-constant total overhead. A protocol idea, not just a model idea.</p>
+        </div>
+        <div class="cora-card">
+          <h3>Correction over trust</h3>
+          <p>PAC never assumes poses are right; it treats collaborator detections as evidence to be re-aligned by learned offsets. Robustness comes from rectifiability, not from hoping the channel behaves.</p>
+        </div>
+        <div class="cora-card">
+          <h3>The numbers hold up</h3>
+          <p>86.58% AP@0.7 on OPV2V at 3.80 MB; +19% over baseline under extreme conditions with 5&times; less communication; stays above every rival across noise, latency and fleet size on two benchmarks.</p>
+        </div>
+      </div>
+      <p><strong>What I'd watch next</strong> (my reading, not the paper's): how the offset field behaves under asymmetric errors between many collaborators, whether the competition in CIT starves rare-but-critical viewpoints, and how the hybrid fares on camera-only agents where late-fusion boxes are weaker.</p>
+    </section>
+
+    <!-- ================================================================
+         09 · RESOURCES
+    ================================================================= -->
+    <section id="resources" class="cora-section">
+      <p class="cora-kicker">09 &middot; Resources</p>
+      <h2 class="cora-h2">Paper &amp; citation</h2>
+      <ul class="cora-resources">
+        <li><strong>Paper:</strong> <a href="https://arxiv.org/abs/2512.13191" target="_blank" rel="noopener">CoRA: A Collaborative Robust Architecture with Hybrid Fusion for Efficient Perception (arXiv:2512.13191)</a></li>
+        <li><strong>Authors:</strong> Gong Chen, Chaokun Zhang (Tianjin University), Pengcheng Lv (Tianjin University), Xiaohui Xie (Tsinghua University).</li>
+        <li><strong>Benchmarks used:</strong> <a href="https://mobility-lab.seas.ucla.edu/opv2v/" target="_blank" rel="noopener">OPV2V</a> (simulated V2V) and <a href="https://thudair.baai.ac.cn/index" target="_blank" rel="noopener">DAIR-V2X</a> (real-world V2I), via the <a href="https://github.com/DerrickXuNu/OpenCOOD" target="_blank" rel="noopener">OpenCOOD</a> framework.</li>
+      </ul>
+      <div class="cora-bibbox" id="bibbox">
+        <button class="bib-copy" type="button" id="bib-copy">copy</button>
+        <pre class="bibtex">@article{chen2025cora,
+  author  = {Chen, Gong and Zhang, Chaokun and Lv, Pengcheng and Xie, Xiaohui},
+  title   = {CoRA: A Collaborative Robust Architecture with Hybrid Fusion for Efficient Perception},
+  journal = {arXiv preprint arXiv:2512.13191},
+  year    = {2025}
+}</pre>
+      </div>
+      <p class="cora-disclaimer">This page is an independent explainer, not affiliated with or endorsed by the authors. Scenario animations are conceptual reconstructions; charted values are transcribed from the paper's Tables 1&ndash;4.</p>
+    </section>
+
+    <div class="page-foot"></div>
+  </div><!-- CONTENT ENDS HERE -->
+
+  <noscript>
+    <style>.cora-widget .cora-controls, .cora-hero-hint { display: none; }</style>
+    <p style="text-align:center; font-size: 0.85em;">The interactive figures on this page require JavaScript. The paper is available at <a href="https://arxiv.org/abs/2512.13191">arXiv:2512.13191</a>.</p>
+  </noscript>
+
+  <script src="/Portfolio/assets/site.js?v=3"></script>
+  <script defer src="/Portfolio/notes/cora/cora-core.js?v=1"></script>
+  <script defer src="/Portfolio/notes/cora/cora-widgets.js?v=1"></script>
+  <script defer src="/Portfolio/notes/cora/cora-charts.js?v=1"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
