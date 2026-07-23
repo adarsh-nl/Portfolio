@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=18">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=18">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=19">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=19">
   <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
   <link rel="stylesheet" href="/Portfolio/projects/clma/clma.css?v=1">
   <title>Collaborative Drift Compensation — Interactive Project Page</title>
@@ -28,7 +28,7 @@
   <header>
     <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
     <nav>
-      <ul>
+      <ul id="site-nav">
         <li><a href="/Portfolio/">Home</a></li>
         <li><a href="/Portfolio/cv/">Research</a></li>
         <li><a href="/Portfolio/teaching/">Teaching</a></li>
@@ -36,7 +36,7 @@
         <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
       </ul>
       <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
-      <img src="/Portfolio/assets/hamburger.svg" id="menu-icon" alt="">
+      <button id="menu-icon" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><img src="/Portfolio/assets/hamburger.svg" alt=""></button>
     </nav>
   </header>
 
@@ -501,7 +501,7 @@
     <p style="text-align:center; font-size: 0.85em;">The interactive figures on this page require JavaScript. The full paper is available at <a href="https://doi.org/10.1145/3703323.3703341">doi:10.1145/3703323.3703341</a>.</p>
   </noscript>
 
-  <script src="/Portfolio/assets/site.js?v=3"></script>
+  <script src="/Portfolio/assets/site.js?v=4"></script>
   <script defer src="/Portfolio/libs/katex/katex.min.js"></script>
   <script defer src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
   <script defer src="/Portfolio/projects/clma/clma-core.js?v=1"></script>

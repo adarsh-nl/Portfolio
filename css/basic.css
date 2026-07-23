@@ -98,6 +98,17 @@ header li a:hover {
 
 #menu-icon {
   display: none;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#menu-icon img {
+  display: block;
+  width: 24px;
+  height: auto;
 }
 
 @media (max-width: 480px) {
@@ -207,10 +218,10 @@ instead, display a burger menu.
   }
 
   #menu-icon {
-    display: inline-block;
-    margin-right: 10px;
-    margin-top: 5px;
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+    margin-top: 2px;
   }
 }
 

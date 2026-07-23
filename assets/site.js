@@ -61,12 +61,22 @@
   var icon = document.getElementById("menu-icon");
   var nav = icon ? icon.closest("nav") : null;
   if (icon && nav) {
+    function setOpen(open) {
+      nav.classList.toggle("open", open);
+      icon.setAttribute("aria-expanded", open ? "true" : "false");
+    }
     icon.addEventListener("click", function (e) {
       e.stopPropagation();
-      nav.classList.toggle("open");
+      setOpen(!nav.classList.contains("open"));
     });
     document.addEventListener("click", function (e) {
-      if (!nav.contains(e.target)) nav.classList.remove("open");
+      if (!nav.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("open")) {
+        setOpen(false);
+        icon.focus();
+      }
     });
   }
 })();
