@@ -79,4 +79,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
 </url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/projects/uxv/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
+<url>
+    <loc>https://adarsh-nl.github.io/Portfolio/notes/cora/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
 </urlset>
