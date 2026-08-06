@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=19">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=19">
+  <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
+  <link rel="stylesheet" href="/Portfolio/projects/fault-injectors/fi.css?v=1">
+  <title>Collaborative Perception &middot; A Fault Injection Benchmark</title>
+  <meta name="description" content="Work in progress by Adarsh Nanjaiya Latha. Seven fault injectors, three severity tiers each, measured on cooperative LiDAR perception models. Every injector has a live synthetic bird's-eye-view scene you can break yourself.">
+  <meta name="author" content="Adarsh Nanjaiya Latha">
+  <meta property="og:title" content="Collaborative Perception: A Fault Injection Benchmark">
+  <meta property="og:description" content="What happens to multi-vehicle LiDAR fusion when poses drift, messages arrive late, agents vanish, and the weather turns. Seven injectors, live and interactive. Work in progress.">
+  <meta property="og:type" content="article">
+  <meta property="article:author" content="Adarsh Nanjaiya Latha">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/fault-injectors/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/fault-injectors/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image:alt" content="Collaborative Perception, a fault injection benchmark. Interactive project page.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Collaborative Perception: A Fault Injection Benchmark">
+  <meta name="twitter:description" content="Seven fault injectors for multi-vehicle LiDAR fusion, each one live and interactive. Work in progress.">
+  <!-- Dark first: this page opts into dark unless the visitor has chosen light. -->
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.setAttribute("data-theme","dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul id="site-nav">
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <button id="menu-icon" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><img src="/Portfolio/assets/hamburger.svg" alt=""></button>
+    </nav>
+  </header>
+
+  <nav class="fi-toc" aria-label="On this page">
+    <div class="fi-toc-inner">
+      <a href="#why">Why</a>
+      <a href="#setup">The scene</a>
+      <a href="#inj-pose">PoseError</a>
+      <a href="#inj-latency">CommLatency</a>
+      <a href="#inj-drop">AgentDrop</a>
+      <a href="#inj-modality">MissingModality</a>
+      <a href="#inj-points">PointsReduce</a>
+      <a href="#inj-fog">LidarFog</a>
+      <a href="#inj-snow">LidarSnow</a>
+      <a href="#ranking">Ranking</a>
+      <a href="#not-injected-sec">Not injected</a>
+      <a href="#notes">Notes</a>
+    </div>
+  </nav>
+
+  <div class="franklin-content fi" id="main" tabindex="-1">
+
+    <!-- ================================================================
+         HERO
+    ================================================================= -->
+    <section class="fi-hero" id="hero">
+      <p class="fi-venue">Work in progress &middot; unpublished</p>
+      <h1 class="fi-title">Collaborative Perception</h1>
+      <p class="fi-subtitle">A fault injection benchmark for cooperative LiDAR perception</p>
+      <p class="fi-tagline">Seven ways a fleet of vehicles can stop seeing straight, three severity tiers each, measured on published fusion models. Every injector below is live, so you can break the scene yourself.</p>
+      <p class="fi-authors">
+        <span class="fi-author"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></span>
+      </p>
+      <p class="fi-affils">University of Twente, The Netherlands</p>
+      <p class="fi-hero-links">
+        <a class="fi-btn" href="#setup">How to read this</a>
+        <a class="fi-btn" href="#ranking">Jump to the ranking</a>
+        <a class="fi-btn" href="#notes">Scope and caveats</a>
+      </p>
+      <p>
+        <span class="fi-badge fi-badge-wip"><b>Work in progress.</b> Results are preliminary and not peer reviewed.</span>
+      </p>
+      <p>
+        <span class="fi-badge">Numbers on this page: <b>CoBEVT</b> on <b>V2XSet</b>, <b>Perfect</b> setting</span>
+        <span class="fi-badge">Scenes: <b>procedurally generated</b>, not sensor data</span>
+      </p>
+    </section>
+
+    <!-- ================================================================
+         WHY
+    ================================================================= -->
+    <section id="why" class="fi-section">
+      <p class="fi-kicker">00 &middot; Why this matters</p>
+      <h2 class="fi-h2">One car cannot see around a building. Two can.</h2>
+      <p class="fi-hero-lede">Cooperative perception lets nearby vehicles share what their sensors picked up, so a car can detect an object that is completely invisible to its own LiDAR. Every published cooperative model takes that sharing for granted: poses are exact, messages arrive on time, every agent's sensor is clean, and nobody drops off the network. This benchmark measures what those models actually do when none of that holds.</p>
+
+      <figure class="fi-widget fi-wide" id="w-hero">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">The thing worth protecting</span>
+          <span class="fi-widget-sub">A synthetic intersection. Shaded wedges are what each vehicle's LiDAR can actually reach, given the buildings in the way.</span>
+        </div>
+        <canvas id="hero-bev" role="img" aria-label="Top-down view of an intersection. The ego vehicle's LiDAR visibility wedge is blocked by a corner building, leaving a shadow that contains a car coming down the cross street, so the ego cannot see it. A second vehicle on the far side shares its point cloud, its visibility wedge covers that shadow, and the hidden car becomes detectable."></canvas>
+        <div class="fi-controls">
+          <button class="fi-ctl" id="hero-play" aria-label="Play animation">&#9654;</button>
+          <div class="fi-tabs fi-tabs-small" id="hero-steps" role="tablist" aria-label="Stages">
+            <button role="tab" data-step="0" aria-selected="true">1 Ego alone</button>
+            <button role="tab" data-step="1">2 Collaborator joins</button>
+            <button role="tab" data-step="2">3 Fused</button>
+          </div>
+        </div>
+        <p class="fi-note" id="hero-caption">One vehicle, one viewpoint. The building on the corner casts a LiDAR shadow, and the car coming down the cross street is inside it.</p>
+      </figure>
+
+      <p>That gain is the entire reason to pay the cost of a vehicle-to-vehicle link. It is also fragile in a specific way: the ego is now trusting geometry, timing and sensor quality that belong to somebody else. A fault in a collaborator does not just remove information, it can actively inject wrong information into the ego's own fused representation. The rest of this page is seven ways that goes wrong, ordered as they appear in the injector suite rather than by how much damage they do.</p>
+    </section>
+
+    <!-- ================================================================
+         SETUP
+    ================================================================= -->
+    <section id="setup" class="fi-section">
+      <p class="fi-kicker">01 &middot; The scene and the numbers</p>
+      <h2 class="fi-h2">What you are looking at</h2>
+      <p>Every figure below is the same top-down scene, rendered live in your browser. It is a procedurally generated intersection, not recorded sensor data: buildings, parked cars and road edges make up a shared static world, four vehicles drive through it, and each agent casts its own rays and therefore has its own occlusions. Points are coloured by the agent that owns them. That single choice is what makes cooperative faults legible at all, because a fault that corrupts one agent's contribution shows up as one colour going wrong while the others stay put.</p>
+
+      <p>The ego is always blue and always at the origin. Collaborators take the other colours in a fixed order, so raising the agent count adds an agent rather than reshuffling the scene. This control is shared by every figure on the page:</p>
+
+      <div class="fi-scene-bar">
+        <label for="scene-agents-1">Agents in the scene
+          <input type="range" id="scene-agents-1" min="2" max="6" step="1" value="4">
+        </label>
+        <span class="fi-scene-count" aria-live="polite"></span>
+        <button type="button" class="fi-ctl-text fi-reseed">New world</button>
+        <p class="fi-scene-hint">Two agents means the ego plus a single collaborator, which is the hardest case for anything that takes a collaborator away. Six means the ego plus five.</p>
+      </div>
+
+      <figure class="fi-widget fi-wide" id="w-clean">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">The clean cooperative frame</span>
+          <span class="fi-widget-sub">No fault injected. This is the reference every figure below is compared against.</span>
+        </div>
+        <canvas id="bev-clean" role="img" aria-label="Top-down bird's-eye view of a synthetic intersection. Each agent contributes a point cloud drawn in its own colour: the ego in blue at the origin, collaborators in orange, teal, yellow, magenta and violet. Buildings, parked cars and road edges are shared static structure; four vehicles move along the lanes. Each agent's points stop where its line of sight is blocked."></canvas>
+        <div class="fi-controls">
+          <div id="clean-stats"></div>
+        </div>
+      </figure>
+
+      <h3 class="fi-h3">How to read the measured numbers</h3>
+      <p>Each injector has three severity tiers, and each tier has a measured cost in detection average precision at two intersection-over-union thresholds. Everything reported on this page comes from <strong>CoBEVT evaluated on V2XSet, at the checkpoint's shipped Perfect setting</strong>. Two further published baselines are in the suite and still running, so they are not here yet.</p>
+
+      <div class="fi-callout">
+        <p><strong>Deltas, not absolutes.</strong> Every number is a change against that model's own clean baseline, not a shared scale. A model with a weaker clean baseline has less to lose, so comparing one model's delta to another model's delta is not meaningful. Comparing <em>injectors within one model</em>, which is what this page does, is.</p>
+        <p>The severity sliders have four stops, clean plus the three measured tiers, and nothing in between. A continuous slider would imply numbers nobody measured.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         01 · POSE ERROR
+    ================================================================= -->
+    <section id="inj-pose" class="fi-section">
+      <p class="fi-kicker">Injector 01</p>
+      <h2 class="fi-h2">PoseError</h2>
+      <p class="fi-one-line">A collaborator thinks it is somewhere it is not, so everything it sends lands in the wrong place.</p>
+      <p>Localisation is never exact. GNSS drifts under a bridge, wheel odometry slips, heading estimates lag through a turn. Cooperative fusion has to put every agent's points into a common frame, and it does that using each agent's reported pose. When that pose is wrong by a few tens of centimetres and a fraction of a degree, the collaborator's entire point cloud arrives rotated and translated off the truth. The ego sees two copies of the same wall.</p>
+      <p>The rotation is applied about the collaborator's own sensor origin, which is why the error is not uniform: a fraction of a degree costs almost nothing near the collaborator and grows steadily with range. The far end of a collaborator's cloud is the part that lands worst.</p>
+
+      <figure class="fi-widget fi-wide" id="w-pose">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Clean and faulty overlaid, with the displacement field</span>
+          <span class="fi-widget-sub">Faded points are where the returns should be. Solid points are where the ego is told they are. Lines connect corresponding points.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-pose" role="img" aria-label="Bird's-eye view where each collaborator's point cloud appears twice: faded at its true position and solid at the position implied by the erroneous pose. Short line segments connect corresponding points, forming a displacement field that grows with distance from that collaborator. The ego's own points, in blue, never move."></canvas>
+            <div class="fi-controls">
+              <label class="fi-field" for="pose-mag">Displacement shown at
+                <select id="pose-mag">
+                  <option value="1">1x, true scale</option>
+                  <option value="3" selected>3x</option>
+                  <option value="6">6x</option>
+                </select>
+              </label>
+              <span class="fi-note" style="margin:0">A sub-metre offset is real but hard to see at 20 m per centimetre of screen. The readout is always the true value.</span>
+            </div>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="pose"></div>
+            <div id="ro-pose"></div>
+            <div class="fi-nums" data-inj="pose"></div>
+            <div class="fi-real-host" data-inj="pose" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <p>The damage is sharply threshold-dependent. At the loose 0.5 threshold, the mild tier is nearly free, because a box that is off by 20 cm still overlaps the ground truth enough to count. At 0.7 the same fault already costs 0.064, and by the severe tier it has taken 0.303. That gap between the two thresholds is the signature of a fault that misplaces objects rather than hiding them: the detections are still there, they are just no longer where the object is.</p>
+    </section>
+
+    <!-- ================================================================
+         02 · COMM LATENCY
+    ================================================================= -->
+    <section id="inj-latency" class="fi-section">
+      <p class="fi-kicker">Injector 02</p>
+      <h2 class="fi-h2">CommLatency</h2>
+      <p class="fi-one-line">A collaborator's message arrives late, so you are fusing a picture of where things used to be.</p>
+      <p>This is the one injector that makes no sense in a still image, so this figure runs. The collaborator's contribution is a whole frame from the past. Static structure is unaffected, because buildings do not move in 300 ms. Moving vehicles are a different story: the collaborator's returns sit behind the live ones by exactly the distance the vehicle covered while the message was in flight.</p>
+      <p>The useful unit here is metres, not milliseconds, because that is what the detector experiences. At <span class="fi-math">\(v = 9\)</span> m/s, a 300 ms delay is 2.7 m of positional error, which is more than half a car length. Watch the trailing returns build up as you raise the severity.</p>
+
+      <figure class="fi-widget fi-wide" id="w-latency">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Stale frames trailing the live world</span>
+          <span class="fi-widget-sub">Solid outlines are where vehicles are now. Dashed amber outlines are where the collaborators still think they are.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-latency" role="img" aria-label="Animated bird's-eye view. Vehicles move along the lanes. The ego's returns track them exactly, while every collaborator's returns lag behind by the latency, leaving a visible trail of stale points behind each moving vehicle. An annotated arrow measures the gap in metres."></canvas>
+            <div class="fi-controls">
+              <button class="fi-ctl" id="latency-play" aria-label="Play animation">&#9654;</button>
+              <label class="fi-scrub" for="latency-time">Time
+                <input type="range" id="latency-time" min="0" max="100" step="1" value="0">
+              </label>
+            </div>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="latency"></div>
+            <div id="ro-latency"></div>
+            <div class="fi-nums" data-inj="latency"></div>
+            <div class="fi-real-host" data-inj="latency" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <p>Latency degrades gently and then not gently at all. Going from 100 ms to 200 ms costs eight times more AP@0.5 than the first 100 ms did. The reason is visible in the figure: at 100 ms the stale returns still overlap the live vehicle, so fusion mostly smears the box. Past roughly 200 ms the stale cloud separates from the live one entirely, and the model is being asked to fuse two objects where there is one.</p>
+    </section>
+
+    <!-- ================================================================
+         03 · AGENT DROP
+    ================================================================= -->
+    <section id="inj-drop" class="fi-section">
+      <p class="fi-kicker">Injector 03</p>
+      <h2 class="fi-h2">AgentDrop</h2>
+      <p class="fi-one-line">A collaborator goes silent and disappears from the fusion graph entirely.</p>
+      <p>A Bernoulli trial per non-ego agent per frame. If it fires, that agent contributes nothing and is not in the graph at all: no node, no edge, no attention. This is the honest model of a link that fails, a vehicle that drives out of range, or a node that never joined.</p>
+      <p>How much this hurts depends almost entirely on how many collaborators you had to begin with, which is why the agent count control matters here more than anywhere else on the page.</p>
+
+      <div class="fi-scene-bar">
+        <label for="scene-agents-2">Agents in the scene
+          <input type="range" id="scene-agents-2" min="2" max="6" step="1" value="4">
+        </label>
+        <span class="fi-scene-count" aria-live="polite"></span>
+        <button type="button" class="fi-ctl-text fi-reseed">New world</button>
+      </div>
+
+      <figure class="fi-widget fi-wide" id="w-drop">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">A colour vanishes, and so does its node</span>
+          <span class="fi-widget-sub">The strip underneath is the fusion graph. A dropped agent is crossed out and its edge is gone.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-drop" role="img" aria-label="Bird's-eye view where dropped agents contribute no points at all, so their colour is entirely absent from the scene and their vehicle glyph is crossed out. The regions only they could see become empty."></canvas>
+            <canvas id="graph-drop" role="img" aria-label="Fusion graph strip: the ego node on the left connected to one node per collaborator. Dropped collaborators are drawn as dashed circles with a cross through them and no edge to the ego."></canvas>
+            <div class="fi-controls">
+              <button type="button" class="fi-ctl-text" id="drop-reroll">Resample the coin flips</button>
+            </div>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="drop"></div>
+            <div id="ro-drop"></div>
+            <div class="fi-nums" data-inj="drop"></div>
+            <div class="fi-real-host" data-inj="drop" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <p class="fi-punch" id="note-drop"></p>
+
+      <p>Even at p = 0.75, AgentDrop costs 0.113 AP@0.7. That is the mildest severe tier of any injector in the suite, and it is the first half of the headline finding: losing a collaborator outright is survivable, because the ego still has its own clean sensor and the fusion is simply operating with less input than it hoped for.</p>
+    </section>
+
+    <!-- ================================================================
+         04 · MISSING MODALITY
+    ================================================================= -->
+    <section id="inj-modality" class="fi-section">
+      <p class="fi-kicker">Injector 04</p>
+      <h2 class="fi-h2">MissingModality</h2>
+      <p class="fi-one-line">A collaborator still shows up and still gets fused, but its sensor delivers nothing.</p>
+      <p>Same Bernoulli trial, same probabilities, and in a naive point view an identical picture: that agent's colour is gone. The difference is not in the points, it is in the graph. The agent is still announcing itself, still occupying a slot in the fusion, still receiving attention weight. It is contributing an empty feature map to a model that was never told it might be empty.</p>
+
+      <figure class="fi-widget fi-wide" id="w-modality">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Same missing points, different graph</span>
+          <span class="fi-widget-sub">Left, the scene. Right, the fusion graph where the node is hollow but present.</span>
+        </div>
+        <div class="fi-two">
+          <div>
+            <span class="fi-panel-label">Bird's-eye view</span>
+            <canvas id="bev-modality" role="img" aria-label="Bird's-eye view identical in appearance to the AgentDrop figure: agents with a missing modality contribute no points, so their colour is absent from the scene."></canvas>
+          </div>
+          <div>
+            <span class="fi-panel-label">Fusion graph</span>
+            <canvas id="graph-modality" role="img" aria-label="Fusion graph strip where every node is still present. Agents with a missing modality are drawn as hollow circles with a solid edge to the ego and a label reading zero points, showing that they still participate in fusion while contributing nothing."></canvas>
+            <div class="fi-sev-host" data-inj="modality"></div>
+            <div id="ro-modality"></div>
+            <div class="fi-controls">
+              <button type="button" class="fi-ctl-text" id="modality-reroll">Resample the coin flips</button>
+            </div>
+          </div>
+        </div>
+        <div class="fi-nums" data-inj="modality" style="margin-top:1.2em"></div>
+        <div class="fi-real-host" data-inj="modality" hidden></div>
+      </figure>
+
+      <div class="fi-callout fi-callout-warn">
+        <p><strong>The teaching point.</strong> MissingModality degrades slightly worse than AgentDrop at every tier, on both thresholds, even though the surviving point clouds are identical. An empty agent still consumes fusion attention, and a dropped one does not. The model spends part of its representational budget attending to a collaborator that has nothing to say, and that budget comes out of the agents that do.</p>
+      </div>
+
+      <p>The contrast is worth seeing side by side at a fixed probability, because the point clouds are the same and the numbers are not:</p>
+
+      <figure class="fi-widget fi-wide" id="w-contrast">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">AgentDrop against MissingModality, same p, same coin flips</span>
+          <span class="fi-widget-sub">The only difference in the whole comparison is whether the empty node stays in the graph.</span>
+        </div>
+        <div class="fi-tabs fi-tabs-small" id="cmp-tiers" role="tablist" aria-label="Severity tier">
+          <span class="fi-tabs-label">Tier</span>
+          <button role="tab" data-tab="1">Mild, p = 0.25</button>
+          <button role="tab" data-tab="2" aria-selected="true">Moderate, p = 0.50</button>
+          <button role="tab" data-tab="3">Severe, p = 0.75</button>
+        </div>
+        <div class="fi-two">
+          <canvas id="graph-cmp-drop" role="img" aria-label="Fusion graph for AgentDrop: affected nodes are crossed out and removed from the graph."></canvas>
+          <canvas id="graph-cmp-modality" role="img" aria-label="Fusion graph for MissingModality: the same affected nodes are hollow but still connected to the ego."></canvas>
+        </div>
+        <div id="cmp-bars" style="margin-top:1em"></div>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         05 · POINTS REDUCE
+    ================================================================= -->
+    <section id="inj-points" class="fi-section">
+      <p class="fi-kicker">Injector 05</p>
+      <h2 class="fi-h2">PointsReduce</h2>
+      <p class="fi-one-line">Every agent keeps only a fraction of its returns, so the whole scene thins out.</p>
+      <p>Uniform random subsampling across every agent. This is the closest thing in the suite to a plain capacity fault: a cheaper sensor, an aggressive voxel filter, a decimation step that got tuned for throughput instead of accuracy. Nothing is misplaced and nothing is invented, there is simply less of it.</p>
+      <p>What makes this injector informative is that it is uniform. It removes no structure preferentially, so whatever degradation shows up is attributable to density alone. Watch the surviving count, and watch how quickly the far side of the scene stops being describable.</p>
+
+      <figure class="fi-widget fi-wide" id="w-points">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Density falling away</span>
+          <span class="fi-widget-sub">Points are drawn slightly larger once thinning starts, so sparse regions stay visible rather than disappearing into the background.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-points" role="img" aria-label="Bird's-eye view in which every agent's point cloud is randomly subsampled. Building outlines and road edges become progressively more ragged as the keep fraction falls, and distant structure stops being recognisable before near structure does."></canvas>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="points"></div>
+            <div id="ro-points"></div>
+            <div class="fi-nums" data-inj="points"></div>
+            <div class="fi-real-host" data-inj="points" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <p>Even the mild tier here, keeping 30% of points, costs 0.138 AP@0.5, which is already worse than the severe tier of AgentDrop, CommLatency at 200 ms, or anything MissingModality does. Density is load-bearing. A model that has learned to describe a car from a few hundred returns does not degrade gracefully when it gets a few dozen.</p>
+    </section>
+
+    <!-- ================================================================
+         06 · LIDAR FOG
+    ================================================================= -->
+    <section id="inj-fog" class="fi-section">
+      <p class="fi-kicker">Injector 06</p>
+      <h2 class="fi-h2">LidarFog</h2>
+      <p class="fi-one-line">Fog swallows the return energy and drags returns back toward the sensor.</p>
+      <p>Two coupled effects, and the coupling is the point. First, water droplets absorb and scatter the outgoing pulse, so every return comes back weaker: mean intensity falls from 0.94 clean to 0.80, 0.66 and 0.51 across the three tiers. Second, a fraction of pulses are backscattered by the fog itself before ever reaching a surface, so the return arrives early and the point lands short of the object that was supposed to produce it.</p>
+      <p>Points here are coloured by intensity rather than by owner, because the whole distribution shifting is the fault. The histogram underneath shows the clean distribution as a dashed outline and the faulted one as filled bars.</p>
+
+      <figure class="fi-widget fi-wide" id="w-fog">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Energy draining out of the scene</span>
+          <span class="fi-widget-sub">Colour is return intensity, dark violet low through yellow high. The relocation is animated, since the returns are not still.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-fog" role="img" aria-label="Bird's-eye view with points coloured by return intensity on a violet to yellow scale. As fog severity rises the entire scene shifts from yellow toward violet, and a growing fraction of points migrate inward toward their own sensor, landing short of the surfaces that produced them."></canvas>
+            <canvas id="fog-hist" role="img" aria-label="Histogram of return intensity. The dashed outline is the clean distribution concentrated near 0.94. The filled bars are the faulted distribution, which shifts steadily toward zero as severity rises."></canvas>
+            <div class="fi-controls">
+              <button class="fi-ctl" id="fog-play" aria-label="Play animation">&#9654;</button>
+              <span class="fi-note" style="margin:0">The animation shows returns being pulled toward and released from each sensor as backscatter comes and goes.</span>
+            </div>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="fog"></div>
+            <div id="ro-fog"></div>
+            <div class="fi-nums" data-inj="fog"></div>
+            <div class="fi-real-host" data-inj="fog" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="fi-callout fi-callout-warn">
+        <p><strong>The headline finding.</strong> LidarFog is catastrophic, and it is catastrophic immediately. The mild tier alone takes 0.693 AP@0.5 and 0.551 AP@0.7, which is near-total collapse of the detector. Severities 2 and 3 barely add to it, 0.840 and 0.849, because there is very little left to lose by then. Nothing else in the suite comes close, and no amount of extra collaborators helps, because fog is a shared condition: every agent in the scene is in the same weather.</p>
+      </div>
+
+      <p>That saturation shape matters for anyone planning mitigation work. The gap between clean and mild is where essentially all of the damage lives, so a defence that only helps at severity 3 is defending an already lost position.</p>
+    </section>
+
+    <!-- ================================================================
+         07 · LIDAR SNOW
+    ================================================================= -->
+    <section id="inj-snow" class="fi-section">
+      <p class="fi-kicker">Injector 07</p>
+      <h2 class="fi-h2">LidarSnow</h2>
+      <p class="fi-one-line">Snowflakes knock out some returns and invent new ones close to the sensor.</p>
+      <p>Snow is the subtlest result in the suite, and the one most likely to be misread. Each point gets one of three fates: it survives untouched, it survives with its energy cut by a flake clipping the beam, or it is lost entirely. On top of that, flakes near the sensor produce returns of their own, points that correspond to no object at all.</p>
+
+      <figure class="fi-widget fi-wide" id="w-snow">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Per-point status</span>
+          <span class="fi-widget-sub">Blue is unchanged, yellow is attenuated, red is added scatter that corresponds to nothing in the world.</span>
+        </div>
+        <div class="fi-panel-grid">
+          <div class="fi-panel-main">
+            <canvas id="bev-snow" role="img" aria-label="Bird's-eye view with points coloured by status rather than by owner. Blue points are unchanged, yellow points are attenuated, and red points are added scatter clustered around each sensor. As severity rises the red halos around every agent grow dense while the blue structure thins only slightly."></canvas>
+            <div class="fi-controls">
+              <button type="button" class="fi-ctl-text" id="snow-reroll">Resample the flakes</button>
+            </div>
+          </div>
+          <div class="fi-panel-side">
+            <div class="fi-sev-host" data-inj="snow"></div>
+            <div id="ro-snow"></div>
+            <div class="fi-nums" data-inj="snow"></div>
+            <div class="fi-real-host" data-inj="snow" hidden></div>
+          </div>
+        </div>
+      </figure>
+
+      <h3 class="fi-h3">The mechanism: it is not the removal</h3>
+      <p>The obvious hypothesis is that snow hurts because it deletes returns. The measurement says otherwise. The fraction of points removed actually <em>falls</em> as severity rises, from 0.399 to 0.323 to 0.290, while accuracy degrades monotonically the whole way, from 0.394 to 0.404 to 0.448 AP@0.7 lost. Two lines going opposite directions:</p>
+
+      <figure class="fi-widget fi-wide" id="w-snow-mech">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Removal falling against damage rising</span>
+          <span class="fi-widget-sub">Dashed line and left axis, fraction removed. Solid line and right axis, AP@0.7 lost.</span>
+        </div>
+        <div id="snow-mech"></div>
+      </figure>
+
+      <p class="fi-punch">If more removal meant more damage, these two lines would move together. They do not, so the damage is coming from the other half of the mechanism: the added scatter, which grows steadily with severity and puts dense false structure right where the detector is most confident, close to the sensor.</p>
+
+      <p>This is a useful thing to know before designing a defence. An outlier filter that targets isolated returns is attacking the right half of the problem. A densification or completion step that tries to recover deleted points is attacking the half that is getting smaller.</p>
+    </section>
+
+    <!-- ================================================================
+         RANKING
+    ================================================================= -->
+    <section id="ranking" class="fi-section">
+      <p class="fi-kicker">08 &middot; All seven together</p>
+      <h2 class="fi-h2">Losing a collaborator is cheap. Trusting a broken one is not.</h2>
+      <p>Every injector at one tier, sorted by damage. The colouring splits them into two families: faults that take a collaborator away, and faults that leave the collaborator in place while corrupting what it sends.</p>
+
+      <figure class="fi-widget fi-wide" id="w-rank">
+        <div class="fi-widget-head">
+          <span class="fi-widget-title">Ranked by damage</span>
+          <span class="fi-widget-sub">Click any row to jump to that injector.</span>
+        </div>
+        <div class="fi-tabs fi-tabs-small" id="rank-tiers" role="tablist" aria-label="Severity tier">
+          <span class="fi-tabs-label">Tier</span>
+          <button role="tab" data-tab="1">Mild</button>
+          <button role="tab" data-tab="2">Moderate</button>
+          <button role="tab" data-tab="3" aria-selected="true">Severe</button>
+        </div>
+        <div class="fi-tabs fi-tabs-small" id="rank-metric" role="tablist" aria-label="Metric">
+          <span class="fi-tabs-label">Metric</span>
+          <button role="tab" data-tab="d70" aria-selected="true">ΔAP@0.7</button>
+          <button role="tab" data-tab="d50">ΔAP@0.5</button>
+        </div>
+        <div id="rank-chart"></div>
+        <div class="fi-rank-key" id="rank-key"></div>
+      </figure>
+
+      <p class="fi-punch">Agent loss costs about 0.11 AP@0.7 at its worst. Sensor corruption costs up to 0.66. The two worst things that can happen to a cooperative perception stack are not the network failing, they are the weather and the sensor budget.</p>
+
+      <p>That ordering is not intuitive, and it is not what the cooperative perception literature spends most of its effort on. A large share of robustness work in this area is about communication: dropped links, bandwidth budgets, delay compensation, pose alignment. Those matter, and the ranking confirms pose error and latency are the worst of the communication-side faults. But every one of them sits below every sensor-degradation fault in the suite. A stack that is hardened against every failure mode of the link, and runs a LiDAR that fogs up, is hardened against the smaller problem.</p>
+
+      <p>There is a design implication in the two families as well. Losing an agent degrades gracefully because the fusion just has less to work with. Receiving corrupted data from an agent degrades badly because the model has no way to tell that the data is corrupt, and it has been trained to trust it. That asymmetry argues for making agents easier to <em>discount</em> than to lose: a fusion that can weight down a contribution it does not trust turns the expensive failure mode into the cheap one.</p>
+    </section>
+
+    <!-- ================================================================
+         NOT INJECTED
+    ================================================================= -->
+    <section id="not-injected-sec" class="fi-section">
+      <p class="fi-kicker">09 &middot; Scoping</p>
+      <h2 class="fi-h2">What is not injected, and why</h2>
+      <p>Four injectors that a reader might reasonably expect to find here are deliberately absent. Each one was either implemented and then cut, or scoped out before implementation, for a specific reason. Leaving them silently missing would make the suite look more complete than it is.</p>
+
+      <div class="fi-cards" id="not-injected"></div>
+
+      <p>The common thread is that an injector is only worth reporting if it perturbs the thing it claims to perturb. An injector that acts on the wrong stage of the pipeline, or that needs sensor metadata the data does not carry, produces a number that looks like a measurement and is not one.</p>
+    </section>
+
+    <!-- ================================================================
+         NOTES
+    ================================================================= -->
+    <section id="notes" class="fi-section">
+      <p class="fi-kicker">10 &middot; Notes</p>
+      <h2 class="fi-h2">Scope, provenance and honest limits</h2>
+
+      <h3 class="fi-h3">Where the numbers come from</h3>
+      <p>Every measured value on this page is <strong>CoBEVT on V2XSet, evaluated at the checkpoint's shipped Perfect setting</strong>, which is the noise-free configuration the authors released. Deltas are against that model's own clean baseline. The full suite covers three published baselines; the other two are still running and will be added as separate series rather than averaged into these, because averaging deltas across models with different clean baselines would produce a number that describes nothing.</p>
+      <p>The suite also spans three datasets, OPV2V, V2XSet and Griffin. This page reports the V2XSet slice only.</p>
+
+      <h3 class="fi-h3">What the visualisations are and are not</h3>
+      <p>Every scene on this page is generated in your browser from a seed. There is no sensor data here, on purpose: the page has to work on a laptop with no dataset and no cluster access. The scenes are built to be physically faithful in the ways that carry the argument, and they are not faithful in ways that do not.</p>
+      <ul>
+        <li><strong>Faithful:</strong> occlusion is real ray casting against real geometry, so an agent genuinely cannot see through a building. Pose error transforms a cloud about that collaborator's own sensor origin, so ghosting grows with range for the correct reason. Latency separates static from dynamic returns, because only the dynamic ones go stale. Intensity falls with range. Fault parameters are the benchmark's actual tier values, and the clean mean intensity is calibrated to the measured 0.94.</li>
+        <li><strong>Not faithful:</strong> the world is a single synthetic intersection rather than a dataset distribution. Point counts are chosen for legibility on screen, not to match a real sensor's return count. The visual severity of a fault on screen is not proportional to its AP cost, which is exactly why the measured numbers sit next to every figure instead of being inferred from the picture.</li>
+        <li><strong>Deliberately exaggerated, and labelled:</strong> the PoseError displacement magnifier defaults to 3x. The true displacement is always shown in the readout.</li>
+      </ul>
+
+      <h3 class="fi-h3">Dropping in real data later</h3>
+      <p>The page checks for <code>real/manifest.json</code> at load. If it exists, any injector listed in it gains a toggle that shows an exported clip or frame from the cluster next to the synthetic scene. If it does not exist, nothing changes and no error appears. Format:</p>
+      <div class="fi-codebox">
+        <button class="fi-copy" type="button">copy</button>
+        <pre>{
+  "fog": {
+    "3": { "type": "video", "src": "/Portfolio/projects/fault-injectors/real/fog_s3.mp4",
+           "poster": "/Portfolio/projects/fault-injectors/real/fog_s3.jpg",
+           "caption": "OPV2V frame 001820, LidarFog severity 3, CoBEVT." }
+  },
+  "snow": {
+    "1": { "type": "image", "src": "/Portfolio/projects/fault-injectors/real/snow_s1.png",
+           "alt": "Real snow-injected frame", "caption": "V2XSet, LidarSnow severity 1." }
+  }
+}</pre>
+      </div>
+      <p class="fi-note">Keys are injector names as used on this page, then the severity tier as a string, 1 through 3. Anything not listed simply keeps the synthetic scene.</p>
+
+      <h3 class="fi-h3">Reproducing a figure</h3>
+      <p>The scene is fully determined by two values, the agent count and the world seed, both in the shared control. Every fault draw is seeded from the world seed too, so a given configuration renders identically on every machine and every reload. The resample buttons advance the fault seed only, leaving the world alone.</p>
+
+      <ul class="fi-resources">
+        <li><strong>Work:</strong> Collaborative Perception, a fault injection benchmark for cooperative LiDAR perception. Adarsh Nanjaiya Latha, University of Twente. Work in progress, unpublished, no preprint yet.</li>
+        <li><strong>Status:</strong> the title is a working one and may change. Results on this page are preliminary and have not been peer reviewed. Please do not cite them.</li>
+        <li><strong>Baselines in the suite:</strong> three published cooperative perception models, LiDAR-only. CoBEVT results are on this page; the other two are pending.</li>
+        <li><strong>Datasets:</strong> OPV2V, V2XSet, Griffin. This page covers V2XSet.</li>
+        <li><strong>Page source:</strong> <code>projects/fault-injectors/</code> in the site repository. See <code>README.md</code> there for how each figure maps to its measurement, and <code>COMPONENTS.md</code> for the component breakdown.</li>
+        <li><strong>Related work of mine:</strong> <a href="/Portfolio/projects/uxv/">the UxV ecosystem paper</a> on cross-domain unmanned vehicle cooperation, and <a href="/Portfolio/projects/clma/">collaborative drift compensation</a> on keeping federated models honest as conditions change.</li>
+      </ul>
+
+      <p class="fi-disclaimer">This page describes work in progress by Adarsh Nanjaiya Latha. The measured values are current as of the CoBEVT run and will be revised if the evaluation changes. Nothing here has been peer reviewed.</p>
+    </section>
+
+    <div class="page-foot"></div>
+  </div><!-- CONTENT ENDS HERE -->
+
+  <noscript>
+    <style>.fi-widget .fi-controls, .fi-scene-bar, .fi-panel-side { display: none; }</style>
+    <p style="text-align:center; font-size: 0.85em;">Every figure on this page is generated live in the browser, so JavaScript is required. The written explanation of each injector, and the measured numbers in the text, remain readable without it.</p>
+  </noscript>
+
+  <script src="/Portfolio/assets/site.js?v=4"></script>
+  <script defer src="/Portfolio/libs/katex/katex.min.js"></script>
+  <script defer src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
+  <script defer src="/Portfolio/projects/fault-injectors/fi-core.js?v=1"></script>
+  <script defer src="/Portfolio/projects/fault-injectors/fi-scene.js?v=1"></script>
+  <script defer src="/Portfolio/projects/fault-injectors/fi-widgets.js?v=1"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

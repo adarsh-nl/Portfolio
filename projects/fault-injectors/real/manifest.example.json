@@ -1,0 +1,27 @@
+{
+  "_comment": "Rename this file to manifest.json once real exports exist. The page fetches real/manifest.json at load and silently ignores a 404, so leaving this as .example.json keeps the page on synthetic scenes only. Top-level keys are injector keys: pose, latency, drop, modality, points, fog, snow. Second-level keys are the severity tier as a string, 1 to 3. See README.md.",
+
+  "fog": {
+    "1": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/fog_s1.png",
+      "alt": "Exported bird's-eye view of a real frame with LidarFog severity 1 injected",
+      "caption": "V2XSet, LidarFog severity 1, CoBEVT. Replace with a real export."
+    },
+    "3": {
+      "type": "video",
+      "src": "/Portfolio/projects/fault-injectors/real/fog_s3.mp4",
+      "poster": "/Portfolio/projects/fault-injectors/real/fog_s3.jpg",
+      "caption": "V2XSet, LidarFog severity 3, CoBEVT. Replace with a real export."
+    }
+  },
+
+  "snow": {
+    "3": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/snow_s3.png",
+      "alt": "Exported bird's-eye view of a real frame with LidarSnow severity 3 injected",
+      "caption": "V2XSet, LidarSnow severity 3, CoBEVT. Replace with a real export."
+    }
+  }
+}
