@@ -1,5 +1,5 @@
 /* ==================================================================
-   fi-widgets.js — every interactive figure on the page.
+   fi-widgets.js: every interactive figure on the page.
 
    One widget per fault injector, plus the hero occlusion figure, the
    ranking chart, and the AgentDrop / MissingModality contrast.
@@ -181,7 +181,7 @@
     FI.scene.on(onSceneChange);
 
     /* ==============================================================
-       HERO — two vehicles seeing around an occlusion.
+       HERO: two vehicles seeing around an occlusion.
        A bespoke miniature scene: the ego's visibility polygon stops at
        a corner building, a car coming down the cross street sits in the
        shadow, and the collaborator's polygon covers exactly that gap.
@@ -389,7 +389,7 @@
     })();
 
     /* ==============================================================
-       LEGEND / SETUP — a clean cooperative frame, no fault at all.
+       LEGEND / SETUP: a clean cooperative frame, no fault at all.
        This is the reference every fault figure is compared against.
     ============================================================== */
     (function setup() {
@@ -1159,7 +1159,7 @@
     })();
 
     /* ==============================================================
-       NOT INJECTED — cards generated from the same data object
+       NOT INJECTED: cards generated from the same data object
     ============================================================== */
     (function notInjected() {
       var host = document.getElementById("not-injected");

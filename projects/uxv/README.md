@@ -1,4 +1,4 @@
-# The UxV Ecosystem — interactive project page
+# The UxV Ecosystem: interactive project page
 
 Interactive explainer for:
 
@@ -24,38 +24,38 @@ No frameworks, no bundler, no external libraries.
 
 ## How each visualization teaches the paper
 
-- **Hero** — sky/land/water bands with UAV/UGV/USV particles; cross-domain
+- **Hero**: sky/land/water bands with UAV/UGV/USV particles; cross-domain
   links flicker between them with traveling pulses. The paper's thesis
   (domains discovering each other) as an ambient image.
-- **§01 Market slider + application matrix** — the \$29.3B→\$46B forecast is
+- **§01 Market slider + application matrix**: the \$29.3B→\$46B forecast is
   *dragged through*, not read; Table I becomes a clickable platform×sector
   grid so the visitor samples today's siloed landscape.
-- **§02 Wildfire race** — the paper's first scenario as a controlled
+- **§02 Wildfire race**: the paper's first scenario as a controlled
   experiment: two identical worlds (same seed, same fleet, same fire), one
   siloed, one ecosystem. The only independent variable is whether UAV
-  sightings become UGV tasks — so the rescue-count gap *is* the thesis.
-- **§02 Maritime storyboard** — the second scenario; each step adds a domain
+  sightings become UGV tasks, so the rescue-count gap *is* the thesis.
+- **§02 Maritime storyboard**: the second scenario; each step adds a domain
   and the time-to-neutralization bar shrinks: complement/compound effects
   quantified.
-- **§03 Fusion pyramid** — the paper's three-level fusion hierarchy. Each
+- **§03 Fusion pyramid**: the paper's three-level fusion hierarchy. Each
   level runs a live computation: noisy fixes → Kalman-style state (L1), two
   viewpoints → associated + fused track (L2), facts → knowledge-graph
   relations (L3). Makes "what/where vs. why/so-what" concrete.
-- **§04 Prior-work table** — Table II with a working sketch of each row's
+- **§04 Prior-work table**: Table II with a working sketch of each row's
   ceiling: Stolfi's static zones lose the crossing target; JAUS delivers
   packets under a pulsing "but what does it MEAN"; Wu compresses the mission
   to a 2×2 game; Xu's pair lands perfectly while a third party sails past.
-- **§05 Architecture explorer** — Fig. 1 rebuilt: every module clickable
+- **§05 Architecture explorer**: Fig. 1 rebuilt: every module clickable
   (description + the paper's own example), plus two flow animations (command
   descending, sensing ascending) where each block lights as data passes.
-- **§06 Mechanisms** — one widget per moving part: DTN buffering ("lost: 0,
+- **§06 Mechanisms**: one widget per moving part: DTN buffering ("lost: 0,
   always"), DHT service lookup (chemical-spill story), product-of-Gaussians
   track fusion (toggle sensors, watch the ellipse balloon), auction-based
   allocation with kill-and-re-auction.
-- **§07 Simulator** — all mechanisms composed: publish → auction → escort →
+- **§07 Simulator**: all mechanisms composed: publish → auction → escort →
   ferry → re-task, with jamming and click-to-kill. The event log narrates the
   architecture doing its job.
-- **§08–10** — challenges cards, future-work roadmap tabs, takeaways,
+- **§08–10**: challenges cards, future-work roadmap tabs, takeaways,
   resources + BibTeX.
 
 ## Conventions
@@ -81,5 +81,5 @@ python3 -m http.server 8931 --directory ~/Desktop
 then open `http://localhost:8931/Portfolio/projects/uxv/`.
 
 The scenario dynamics are conceptual reconstructions built to teach the
-paper's ideas — the paper is a vision/position paper; nothing here is
+paper's ideas. The paper is a vision/position paper; nothing here is
 experimental data.

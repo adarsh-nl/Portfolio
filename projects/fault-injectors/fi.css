@@ -1,5 +1,5 @@
 /* ==================================================================
-   Fault injection for cooperative perception — project page styles.
+   Fault injection for cooperative perception: project page styles.
 
    Dark first: the page opts into the dark theme unless the visitor has
    explicitly chosen light, and the dark steps below are the ones that
@@ -13,12 +13,12 @@
 
 :root {
   /* categorical agent slots: 1 is always the ego */
-  --viz-s1: #2a78d6;   /* blue    — ego */
-  --viz-s2: #d9622a;   /* orange  — A1 */
-  --viz-s3: #0f9e75;   /* teal    — A2, also "agent loss" family */
-  --viz-s4: #b58a00;   /* yellow  — A3, also "attenuated" */
-  --viz-s5: #c8437f;   /* magenta — A4 */
-  --viz-s6: #6b4ee6;   /* violet  — A5 */
+  --viz-s1: #2a78d6;   /* blue:    ego */
+  --viz-s2: #d9622a;   /* orange:  A1 */
+  --viz-s3: #0f9e75;   /* teal:    A2, also "agent loss" family */
+  --viz-s4: #b58a00;   /* yellow:  A3, also "attenuated" */
+  --viz-s5: #c8437f;   /* magenta: A4 */
+  --viz-s6: #6b4ee6;   /* violet:  A5 */
 
   --viz-crit: #cf3a34; /* corrupted data family, added scatter */
   --viz-good: #17913f;

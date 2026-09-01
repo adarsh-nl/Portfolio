@@ -3,10 +3,17 @@
   <channel>
     <title>Adarsh Nanjaiya Latha</title>
     <link>https://adarsh-nl.github.io/Portfolio/</link>
-    <description>News and updates from Adarsh Nanjaiya Latha — Doctoral Candidate in Computer Science, University of Twente.</description>
+    <description>News and updates from Adarsh Nanjaiya Latha, Doctoral Candidate in Computer Science, University of Twente.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://adarsh-nl.github.io/Portfolio/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Attended the 2026 IEEE RAS Summer School on Multi-Robot Systems, Prague</title>
+      <link>https://mrs.fel.cvut.cz/summer-school-2026/</link>
+      <description>Attended the 2026 IEEE RAS Summer School on Multi-Robot Systems in Prague, hosted by the Multi-Robot Systems Group at the Czech Technical University: cooperative navigation, active perception, legged robotics and reinforcement learning, closing with outdoor experiments on real UAV swarms.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-08-mrs-summer-school</guid>
+    </item>
     <item>
       <title>HD-map support for the Griffin dataset merged into py123d</title>
       <link>https://github.com/kesai-labs/py123d/pull/159</link>
@@ -17,7 +24,7 @@
     <item>
       <title>New post: Adaptive Spatiotemporal Graph Learning for Drone Swarms</title>
       <link>https://adarsh-nl.github.io/Portfolio/otium/graph_learning_swarms/</link>
-      <description>A short review of recent work on learning over time-evolving graphs for swarm situational awareness — and its two open gaps.</description>
+      <description>A short review of recent work on learning over time-evolving graphs for swarm situational awareness, and its two open gaps.</description>
       <pubDate>Fri, 17 Jul 2026 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">adarsh-post-2026-07-graph-learning-swarms</guid>
     </item>

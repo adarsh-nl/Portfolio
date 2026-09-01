@@ -1,10 +1,10 @@
 /* ==================================================================
-   uxv-arch.js — the interactive UxV Ecosystem Architecture explorer.
+   uxv-arch.js: the interactive UxV Ecosystem Architecture explorer.
 
    The paper's Fig. 1 rebuilt as a living diagram: every module is
    clickable (description + concrete example from the paper in the
    side panel), and two flow animations show a mission command
-   descending the stack and sensor data ascending it — each block
+   descending the stack and sensor data ascending it, and each block
    illuminating as information passes through, so the *reason* for
    the layering is visible, not asserted.
 ================================================================== */
@@ -35,18 +35,18 @@
     var MODULES = {
       "mission-interface": {
         layer: "L4", x: 30, y: 34, w: 270, h: 50, name: "Mission Interface",
-        desc: "The human operator specifies the mission in a standardized format — objectives, constraints, rules of engagement. Strategic command and control, not micromanagement.",
+        desc: "The human operator specifies the mission in a standardized format: objectives, constraints, rules of engagement. Strategic command and control, not micromanagement.",
         ex: "MISSION: Secure Facility. OBJECTIVE 1: Establish Perimeter. OBJECTIVE 2: Investigate Anomaly at (lat, lon)."
       },
       "cop": {
         layer: "L4", x: 340, y: 34, w: 270, h: 50, name: "Integrated Common Operating Picture",
         desc: "A multimodal live visualization of the Distributed World Model: one unified, real-time understanding of the operational environment for the operator to monitor.",
-        ex: "The operator watches the fused picture — not fifteen separate video feeds."
+        ex: "The operator watches the fused picture, not fifteen separate video feeds."
       },
       "dwm": {
         layer: "L3", x: 30, y: 132, w: 270, h: 172, name: "Distributed World Model",
         container: true,
-        desc: "The cornerstone of the architecture: a logically centralized but physically distributed representation of shared reality — a multi-layered knowledge base spanning geometry, objects, semantics and mission intelligence.",
+        desc: "The cornerstone of the architecture: a logically centralized but physically distributed representation of shared reality, a multi-layered knowledge base spanning geometry, objects, semantics and mission intelligence.",
         ex: "Every vehicle contributes to it and reads from it; no single machine owns it."
       },
       "fusion-engine": {
@@ -56,19 +56,19 @@
       },
       "env-map": {
         layer: "L3", x: 42, y: 208, w: 246, h: 40, name: "Environment Map",
-        desc: "Three stacked layers: geometric (terrain, obstacles), object (state of all dynamic entities), and semantic — space annotated with mission meaning.",
+        desc: "Three stacked layers: geometric (terrain, obstacles), object (state of all dynamic entities), and semantic: space annotated with mission meaning.",
         ex: "Semantic annotations like No-Fly Zone, Area Already Searched, Objective 1 complete."
       },
       "kgraph": {
         layer: "L3", x: 42, y: 256, w: 246, h: 40, name: "Knowledge Graph",
         desc: "Models relationships between entities, objects and environment, enabling complex high-level reasoning and prediction.",
-        ex: "UGV-2 —escorting→ civilian-1;  UAV-3 —performing→ Objective-1."
+        ex: "UGV-2 -escorting→ civilian-1;  UAV-3 -performing→ Objective-1."
       },
       "task-engine": {
         layer: "L3", x: 340, y: 132, w: 270, h: 172, name: "Collaborative Task Engine",
         container: true,
         desc: "The decentralized decision-making and task-allocation engine of the swarm. Receives a mission of multiple objectives from the Mission Layer and turns it into coordinated action.",
-        ex: "Runs distributed across whichever nodes have spare compute — no mission server to destroy."
+        ex: "Runs distributed across whichever nodes have spare compute, no mission server to destroy."
       },
       "decomp": {
         layer: "L3", x: 352, y: 160, w: 246, h: 40, name: "Mission & Objective Decomposition",
@@ -77,8 +77,8 @@
       },
       "alloc": {
         layer: "L3", x: 352, y: 208, w: 246, h: 40, name: "Distributed Task Allocation",
-        desc: "Assigns each task to the most suitable vehicle across all swarms — via market-based auctions (bids reflect capability and energy/time cost) or priority rules.",
-        ex: "An aerial-imagery task draws low-cost bids from UAVs and prohibitively high bids from UGVs — allocation happens naturally."
+        desc: "Assigns each task to the most suitable vehicle across all swarms, via market-based auctions (bids reflect capability and energy/time cost) or priority rules.",
+        ex: "An aerial-imagery task draws low-cost bids from UAVs and prohibitively high bids from UGVs, so allocation happens naturally."
       },
       "retask": {
         layer: "L3", x: 352, y: 256, w: 246, h: 40, name: "Dynamic Re-tasking",
@@ -87,7 +87,7 @@
       },
       "bus": {
         layer: "L2", x: 30, y: 352, w: 270, h: 50, name: "Decentralized Communication Bus",
-        desc: "Publish–subscribe messaging: producers and consumers never couple directly, with typed channels per kind of information — plus Delay-Tolerant Networking (store-and-forward) for communication-denied environments.",
+        desc: "Publish–subscribe messaging: producers and consumers never couple directly, with typed channels per kind of information, plus Delay-Tolerant Networking (store-and-forward) for communication-denied environments.",
         ex: "A UAV that went out of range automatically uploads its collected data to the world model the moment it reconnects."
       },
       "directory": {
@@ -103,7 +103,7 @@
       "lic": {
         layer: "L1", name: "Local Intelligence Core",
         desc: "Owns the vehicle's safety and primitive execution: state estimation (e.g. Kalman filtering), local perception, collision avoidance, fail-safes. Autonomy survives even if the ecosystem vanishes.",
-        ex: "A UGV's LIC prevents it from driving off a cliff — no network required."
+        ex: "A UGV's LIC prevents it from driving off a cliff, no network required."
       },
       "pal": {
         layer: "L1", name: "Platform Abstraction Layer",
@@ -246,7 +246,7 @@
         '<span class="arch-layer-tag">Explore</span>' +
         "<h4>Click any module</h4>" +
         "<p>Every box in the diagram is a component of the proposed architecture. Click one to see what it does and the paper's concrete example of it in action.</p>" +
-        '<p class="arch-example">Then press the flow buttons under the diagram to watch a command descend from operator to vehicles — and sensed reality climb back up.</p>';
+        '<p class="arch-example">Then press the flow buttons under the diagram to watch a command descend from operator to vehicles, and sensed reality climb back up.</p>';
     }
 
     /* ------------------------------------------------------------

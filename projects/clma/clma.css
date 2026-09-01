@@ -1,5 +1,5 @@
 /* ==================================================================
-   Collaborative Drift Compensation — project page styles.
+   Collaborative Drift Compensation: project page styles.
    Inherits the site theme (Computer Modern serif, light default,
    html[data-theme="dark"] toggle). All visualization colors live in
    CSS variables so canvas/SVG code can read them via getComputedStyle
@@ -8,14 +8,14 @@
 
 :root {
   /* categorical series (validated palette, light steps) */
-  --viz-s1: #2a78d6;   /* blue    — CLMA / base cohort */
-  --viz-s2: #eb6834;   /* orange  — FedDrift / cohort 2 */
-  --viz-s3: #1baf7a;   /* aqua    — FedAvg / cohort 3 */
-  --viz-s4: #eda100;   /* yellow  — cohort 4 */
-  --viz-s5: #e87ba4;   /* magenta — cohort 5 */
-  --viz-s6: #4a3aa7;   /* violet  — cohort 6 */
-  --viz-s7: #008300;   /* green   — cohort 7 */
-  --viz-s8: #e34948;   /* red     — cohort 8 */
+  --viz-s1: #2a78d6;   /* blue:    CLMA / base cohort */
+  --viz-s2: #eb6834;   /* orange:  FedDrift / cohort 2 */
+  --viz-s3: #1baf7a;   /* aqua:    FedAvg / cohort 3 */
+  --viz-s4: #eda100;   /* yellow:  cohort 4 */
+  --viz-s5: #e87ba4;   /* magenta: cohort 5 */
+  --viz-s6: #4a3aa7;   /* violet:  cohort 6 */
+  --viz-s7: #008300;   /* green:   cohort 7 */
+  --viz-s8: #e34948;   /* red:     cohort 8 */
   --viz-crit: #d03b3b; /* drift flag */
   --viz-good: #0ca30c;
   --viz-warn: #c98500;

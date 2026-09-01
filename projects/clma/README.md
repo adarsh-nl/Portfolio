@@ -1,4 +1,4 @@
-# Collaborative Drift Compensation — interactive project page
+# Collaborative Drift Compensation: interactive project page
 
 Interactive project page for **Adarsh N. L., Madapu Amarlingam, Divyasheel Sharma,
 "Collaborative Drift Compensation," CODS-COMAD 2024**
@@ -7,7 +7,7 @@ Interactive project page for **Adarsh N. L., Madapu Amarlingam, Divyasheel Sharm
 Live at `/Portfolio/projects/clma/`. Linked from the Research page entry
 (`[project page]`).
 
-## Stack — and why there is no build step
+## Stack: and why there is no build step
 
 The portfolio is a Franklin.jl static site served by GitHub Pages, so this page
 is **plain HTML + CSS + vanilla JS** (ES2017): no framework, no bundler, no CDN.
@@ -27,7 +27,7 @@ projects/clma/
 
 ## Architecture
 
-### clma-core.js — the shared runtime
+### clma-core.js: the shared runtime
 
 | Facility | What it does |
 |---|---|
@@ -41,7 +41,7 @@ projects/clma/
 
 ### Design tokens
 
-All visualization colors live in `clma.css` as `--viz-*` variables — a validated
+All visualization colors live in `clma.css` as `--viz-*` variables, a validated
 colorblind-safe categorical palette (separate light/dark steps), plus
 ink/grid/axis/surface tokens matched to the site's existing light and dark
 themes. JS never hard-codes a color; canvases repaint on theme flip.
@@ -53,38 +53,38 @@ across rounds and views.
 
 ## How each visualization teaches the research
 
-1. **Hero network** — ambient 12-second preview of the whole paper: federated
+1. **Hero network**: ambient 12-second preview of the whole paper: federated
    rounds, two clients drift (red pulse), they get re-cohorted (recolored).
-2. **FL primer** (§01) — the four phases of a round (broadcast → local train →
+2. **FL primer** (§01): the four phases of a round (broadcast → local train →
    upload → aggregate), steppable, so a reader who has never seen FL learns the
-   protocol CLMA sits on — and that *only weights travel*.
-3. **Drift playground** (§02) — the paper's two drift types made tactile:
+   protocol CLMA sits on, and that *only weights travel*.
+3. **Drift playground** (§02): the paper's two drift types made tactile:
    covariate slider moves P(x) (the points), concept slider moves P(y|x) (the
    answer key), the frozen model's F1 collapses live. Uses the PRONTO story
    (air/water flow, Normal vs Slugging).
-4. **Stagger grid** (§02) — the core premise from FedDrift that motivates CLMA:
+4. **Stagger grid** (§02): the core premise from FedDrift that motivates CLMA:
    drift is staggered in *time* (rounds 3/5/7/9) and *space* (different clients,
    different directions).
-5. **Prior-work demos** (§03) — each baseline fails in a runnable way:
+5. **Prior-work demos** (§03): each baseline fails in a runnable way:
    FedAvg poisoning (drag a drifted client, watch the average leave the healthy
    ones), CDA-FedAvg's probabilistic gate missing real drifts, FedConD's
    knife-edge significance level, and the crux: **FedDrift's scalar-loss
-   collision** — two different drifts, identical loss, indistinguishable.
-6. **Insight demo** (§04) — the paper's central claim (weights are a function of
+   collision**: two different drifts, identical loss, indistinguishable.
+6. **Insight demo** (§04): the paper's central claim (weights are a function of
    the data; the shared global model is a free reference): shift a client's
    data, watch its weight histogram shift *in a matching direction*, with the
    KS statistic and S⁺/S⁻ assignment updating.
-7. **CLMA simulator** (§05) — the whole of Algorithms 1–3 as a precomputed,
+7. **CLMA simulator** (§05): the whole of Algorithms 1–3 as a precomputed,
    deterministic run over 10 clients × 10 rounds: loss tripwire, drift flags,
    quarantine set W̄, signed-KS split, eigen-projection inset, k-means, new
    cohorts. Play / pause / step forward / **step back** / speed, with the
    paper's pseudocode alongside and the executing line highlighted. γ, the
-   number of drifted clients, and the drift mix are user-tunable — setting γ
+   number of drifted clients, and the drift mix are user-tunable; setting γ
    too high visibly lets drift slip through, which is the point of §06.1.
-8. **Math widgets** (§06) — γ tripwire trade-off (false alarms vs misses), the
+8. **Math widgets** (§06): γ tripwire trade-off (false alarms vs misses), the
    KS statistic as the max CDF gap with its *sign* carrying direction, and
    eigen-projection → k-means as a 4-step animation.
-9. **Results** (§07) — cohort-assignment heatmaps (CLMA resolves
+9. **Results** (§07): cohort-assignment heatmaps (CLMA resolves
    direction-specific cohorts; FedDrift only drifted/not-drifted) and F1 line
    charts in three views (drifted client, non-drifted client = the FedAvg
    poisoning story, and post-deployment inference = Algorithm 4). Charts are
@@ -98,7 +98,7 @@ across rounds and views.
   the interaction demonstrates; the simulator log is `aria-live`.
 - `prefers-reduced-motion`: ambient loops stop (hero renders a meaningful
   static frame), tweens become instant state changes, chart draw-in and scroll
-  reveals are disabled — every widget remains fully usable via its step
+  reveals are disabled, and every widget remains fully usable via its step
   controls.
 - Color is never the only channel: drift = ring + log text, cohorts have
   IDs in legends/tooltips, chart series are toggleable and hover-labelled.
@@ -113,7 +113,7 @@ across rounds and views.
   visible (IntersectionObserver + visibilitychange), so idle cost is ~0.
 - Canvases are DPR-aware (`CLMA.fitCanvas`) for crisp HiDPI rendering.
 - The simulator precomputes its entire history at reset; playback and
-  back-stepping are pointer moves plus cheap tweens — no re-simulation.
+  back-stepping are pointer moves plus cheap tweens, no re-simulation.
 
 ## Notes
 

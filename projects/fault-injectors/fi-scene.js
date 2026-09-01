@@ -1,5 +1,5 @@
 /* ==================================================================
-   fi-scene.js — the synthetic BEV world, its LiDAR model, the fault
+   fi-scene.js: the synthetic BEV world, its LiDAR model, the fault
    injectors, and the top-down renderer.
 
    Nothing here reads a dataset. The scene is a procedurally generated

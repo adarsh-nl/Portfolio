@@ -1,5 +1,5 @@
 /* ==================================================================
-   UxV Ecosystem — project page styles.
+   UxV Ecosystem: project page styles.
    Inherits the site theme (Computer Modern serif, light default,
    html[data-theme="dark"] toggle). All visualization colors live in
    CSS variables so canvas/SVG code can read them via getComputedStyle
@@ -16,10 +16,10 @@
   --viz-s6: #4a3aa7;   /* violet  */
   --viz-s7: #008300;   /* green   */
   --viz-s8: #e34948;   /* red     */
-  /* domain colors — used consistently for the three vehicle classes */
-  --viz-air:    #2a78d6;  /* UAV — sky blue     */
-  --viz-ground: #eb6834;  /* UGV — earth orange */
-  --viz-sea:    #0f9bb5;  /* USV — sea teal     */
+  /* domain colors: used consistently for the three vehicle classes */
+  --viz-air:    #2a78d6;  /* UAV: sky blue     */
+  --viz-ground: #eb6834;  /* UGV: earth orange */
+  --viz-sea:    #0f9bb5;  /* USV: sea teal     */
   --viz-fire:   #e34948;
   --viz-crit: #d03b3b;
   --viz-good: #0ca30c;

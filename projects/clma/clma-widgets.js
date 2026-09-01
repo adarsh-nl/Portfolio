@@ -1,5 +1,5 @@
 /* ==================================================================
-   clma-widgets.js — every interactive figure except the simulator.
+   clma-widgets.js: every interactive figure except the simulator.
 
    Each widget is an isolated IIFE that:
      - reads theme colors via CLMA.colors() at draw time,
@@ -14,7 +14,7 @@
   document.addEventListener("DOMContentLoaded", function () {
 
     /* ==============================================================
-       HERO — federated fleet, drift, cohorting (ambient preview)
+       HERO: federated fleet, drift, cohorting (ambient preview)
        Ten clients orbit a server. Packets flow in rounds; sometimes
        a client "drifts" (red pulse), then gets re-cohorted (recolor).
        A silent 12-second preview of the entire paper.
@@ -126,7 +126,7 @@
     })();
 
     /* ==============================================================
-       FL PRIMER — one round in four phases (SVG, stepped/looped)
+       FL PRIMER: one round in four phases (SVG, stepped/looped)
     ============================================================== */
     (function flPrimer() {
       var svg = document.getElementById("fl-svg");
@@ -134,7 +134,7 @@
       var caption = document.getElementById("fl-caption");
       var CAPS = [
         "1 · The server broadcasts the current global model W to every client.",
-        "2 · Each client runs gradient descent on its own private data — data never leaves.",
+        "2 · Each client runs gradient descent on its own private data; data never leaves.",
         "3 · Clients upload only their updated weights Wₙ (and nothing else).",
         "4 · The server averages the weights, weighted by data size, into a new global model."
       ];
@@ -256,7 +256,7 @@
     })();
 
     /* ==============================================================
-       DRIFT PLAYGROUND — covariate vs concept drift on a frozen model
+       DRIFT PLAYGROUND: covariate vs concept drift on a frozen model
     ============================================================== */
     (function driftPlayground() {
       var canvas = document.getElementById("drift-canvas");
@@ -323,7 +323,7 @@
         ctx.fillText("Water flow rate", 0, 0);
         ctx.restore();
 
-        /* marginal P(x) strip just below the axis — shows covariate shift */
+        /* marginal P(x) strip just below the axis: shows covariate shift */
         var bins = new Array(24).fill(0);
         pts.forEach(function (p) {
           var ax = p.ax + cur.cov * 16;
@@ -416,11 +416,11 @@
         f1Bar.style.width = (f1 * 100).toFixed(0) + "%";
         f1Bar.style.background = f1 > 0.85 ? col.good : (f1 > 0.65 ? col.warn : col.crit);
         var msgs = [];
-        if (tgt.cov > 0.08) msgs.push("P(x) shifted — the same faults now show up at different sensor readings");
-        if (tgt.con > 0.08) msgs.push("P(y|x) moved — readings the model calls Normal are now labelled Slugging");
-        if (tgt.noise > 0.08) msgs.push("labels are noisy — engineers relabelled a fraction of points");
+        if (tgt.cov > 0.08) msgs.push("P(x) shifted: the same faults now show up at different sensor readings");
+        if (tgt.con > 0.08) msgs.push("P(y|x) moved: readings the model calls Normal are now labelled Slugging");
+        if (tgt.noise > 0.08) msgs.push("labels are noisy: engineers relabelled a fraction of points");
         noteEl.textContent = msgs.length
-          ? "Drift active: " + msgs.join("; ") + ". The frozen model never moved — its mistakes are circled."
+          ? "Drift active: " + msgs.join("; ") + ". The frozen model never moved; its mistakes are circled."
           : "The model is perfect on the data it was trained on.";
       }
 
@@ -463,7 +463,7 @@
     })();
 
     /* ==============================================================
-       STAGGER GRID — drift staggered across time and space
+       STAGGER GRID: drift staggered across time and space
     ============================================================== */
     (function stagger() {
       var svg = document.getElementById("stagger-svg");
@@ -580,7 +580,7 @@
     })();
 
     /* ==============================================================
-       BASELINES — tabbed failure demos
+       BASELINES: tabbed failure demos
     ============================================================== */
     (function baselines() {
       var panels = { fedavg: "bl-fedavg", cda: "bl-cda", fedcond: "bl-fedcond", feddrift: "bl-feddrift" };
@@ -682,7 +682,7 @@
             .textContent = "A drifted client arrives. Gate: flag drift iff e⁻²ᶜ > r, r ~ U[0,1].";
           C.svg("text", { x: 20, y: 50, "font-size": 12, fill: col.muted,
             "font-family": "inherit" }, svg)
-            .textContent = "Here e⁻²ᶜ = " + PDET.toFixed(2) + " — the SAME real drift, 20 independent trials:";
+            .textContent = "Here e⁻²ᶜ = " + PDET.toFixed(2) + ", on the SAME real drift, 20 independent trials:";
           for (var i = 0; i < 20; i++) {
             var x = 34 + i * 29, y = 100;
             if (i < results.length) {
@@ -696,7 +696,7 @@
             }
           }
           C.svg("text", { x: 20, y: 150, "font-size": 12, fill: col.ink2, "font-family": "inherit" }, svg)
-            .textContent = "✓ drift flagged   ✗ drift silently missed — the client keeps polluting the global model";
+            .textContent = "✓ drift flagged   ✗ drift silently missed: the client keeps polluting the global model";
           C.svg("text", { x: 20, y: 185, "font-size": 12, fill: col.muted, "font-family": "inherit" }, svg)
             .textContent = "…and when it does fire, every drifted client is adapted the same way,";
           C.svg("text", { x: 20, y: 203, "font-size": 12, fill: col.muted, "font-family": "inherit" }, svg)
@@ -736,7 +736,7 @@
         for (var r = 0; r < R; r++) {
           v = 0.3 + rng.gauss() * 0.035;
           if (trueDrift.indexOf(r) >= 0) v += 0.28;
-          if (r === 7) v += 0.09;               /* a noise bump — trap for loose settings */
+          if (r === 7) v += 0.09;               /* a noise bump: trap for loose settings */
           loss.push(v);
         }
 
@@ -782,7 +782,7 @@
             ? '<strong style="color:' + col.crit + '">' + misses + " true drift(s) missed</strong>"
             : (falseAlarms
               ? '<strong style="color:' + col.warn + '">' + falseAlarms + " false alarm(s)</strong>"
-              : '<strong style="color:' + col.good + '">tuned just right — for THIS dataset</strong>');
+              : '<strong style="color:' + col.good + '">tuned just right, for THIS dataset</strong>');
         }
         slider.addEventListener("input", draw);
         draw();
@@ -814,8 +814,8 @@
           var t2 = C.ease(Math.min(1, t));
           var lossA = 0.18 + 0.24 * t2, lossB = 0.18 + 0.24 * t2;   /* identical! */
 
-          [{ cx: 168, name: "Client A — covariate drift", shift: 1.6, skew: 0, color: col.s2 },
-           { cx: 472, name: "Client B — concept drift", shift: -1.3, skew: 0.9, color: col.s5 }]
+          [{ cx: 168, name: "Client A: covariate drift", shift: 1.6, skew: 0, color: col.s2 },
+           { cx: 472, name: "Client B: concept drift", shift: -1.3, skew: 0.9, color: col.s5 }]
           .forEach(function (cl) {
             C.svg("text", { x: cl.cx, y: 26, "text-anchor": "middle", "font-size": 13,
               fill: col.ink, "font-family": "inherit" }, svg).textContent = cl.name;
@@ -852,7 +852,7 @@
             .textContent = "the weights still tell them apart";
 
           verdict.innerHTML = t2 > 0.9
-            ? 'loss says <strong>same cluster</strong> — weights say <strong>different drifts</strong>'
+            ? 'loss says <strong>same cluster</strong>, weights say <strong>different drifts</strong>'
             : "";
         }
 
@@ -880,7 +880,7 @@
     })();
 
     /* ==============================================================
-       INSIGHT — weights are a fingerprint of the data
+       INSIGHT: weights are a fingerprint of the data
     ============================================================== */
     (function insight() {
       var canvas = document.getElementById("insight-canvas");
@@ -990,7 +990,7 @@
     })();
 
     /* ==============================================================
-       MATH 6.1 — γ tripwire
+       MATH 6.1: γ tripwire
     ============================================================== */
     (function gammaWidget() {
       var svg = document.getElementById("gamma-svg");
@@ -1067,8 +1067,8 @@
           fill: col.ink2, "font-family": "inherit" }, svg).textContent = "communication round · shaded band = L₍ᶜ₋₁₎ + γ allowance";
 
         verdict.innerHTML =
-          missed ? '<strong style="color:' + col.crit + '">γ too high — real drift slips through</strong>' :
-          falseAlarms ? '<strong style="color:' + col.warn + '">γ too low — noise trips the wire</strong>' :
+          missed ? '<strong style="color:' + col.crit + '">γ too high: real drift slips through</strong>' :
+          falseAlarms ? '<strong style="color:' + col.warn + '">γ too low: noise trips the wire</strong>' :
           '<strong style="color:' + col.good + '">both drifts caught, zero false alarms</strong>';
       }
       slider.addEventListener("input", draw);
@@ -1077,7 +1077,7 @@
     })();
 
     /* ==============================================================
-       MATH 6.2 — KS test on weights
+       MATH 6.2: KS test on weights
     ============================================================== */
     (function ksWidget() {
       var svg = document.getElementById("ks-svg");
@@ -1153,7 +1153,7 @@
           .textContent = "cumulative fraction of weight values ≤ x";
 
         dEl.textContent = Math.abs(maxD).toFixed(2);
-        gEl.innerHTML = Math.abs(mu) < 0.03 ? "—" : (sign > 0 ? "S⁺" : "S⁻");
+        gEl.innerHTML = Math.abs(mu) < 0.03 ? "–" : (sign > 0 ? "S⁺" : "S⁻");
         gEl.style.color = Math.abs(mu) < 0.03 ? "" : (sign > 0 ? C.colors().s2 : C.colors().s6);
       }
       slider.addEventListener("input", draw);
@@ -1162,7 +1162,7 @@
     })();
 
     /* ==============================================================
-       MATH 6.3 — eigen-projection + k-means, stepped
+       MATH 6.3: eigen-projection + k-means, stepped
     ============================================================== */
     (function eigWidget() {
       var canvas = document.getElementById("eig-canvas");
@@ -1229,7 +1229,7 @@
         var msgs = [
           "Each dot is one drifted client's flattened weight vector (thousands of dimensions, sketched in 2-D).",
           "eig(SᵀS): the eigenvectors point along the directions where clients actually differ. The leading axis explains " + (varExp * 100).toFixed(0) + "% of the variance here (the paper keeps enough for 95%).",
-          "Projecting onto the leading eigenvectors compresses each client to a handful of coordinates — differences survive, noise doesn't.",
+          "Projecting onto the leading eigenvectors compresses each client to a handful of coordinates: differences survive, noise doesn't.",
           "k-means in the projected space finds the groups: clients drifting the same way land in the same cohort."
         ];
 
@@ -1335,7 +1335,7 @@
     })();
 
     /* ==============================================================
-       RESULTS 7.1 — cohort heatmap (CLMA vs FedDrift)
+       RESULTS 7.1: cohort heatmap (CLMA vs FedDrift)
     ============================================================== */
     (function cohortMap() {
       var svg = document.getElementById("cohort-svg");
@@ -1433,8 +1433,8 @@
         });
 
         note.textContent = algo === "clma"
-          ? "CLMA: every drift event spawns direction-specific cohorts — clients 1–4 and 5–8 drift differently and are never lumped together. The two clean clients keep the original global model."
-          : "FedDrift: after the first drift at round 3 it separates drifted (one cluster) from non-drifted — but never distinguishes the different drifts among clients 1–8, and later drift events at rounds 5, 7, 9 go unresolved.";
+          ? "CLMA: every drift event spawns direction-specific cohorts: clients 1–4 and 5–8 drift differently and are never lumped together. The two clean clients keep the original global model."
+          : "FedDrift: after the first drift at round 3 it separates drifted (one cluster) from non-drifted, but never distinguishes the different drifts among clients 1–8, and later drift events at rounds 5, 7, 9 go unresolved.";
       }
 
       C.tabs(document.getElementById("cohort-algo-tabs"), function (k) { algo = k; draw(); });
@@ -1444,7 +1444,7 @@
     })();
 
     /* ==============================================================
-       RESULTS 7.2 — F1 line charts
+       RESULTS 7.2: F1 line charts
     ============================================================== */
     (function f1Charts() {
       var el = document.getElementById("f1-chart");
@@ -1491,9 +1491,9 @@
       DATA.infer.con = DATA.infer.cov;
 
       var NOTES = {
-        drifted: "A drifted client. Everyone falls at rounds 3 and 5 — the difference is the bounce-back. By round 4 CLMA has quarantined and re-cohorted the client; by rounds 7 and 9 all methods have partially learned the recurring pattern, but CLMA stays on top.",
-        clean: "A client that never drifted. CLMA and FedDrift protect it by quarantining drifted peers. FedAvg blends the drifted weights into everyone's model — the poison shows up one round after each drift event.",
-        infer: "CLMA after deployment (Algorithm 4): the fielded model self-monitors its loss on live data, raises the flag at round 3, and the server-side re-cohorting restores performance within about a round — no retraining fleet-wide."
+        drifted: "A drifted client. Everyone falls at rounds 3 and 5; the difference is the bounce-back. By round 4 CLMA has quarantined and re-cohorted the client; by rounds 7 and 9 all methods have partially learned the recurring pattern, but CLMA stays on top.",
+        clean: "A client that never drifted. CLMA and FedDrift protect it by quarantining drifted peers. FedAvg blends the drifted weights into everyone's model, so the poison shows up one round after each drift event.",
+        infer: "CLMA after deployment (Algorithm 4): the fielded model self-monitors its loss on live data, raises the flag at round 3, and the server-side re-cohorting restores performance within about a round, no retraining fleet-wide."
       };
 
       function render() {

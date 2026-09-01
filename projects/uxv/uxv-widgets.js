@@ -1,5 +1,5 @@
 /* ==================================================================
-   uxv-widgets.js — every interactive figure on the UxV page except
+   uxv-widgets.js: every interactive figure on the UxV page except
    the architecture explorer (uxv-arch.js) and the mission simulator
    (uxv-sim.js). Each widget is an isolated init function; all of
    them read theme colors live so dark mode repaints correctly.
@@ -23,7 +23,7 @@
   });
 
   /* ================================================================
-     HERO — three domains discovering each other.
+     HERO: three domains discovering each other.
      Sky / land / water bands; vehicles roam their own band, and
      cross-domain communication links flicker between them: the
      paper's thesis in one image.
@@ -124,7 +124,7 @@
   }
 
   /* ================================================================
-     MARKET — $29.3B (2025) → $46B+ (2030).
+     MARKET: $29.3B (2025) → $46B+ (2030).
      A slider over the forecast years; the headline number and the
      bar chart grow together, making the scale of the field felt
      rather than read.
@@ -186,7 +186,7 @@
   }
 
   /* ================================================================
-     APPLICATION MATRIX — Table I as a clickable platform × sector
+     APPLICATION MATRIX: Table I as a clickable platform × sector
      grid. Interaction replaces reading: the visitor samples the
      landscape instead of scanning a table.
   ================================================================ */
@@ -245,7 +245,7 @@
         b.addEventListener("click", function () {
           buttons.forEach(function (o) { o.setAttribute("aria-pressed", "false"); });
           b.setAttribute("aria-pressed", "true");
-          detail.innerHTML = "<strong>" + row.name + " &times; " + DOMAINS[ci] + "</strong> &mdash; " +
+          detail.innerHTML = "<strong>" + row.name + " &times; " + DOMAINS[ci] + "</strong>: " +
             cell.full + ". <em>One platform, one domain: today each of these is engineered and deployed on its own.</em>";
         });
         buttons.push(b);
@@ -257,7 +257,7 @@
   }
 
   /* ================================================================
-     MARITIME STORYBOARD — time-to-neutralization vs. coverage.
+     MARITIME STORYBOARD: time-to-neutralization vs. coverage.
      Each step adds a domain; the visible payoff is the shrinking
      red bar: synergy quantified, not asserted.
   ================================================================ */
@@ -269,9 +269,9 @@
 
     var STEPS = [
       { ttn: 1.0, detect: 0.34,
-        cap: "USV alone: sonar has short reach, so the threat is only confirmed close to the harbour. Engagement works — but response time is the mission cost." },
+        cap: "USV alone: sonar has short reach, so the threat is only confirmed close to the harbour. Engagement works, but response time is the mission cost." },
       { ttn: 0.55, detect: 0.80,
-        cap: "Add UAV surveillance: an aerial camera spots the vessel far out at sea. Same USV, same weapons — minutes more warning." },
+        cap: "Add UAV surveillance: an aerial camera spots the vessel far out at sea. Same USV, same weapons; minutes more warning." },
       { ttn: 0.40, detect: 0.80,
         cap: "Add coastal UGVs: land-based targeting is ready before the threat is in range. The engagement window widens again." },
       { ttn: 0.25, detect: 0.80,
@@ -410,7 +410,7 @@
   }
 
   /* ================================================================
-     FUSION HIERARCHY — pyramid selector + one live demo per level.
+     FUSION HIERARCHY: pyramid selector + one live demo per level.
      Each demo *computes* what its level fuses: noisy sensors → state
      (L1), two viewpoints → one track (L2), facts → meaning (L3).
   ================================================================ */
@@ -422,11 +422,11 @@
 
     var LEVELS = [
       { id: 2, name: "Mission-level", q: "why? · so what?",
-        cap: "<strong>Mission-level fusion (the gap).</strong> Fuse <em>concepts</em>: intent, capability, causality. A knowledge graph relates agents, tasks and environment — UGV-2 is escorting civilian-1, UAV-3 is on Objective-1, fire blocks exit B — so the collective can reason about trade-offs and act as one." },
+        cap: "<strong>Mission-level fusion (the gap).</strong> Fuse <em>concepts</em>: intent, capability, causality. A knowledge graph relates agents, tasks and environment (UGV-2 is escorting civilian-1, UAV-3 is on Objective-1, fire blocks exit B), so the collective can reason about trade-offs and act as one." },
       { id: 1, name: "Intra-swarm", q: "what? · where?",
-        cap: "<strong>Intra-swarm fusion (the frontier).</strong> Aggregate several vehicles into a shared tactical picture. The key challenge is data association — do two observations refer to the same object? Redundant viewpoints shrink uncertainty, but the result is still geometric: objects and positions, no mission meaning." },
+        cap: "<strong>Intra-swarm fusion (the frontier).</strong> Aggregate several vehicles into a shared tactical picture. The key challenge is data association: do two observations refer to the same object? Redundant viewpoints shrink uncertainty, but the result is still geometric: objects and positions, no mission meaning." },
       { id: 0, name: "Intra-vehicle", q: "where am I?",
-        cap: "<strong>Intra-vehicle fusion (well studied).</strong> One vehicle merges its own noisy sensors — IMU, GPS, cameras — into a robust state estimate (Kalman filters, factor-graph SLAM). Essential, but egocentric: blind to the wider mission and to every other agent." }
+        cap: "<strong>Intra-vehicle fusion (well studied).</strong> One vehicle merges its own noisy sensors (IMU, GPS, cameras) into a robust state estimate (Kalman filters, factor-graph SLAM). Essential, but egocentric: blind to the wider mission and to every other agent." }
     ];
     var current = 0;   /* demo level id: 0 base, 1 mid, 2 top */
 
@@ -472,7 +472,7 @@
     }
     buildPyramid();
     U.onThemeChange(buildPyramid);
-    caption.innerHTML = LEVELS[2].cap;   /* default: base level (id 0) — set below */
+    caption.innerHTML = LEVELS[2].cap;   /* default: base level (id 0), set below */
     current = 0;
     shapes[0].select();
 
@@ -519,7 +519,7 @@
       ctx.stroke();
       var pv = truePath(u, w, h);
       U.glyph.ugv(ctx, pv.x, pv.y, 7, 0, C.ground);
-      label(ctx, C, w, [["■", C.warn, "raw sensor fixes"], ["—", C.s3, "fused state (KF)"]]);
+      label(ctx, C, w, [["■", C.warn, "raw sensor fixes"], ["▬", C.s3, "fused state (KF)"]]);
     }
 
     function drawL1(ctx, w, h, t, C) {
@@ -608,7 +608,7 @@
         ctx.textAlign = "center";
         ctx.fillText(n.id, p.x, p.y + 30);
       });
-      label(ctx, C, w, [["—", C.s5, "semantic relations, appearing as they are inferred"]]);
+      label(ctx, C, w, [["▬", C.s5, "semantic relations, appearing as they are inferred"]]);
     }
 
     function ellipse(ctx, x, y, rx, ry, rot, col, alpha) {
@@ -649,7 +649,7 @@
   }
 
   /* ================================================================
-     PRIOR WORK — Table II, but each row demonstrates its own
+     PRIOR WORK: Table II, but each row demonstrates its own
      ceiling as a looping sketch. Reading a ✗ is forgettable;
      watching a target get lost at a zone wall is not.
   ================================================================ */
@@ -662,26 +662,26 @@
 
     function mark(v) {
       if (v === true) return '<span class="yes">&#10003;</span>';
-      if (v === false) return '<span class="no">&mdash;</span>';
+      if (v === false) return '<span class="no">&ndash;</span>';
       return '<span class="partial">' + v + "</span>";
     }
 
     var ROWS = [
       { key: "stolfi", work: "Stolfi et al. 2021", uvs: "UAV·UGV·USV", cols: [true, false, false, false, false],
         title: "Static partitioning: co-located, not collaborative",
-        desc: "Cross-domain swarms hunt evaders — but each swarm is fenced into its own dedicated zone. No inter-swarm communication, no fused sensing. Watch the target: every time it crosses a boundary, whoever was tracking it goes blind and the next swarm must reacquire from scratch." },
+        desc: "Cross-domain swarms hunt evaders, but each swarm is fenced into its own dedicated zone. No inter-swarm communication, no fused sensing. Watch the target: every time it crosses a boundary, whoever was tracking it goes blind and the next swarm must reacquire from scratch." },
       { key: "jaus", work: "Wang et al. 2022 / JAUS", uvs: "UxV", cols: [true, true, false, false, false],
         title: "Interoperability standards: syntax without semantics",
-        desc: "Message standards like JAUS achieve plug-and-play data exchange — the “verbs and nouns” of communication. But delivering a packet is not understanding it: a human operator still sits in the middle doing all the reasoning. The systems talk; they do not think together." },
+        desc: "Message standards like JAUS achieve plug-and-play data exchange: the “verbs and nouns” of communication. But delivering a packet is not understanding it: a human operator still sits in the middle doing all the reasoning. The systems talk; they do not think together." },
       { key: "wu", work: "Wu et al. 2022", uvs: "UAV", cols: [true, false, "intra-swarm", false, false],
         title: "Game theory: the mission reduced to cooperate/defect",
-        desc: "Evolutionary games elegantly explain when collaboration pays off. But the model compresses a rich, multi-objective mission into a 2×2 payoff matrix — valuable analysis, not a functional architecture that fuses real sensor data or manages real objectives." },
+        desc: "Evolutionary games elegantly explain when collaboration pays off. But the model compresses a rich, multi-objective mission into a 2×2 payoff matrix: valuable analysis, not a functional architecture that fuses real sensor data or manages real objectives." },
       { key: "xu", work: "Xu et al. 2024", uvs: "UAV·USV", cols: [true, true, "inter-vehicle", false, false],
         title: "Physical coordination: brilliant at one task, blind to the mission",
-        desc: "A manipulator arm on a USV catches and lands a UAV in rough seas — hard control, beautifully solved. But the collaboration is purely physical: while the pair coordinates its ballet, a third-party target sails past unobserved. Nothing here scales to negotiating mission objectives." },
+        desc: "A manipulator arm on a USV catches and lands a UAV in rough seas: hard control, beautifully solved. But the collaboration is purely physical: while the pair coordinates its ballet, a third-party target sails past unobserved. Nothing here scales to negotiating mission objectives." },
       { key: "ours", work: "UxV Ecosystem (proposed)", uvs: "UxV", cols: [true, true, "mission-level", true, true], ours: true,
         title: "The proposed ecosystem: every column, by construction",
-        desc: "Collaboration, information sharing and mission-level fusion are not features bolted on — they are what the architecture is made of: a shared world model, semantic services, and decentralized task allocation across all three domains. The rest of this page shows how." }
+        desc: "Collaboration, information sharing and mission-level fusion are not features bolted on; they are what the architecture is made of: a shared world model, semantic services, and decentralized task allocation across all three domains. The rest of this page shows how." }
     ];
 
     var trs = [];
@@ -883,7 +883,7 @@
   }
 
   /* ================================================================
-     DTN — store-and-forward, felt. The UAV's orbit takes it beyond
+     DTN: store-and-forward, felt. The UAV's orbit takes it beyond
      radio range; the buffer visibly grows, then drains on reconnect.
      The "lost: 0, always" counter *is* the lesson.
   ================================================================ */
@@ -980,7 +980,7 @@
         ctx.fillStyle = C.warn;
         ctx.font = U.font(10, true);
         ctx.textAlign = "center";
-        ctx.fillText("out of range — buffering", ux, uy - 26);
+        ctx.fillText("out of range, buffering", ux, uy - 26);
       }
       /* buffer stack above the UAV */
       var show = Math.min(buffer, 12);
@@ -998,7 +998,7 @@
   }
 
   /* ================================================================
-     SERVICE DIRECTORY — the paper's chemical-spill story as four
+     SERVICE DIRECTORY: the paper's chemical-spill story as four
      steps: anomaly → query → DHT resolve → fulfilment. The DHT ring
      lights up hop by hop so "distributed lookup" stops being a
      buzzword.
@@ -1010,10 +1010,10 @@
     var playBtn = document.getElementById("dir-play");
 
     var CAPS = [
-      "A UGV assessing damage at a power plant finds a chemical spill. Its own sensors can't analyse it — it has a capability gap.",
-      "The UGV's Gateway publishes a query to the Service Directory: “who provides chem-sensing?” No central server — the directory is a distributed hash table living across the fleet.",
+      "A UGV assessing damage at a power plant finds a chemical spill. Its own sensors can't analyse it: it has a capability gap.",
+      "The UGV's Gateway publishes a query to the Service Directory: “who provides chem-sensing?” No central server: the directory is a distributed hash table living across the fleet.",
       "The lookup hops node to node until the key resolves: UAV-7, chemical sensor, 1.2 km away, available. Capabilities were registered against a service ontology when each vehicle joined.",
-      "UAV-7 accepts the task and flies to the spill. A vehicle that couldn't solve its problem found one that could — autonomously, at mission time."
+      "UAV-7 accepts the task and flies to the spill. A vehicle that couldn't solve its problem found one that could, autonomously, at mission time."
     ];
     var step = 0, playing = false, timer = null;
 
@@ -1113,7 +1113,7 @@
   }
 
   /* ================================================================
-     SPATIO-TEMPORAL FUSION — radar (wide bearing error) + camera
+     SPATIO-TEMPORAL FUSION: radar (wide bearing error) + camera
      (wide depth error) → product of Gaussians. Toggling a sensor
      off makes the fused ellipse balloon: redundancy across
      *different* error geometries is where the win comes from.
@@ -1223,7 +1223,7 @@
         ctx.fillStyle = C.crit;
         ctx.font = U.font(13, true);
         ctx.textAlign = "center";
-        ctx.fillText("no sensors — no track", w / 2, h * 0.45);
+        ctx.fillText("no sensors, no track", w / 2, h * 0.45);
         areaEl.textContent = "∞";
       }
       /* legend of what the ellipses mean */
@@ -1238,10 +1238,10 @@
   }
 
   /* ================================================================
-     AUCTION — market-based task allocation with live re-auction on
+     AUCTION: market-based task allocation with live re-auction on
      failure. Bids are honest costs (capability + distance), so the
      "natural and efficient allocation" of the paper emerges on its
-     own — and keeps emerging when the winner dies.
+     own, and keeps emerging when the winner dies.
   ================================================================ */
   function initAuction() {
     var canvas = document.getElementById("auction-canvas");
@@ -1282,7 +1282,7 @@
       renderBids(false);
       setTimeout(function () {
         var alive = state.bids.filter(function (b) { return b.bid !== null; });
-        if (!alive.length) { taskEl.textContent = tk.label + " — no capable vehicles left!"; return; }
+        if (!alive.length) { taskEl.textContent = tk.label + ", no capable vehicles left!"; return; }
         alive.sort(function (a, b) { return a.bid - b.bid; });
         state.winner = alive[0].v;
         renderBids(true);
@@ -1320,7 +1320,7 @@
     killBtn.addEventListener("click", function () {
       if (!state.winner) return;
       state.dead[state.winner.id] = true;
-      taskEl.textContent = state.task.label + " — " + state.winner.id + " lost! Re-auctioning…";
+      taskEl.textContent = state.task.label + ": " + state.winner.id + " lost! Re-auctioning…";
       state.winner = null;
       killBtn.disabled = true;
       setTimeout(announce, 700);
@@ -1380,18 +1380,18 @@
   }
 
   /* ================================================================
-     ROADMAP — the five future-work directions.
+     ROADMAP: the five future-work directions.
   ================================================================ */
   function initRoadmap() {
     var track = document.getElementById("roadmap-track");
     if (!track) return;
     var detail = document.getElementById("roadmap-detail");
     var ITEMS = [
-      { t: "Cross-domain missions", d: "Heterogeneous teams for disaster response, infrastructure inspection and logistics — each mission type driving new coordination and planning research. The wildfire simulator above is a toy version of exactly this class of problem." },
-      { t: "Open standards", d: "Shared formats for data exchange, task negotiation and capability description, so vehicles from different vendors can join the same ecosystem — the Gateway's Canonical Data Model needs to be a community artifact, not a proprietary one." },
-      { t: "Formal mission semantics", d: "Modeling goals, constraints and roles formally, so cross-agent reasoning and dynamic task decomposition can scale beyond hand-written objective lists — the Mission Interface's structured format, made rigorous." },
-      { t: "Simulation at scale", d: "High-fidelity environments for testing cross-domain swarms under real-world constraints — validation and benchmarking need shared testbeds before anyone deploys mixed fleets in a real disaster." },
-      { t: "Emerging technologies", d: "6G networking for the fabric, edge AI for on-vehicle intelligence, quantum-safe cryptography for trust — each slots into a specific layer of the architecture rather than replacing it." }
+      { t: "Cross-domain missions", d: "Heterogeneous teams for disaster response, infrastructure inspection and logistics, with each mission type driving new coordination and planning research. The wildfire simulator above is a toy version of exactly this class of problem." },
+      { t: "Open standards", d: "Shared formats for data exchange, task negotiation and capability description, so vehicles from different vendors can join the same ecosystem: the Gateway's Canonical Data Model needs to be a community artifact, not a proprietary one." },
+      { t: "Formal mission semantics", d: "Modeling goals, constraints and roles formally, so cross-agent reasoning and dynamic task decomposition can scale beyond hand-written objective lists: the Mission Interface's structured format, made rigorous." },
+      { t: "Simulation at scale", d: "High-fidelity environments for testing cross-domain swarms under real-world constraints: validation and benchmarking need shared testbeds before anyone deploys mixed fleets in a real disaster." },
+      { t: "Emerging technologies", d: "6G networking for the fabric, edge AI for on-vehicle intelligence, quantum-safe cryptography for trust: each slots into a specific layer of the architecture rather than replacing it." }
     ];
     var btns = [];
     ITEMS.forEach(function (it, i) {

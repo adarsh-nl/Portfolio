@@ -1,4 +1,4 @@
-# CoRA — unofficial interactive explainer
+# CoRA: unofficial interactive explainer
 
 Interactive explainer for a paper **by other authors** that I liked:
 
@@ -26,35 +26,35 @@ same design system as `projects/uxv/` (prefix `cora-`, namespace
 
 ## How each visualization teaches the paper
 
-- **Hero** — the whole premise in one loop: a truck occludes a car from the
+- **Hero**: the whole premise in one loop: a truck occludes a car from the
   ego; the collaborator's V2X message reveals it.
-- **§01 Occlusion playground** — raycast LiDAR against a draggable occluder;
+- **§01 Occlusion playground**: raycast LiDAR against a draggable occluder;
   toggling the collaborator turns hidden hazards visible. Why collaborative
   perception exists.
-- **§02 Misalignment playground** — σt/σr sliders warp the collaborator's
+- **§02 Misalignment playground**: σt/σr sliders warp the collaborator's
   feature blobs off the true boxes; "ghost" labels appear and an alignment
   score decays. The paper's failure mode, felt by hand.
-- **§02 Fig-1 bubble chart** — accuracy vs. communication volume from real
+- **§02 Fig-1 bubble chart**: accuracy vs. communication volume from real
   Table-1 numbers; flipping ideal → 0.6/0.6 noise animates the crash of
   efficient methods below the single-agent line.
-- **§03 Paradigm comparison** — the central insight as an experiment: the
+- **§03 Paradigm comparison**: the central insight as an experiment: the
   same pose error hits intermediate fusion (blended blobs; "attempt
   correction" fails) and late fusion (intact boxes; correction snaps them
   home). Complementary weaknesses, demonstrated not asserted.
-- **§04 Architecture explorer** — Fig. 2 rebuilt: clickable modules with the
+- **§04 Architecture explorer**: Fig. 2 rebuilt: clickable modules with the
   paper's own examples, and a nine-stage "trace one perception cycle"
   animation through both branches to the fused output.
-- **§05 CIT walkthrough** — the receiver-centric protocol computed live on a
+- **§05 CIT walkthrough**: the receiver-centric protocol computed live on a
   BEV grid: confidence maps → demand (1−σ(conf)) → per-pixel winner-take-all
   → exclusive sparse request masks → sparse transmission. Side panel: comm
   volume vs. fleet size, sender-centric (linear) vs. CIT (near-constant).
-- **§05 LC pipeline** — animated strip of the fusion path (confidence
+- **§05 LC pipeline**: animated strip of the fusion path (confidence
   weighting → attention → CSSM → gate) with the training-only dense teacher
   (L_align) hovering above.
-- **§06 PAC walkthrough** — displaced collaborator boxes → cross-agent
+- **§06 PAC walkthrough**: displaced collaborator boxes → cross-agent
   attention matches → predicted offset field Δp → deformable snap-back, with
   a live mean-IoU readout.
-- **§07 Results** — Table 1 as a line chart (dataset / metric tabs, method
+- **§07 Results**: Table 1 as a line chart (dataset / metric tabs, method
   toggles, single-agent dashed baseline), Table 2 latency chart, Table 3
   ablation as clickable configurations (the ideal-vs-noisy split shows the
   feature branch buys performance and PAC buys robustness), and a Fig-5-style

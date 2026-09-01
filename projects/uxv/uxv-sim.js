@@ -1,9 +1,9 @@
 /* ==================================================================
-   uxv-sim.js — the wildfire mission engine.
+   uxv-sim.js: the wildfire mission engine.
 
    One engine, two widgets:
    · §02 "race": two locked-parameter instances side by side (siloed
-     vs ecosystem) on the same seed — a controlled experiment the
+     vs ecosystem) on the same seed: a controlled experiment the
      visitor runs with one button.
    · §07 "simulator": one full instance with sliders, mode switch,
      comm jamming (DTN buffering) and click-to-kill vehicles
@@ -14,7 +14,7 @@
    model, rescue tasks are *auctioned* to UGVs by cost, a USV serves
    as a mobile ferry point, jamming exercises DTN store-and-forward,
    and vehicle failures trigger re-auctions. Siloed mode disables
-   exactly one thing — cross-domain information flow — so every
+   exactly one thing (cross-domain information flow), so every
    performance gap on screen is attributable to it.
 ================================================================== */
 (function () {
@@ -128,7 +128,7 @@
         if (M.jammed) {
           civ.state = "buffered";
           M.buffer.push(civ);
-          M.log("uav", byWhom + " sees civ-" + civ.id + " — comms jammed, buffering (DTN)");
+          M.log("uav", byWhom + " sees civ-" + civ.id + ": comms jammed, buffering (DTN)");
           return;
         }
         publish(civ, byWhom);
@@ -164,7 +164,7 @@
         if (g.carrying === civ) { civ.x = g.x; civ.y = g.y; }
         g.task = null;
         g.carrying = null;
-        M.log("crit", "UGV-" + g.id + " " + reason + " — civ-" + civ.id + " re-auctioned");
+        M.log("crit", "UGV-" + g.id + " " + reason + "; civ-" + civ.id + " re-auctioned");
       } else {
         M.log("crit", (reason.indexOf("UAV") === 0 ? "" : "UGV-" + g.id + " ") + reason);
       }
@@ -173,9 +173,9 @@
     M.setJam = function (on) {
       if (on === M.jammed) return;
       M.jammed = on;
-      if (on) M.log("crit", "COMMS JAMMED — UAV observations will buffer on board");
+      if (on) M.log("crit", "COMMS JAMMED: UAV observations will buffer on board");
       else {
-        M.log("good", "Comms restored — DTN flushing " + M.buffer.length + " buffered observation(s) to DWM");
+        M.log("good", "Comms restored: DTN flushing " + M.buffer.length + " buffered observation(s) to DWM");
         M.buffer.forEach(function (civ) { if (civ.state === "buffered") publish(civ, "DTN"); });
         M.buffer = [];
       }
@@ -191,8 +191,8 @@
       if (!best) return false;
       best.dead = true;
       if (M.ugvs.indexOf(best) >= 0) dropTask(best, "disabled");
-      else if (best === M.usv) M.log("crit", "USV disabled — ferry point lost, rescues fall back to the exit");
-      else M.log("crit", "UAV-" + best.id + " disabled — search coverage reduced");
+      else if (best === M.usv) M.log("crit", "USV disabled: ferry point lost, rescues fall back to the exit");
+      else M.log("crit", "UAV-" + best.id + " disabled: search coverage reduced");
       return true;
     };
 
@@ -301,7 +301,7 @@
               c.state = "rescued";
               c.escorted = false;
               M.rescued++;
-              M.log("good", "civ-" + c.id + " safe" + (tgt === M.exit ? " at the exit" : " — ferried by USV") +
+              M.log("good", "civ-" + c.id + " safe" + (tgt === M.exit ? " at the exit" : ", ferried by USV") +
                 " (" + M.rescued + "/" + M.nCiv + ")");
               g.task = null;
               g.carrying = null;
@@ -473,7 +473,7 @@
   }
 
   /* ================================================================
-     §02 — the race
+     §02: the race
   ================================================================ */
   document.addEventListener("DOMContentLoaded", function () {
     var cSilo = document.getElementById("race-silo");
@@ -550,7 +550,7 @@
   });
 
   /* ================================================================
-     §07 — the full simulator
+     §07: the full simulator
   ================================================================ */
   document.addEventListener("DOMContentLoaded", function () {
     var canvas = document.getElementById("sim-canvas");
@@ -581,7 +581,7 @@
       mode: "eco", nCiv: 10, nUAV: +uavIn.value, nUGV: 3,
       fireRate: +fireIn.value / 100, seed: seed, log: log
     });
-    log("t", "Ecosystem mode. Press play — or sabotage something first.");
+    log("t", "Ecosystem mode. Press play, or sabotage something first.");
 
     var playing = false, acc = 0, lastT = 0;
 

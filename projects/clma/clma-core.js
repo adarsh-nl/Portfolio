@@ -1,5 +1,5 @@
 /* ==================================================================
-   clma-core.js — shared runtime for the CLMA project page.
+   clma-core.js: shared runtime for the CLMA project page.
 
    Provides (on window.CLMA):
      colors()       theme-aware palette read from CSS variables
@@ -242,7 +242,7 @@
 
   CLMA.LineChart.prototype.update = function (data) {
     /* data: { xLabel, yLabel, x: [..], series: [{name,color(key),values:[..]}],
-              markers: [{x, label}] } — color is a palette key like "s1". */
+              markers: [{x, label}] }. Color is a palette key like "s1". */
     this.data = data;
     this.render();
   };

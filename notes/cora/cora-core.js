@@ -1,5 +1,5 @@
 /* ==================================================================
-   cora-core.js — shared runtime for the UxV Ecosystem project page.
+   cora-core.js: shared runtime for the UxV Ecosystem project page.
 
    Provides (on window.CORA):
      colors()       theme-aware palette read from CSS variables

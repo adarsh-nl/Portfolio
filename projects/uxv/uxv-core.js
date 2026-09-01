@@ -1,5 +1,5 @@
 /* ==================================================================
-   uxv-core.js — shared runtime for the UxV Ecosystem project page.
+   uxv-core.js: shared runtime for the UxV Ecosystem project page.
 
    Provides (on window.UXV):
      colors()       theme-aware palette read from CSS variables

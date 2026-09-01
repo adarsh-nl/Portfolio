@@ -1,5 +1,5 @@
 /* ==================================================================
-   fi-core.js — shared runtime for the fault-injector benchmark page.
+   fi-core.js: shared runtime for the fault-injector benchmark page.
 
    Provides (on window.FI):
      colors()        theme-aware palette read from CSS variables
@@ -301,7 +301,7 @@
   };
 
   /* ==================================================================
-     MEASURED DATA — the single source of truth for every number shown.
+     MEASURED DATA: the single source of truth for every number shown.
 
      Everything here is CoBEVT evaluated on V2XSet at the checkpoint's
      shipped "Perfect" setting. Values are deltas against that model's
@@ -508,7 +508,7 @@
   };
 
   /* ==================================================================
-     NUMBERS PANEL — measured degradation for one injector.
+     NUMBERS PANEL: measured degradation for one injector.
   ================================================================== */
 
   FI.numbersTable = function (host, inj) {

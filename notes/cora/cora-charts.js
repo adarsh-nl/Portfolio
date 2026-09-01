@@ -1,5 +1,5 @@
 /* ==================================================================
-   cora-charts.js — every chart built from the paper's tables.
+   cora-charts.js: every chart built from the paper's tables.
    Values transcribed from Tables 1–4 of arXiv:2512.13191.
 ================================================================== */
 (function () {
@@ -181,8 +181,8 @@
         })
       });
       note.textContent = ds === "opv2v"
-        ? "OPV2V: at 0.6/0.6 noise CoRA holds 0.6544 AP@0.7 — 17 points above CoAlign, using 3.80 MB vs. its 21.35 MB. CoSDH (also a hybrid) collapses: hybridization alone isn't enough without pose-aware correction."
-        : "DAIR-V2X (real-world): the same ranking holds — CoRA leads at every noise level with the smallest volume (2.84 MB). Note Where2comm falling to 0.165, far below the 0.4457 single-agent line.";
+        ? "OPV2V: at 0.6/0.6 noise CoRA holds 0.6544 AP@0.7, 17 points above CoAlign, using 3.80 MB vs. its 21.35 MB. CoSDH (also a hybrid) collapses: hybridization alone isn't enough without pose-aware correction."
+        : "DAIR-V2X (real-world): the same ranking holds: CoRA leads at every noise level with the smallest volume (2.84 MB). Note Where2comm falling to 0.165, far below the 0.4457 single-agent line.";
     }
 
     U.tabs(document.getElementById("res-ds-tabs"), function (k) { ds = k; render(); });
@@ -239,15 +239,15 @@
     { label: "baseline (single-agent)", mods: [], ideal: [0.6250, 0.4457], noisy: [0.6250, 0.4457],
       note: "No collaboration at all. Everything below is gain over this." },
     { label: "+ CIT", mods: ["CIT"], ideal: [0.7749, 0.6036], noisy: [0.6858, 0.5184],
-      note: "Competitive transmission alone already buys +15.8 points of AP@0.7 — cheap, sparse features are that valuable." },
+      note: "Competitive transmission alone already buys +15.8 points of AP@0.7: cheap, sparse features are that valuable." },
     { label: "+ CIT + LC", mods: ["CIT", "LC"], ideal: [0.7826, 0.6288], noisy: [0.6933, 0.5287],
       note: "The fusion module squeezes more out of the same sparse features." },
     { label: "+ CIT + LC + L_align", mods: ["CIT", "LC", "L"], ideal: [0.7856, 0.6359], noisy: [0.7004, 0.5371],
-      note: "Dense-teacher distillation closes the sparsity gap: the full feature branch. But note the noisy column — still 5 points below where it could be." },
+      note: "Dense-teacher distillation closes the sparsity gap: the full feature branch. But note the noisy column: still 5 points below where it could be." },
     { label: "+ CIT + PAC", mods: ["CIT", "PAC"], ideal: [0.7786, 0.6073], noisy: [0.7270, 0.5733],
-      note: "Swap LC for PAC: ideal-pose accuracy dips slightly, but noisy-pose accuracy jumps. PAC is the robustness module — exactly as designed." },
+      note: "Swap LC for PAC: ideal-pose accuracy dips slightly, but noisy-pose accuracy jumps. PAC is the robustness module, exactly as designed." },
     { label: "full CoRA", mods: ["CIT", "LC", "L", "PAC"], ideal: [0.7858, 0.6361], noisy: [0.7455, 0.5862],
-      note: "Both branches together: best ideal AND best noisy. The decoupling thesis, verified — +14.05 AP@0.7 over baseline under noise." }
+      note: "Both branches together: best ideal AND best noisy. The decoupling thesis, verified: +14.05 AP@0.7 over baseline under noise." }
   ];
 
   document.addEventListener("DOMContentLoaded", function () {

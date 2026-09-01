@@ -1,5 +1,5 @@
 /* ==================================================================
-   clma-sim.js — the CLMA step-by-step simulator (section 05).
+   clma-sim.js: the CLMA step-by-step simulator (section 05).
 
    Design: the whole run is PRE-COMPUTED into a list of step
    snapshots (deterministic, seeded), so play / pause / step-forward /
@@ -78,7 +78,7 @@
         /* --- broadcast --- */
         snap(r, "broadcast", "The server sends each cohort's model to its member clients.",
           "a1", r === 1 ? "a1-init" : "a1-train", [
-            { t: "round", txt: "— Round " + r + " —" }
+            { t: "round", txt: "Round " + r }
           ]);
 
         /* --- local training (drift lands here, inside the data) --- */
@@ -97,7 +97,7 @@
           c.flag = false;
         });
         snap(r, "train", "Each client runs local gradient descent on its fresh private data" +
-          (driftNow ? " — but for the drifted clients, the data has changed under them." : "."),
+          (driftNow ? ", but for the drifted clients, the data has changed under them." : "."),
           "a2", "a2-train");
 
         /* --- detect --- */
@@ -112,11 +112,11 @@
         var missedCount = clients.filter(function (c) { return c.missed; }).length;
         var detectLog = [];
         if (flagged.length) detectLog.push({ t: "drift", txt: flagged.length + " client(s) raise the drift flag (Lc > Lc−1 + γ)" });
-        if (missedCount) detectLog.push({ t: "drift", txt: missedCount + " drifted client(s) NOT caught — γ too high" });
-        if (!flagged.length && !missedCount) detectLog.push({ txt: "no drift detected — losses within γ of last round" });
+        if (missedCount) detectLog.push({ t: "drift", txt: missedCount + " drifted client(s) NOT caught: γ too high" });
+        if (!flagged.length && !missedCount) detectLog.push({ txt: "no drift detected: losses within γ of last round" });
         snap(r, "detect", flagged.length
           ? flagged.length + " client(s) tripped the loss tripwire: Lc > Lc−1 + γ. They set F = True."
-          : (missedCount ? "Drift happened, but the loss jump stayed under γ — the tripwire stays silent. Try a lower γ."
+          : (missedCount ? "Drift happened, but the loss jump stayed under γ, so the tripwire stays silent. Try a lower γ."
             : "All losses within tolerance; no flags raised."),
           "a2", "a2-detect", detectLog);
 
@@ -131,7 +131,7 @@
         if (flagged.length) {
           /* --- quarantine --- */
           flagged.forEach(function (c) { c.quar = true; });
-          snap(r, "quarantine", "Flagged clients are pulled out of their cohorts into the quarantine set W̄ — their weights must not poison their old peers.",
+          snap(r, "quarantine", "Flagged clients are pulled out of their cohorts into the quarantine set W̄: their weights must not poison their old peers.",
             "a1", "a1-quar", [{ t: "drift", txt: "quarantined: " + flagged.map(function (c) { return "C" + (c.id + 1); }).join(", ") }]);
 
           /* --- KS test --- */
@@ -141,7 +141,7 @@
               "}  S⁻ = {" + flagged.filter(function (c) { return c.sign < 0; }).map(function (c) { return "C" + (c.id + 1); }).join(",") + "}" }]);
 
           /* --- project --- */
-          snap(r, "project", "Flattened weights are projected onto the top eigenvectors (95% variance kept) — clients become low-dimensional points.",
+          snap(r, "project", "Flattened weights are projected onto the top eigenvectors (95% variance kept), so clients become low-dimensional points.",
             "a3", "a3-eig");
 
           /* --- cluster --- */
@@ -165,12 +165,12 @@
             newLog.push({ t: "cohort", txt: "new cohort " + cid + " (" + TYPE_LABEL[ty] + "): " +
               byType[ty].map(function (c) { return "C" + (c.id + 1); }).join(", ") });
           });
-          snap(r, "cohort", "Each cluster becomes a NEW cohort that continues federated learning among clients with the same drift — collaborative adaptation begins immediately.",
+          snap(r, "cohort", "Each cluster becomes a NEW cohort that continues federated learning among clients with the same drift; collaborative adaptation begins immediately.",
             "a1", "a1-union", newLog);
         }
       }
       snap(ROUNDS, "done", "Run complete. Every drift event was resolved into direction-specific cohorts; clean clients were never disturbed. Change γ or the drift mix and run it again.",
-        "a1", "a1-end", [{ t: "round", txt: "— run complete —" }]);
+        "a1", "a1-end", [{ t: "round", txt: "Run complete" }]);
     }
 
     /* ---------------- rendering --------------------------------- */

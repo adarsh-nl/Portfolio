@@ -1,5 +1,5 @@
 /* ==================================================================
-   cora-widgets.js — interactive figures for the CoRA explainer.
+   cora-widgets.js: interactive figures for the CoRA explainer.
    Charts built from the paper's tables live in cora-charts.js.
 ================================================================== */
 (function () {
@@ -56,7 +56,7 @@
   }
 
   /* ================================================================
-     HERO — the whole paper in one loop: a truck hides a car from
+     HERO: the whole paper in one loop: a truck hides a car from
      the ego; the collaborator's message reveals it.
   ================================================================ */
   function initHero() {
@@ -150,7 +150,7 @@
   }
 
   /* ================================================================
-     OCCLUSION PLAYGROUND — raycast LiDAR with a draggable occluder;
+     OCCLUSION PLAYGROUND: raycast LiDAR with a draggable occluder;
      the collaborator toggle is the entire value proposition of
      collaborative perception, verified by a counter.
   ================================================================ */
@@ -272,7 +272,7 @@
         }
         ctx.fillStyle = C.ink2;
         ctx.font = U.font(10);
-        ctx.fillText(hz.name + (seen ? "" : " — unseen!"), hz.x, hz.y - hz.r - 8);
+        ctx.fillText(hz.name + (seen ? "" : ": unseen!"), hz.x, hz.y - hz.r - 8);
       });
 
       car(ctx, ego.x, ego.y, 34, 16, -0.5, C.s1);
@@ -291,7 +291,7 @@
   }
 
   /* ================================================================
-     MISALIGNMENT PLAYGROUND — pose error made tactile: the
+     MISALIGNMENT PLAYGROUND: pose error made tactile: the
      collaborator's features rotate/translate off the true objects,
      ghosts appear, and the alignment score quantifies the damage.
   ================================================================ */
@@ -371,9 +371,9 @@
       apEl.textContent = align + "%";
       noteEl.textContent =
         align > 90 ? "Perfect poses: the two feature maps reinforce each other. This is the world intermediate fusion was designed for." :
-        align > 60 ? "Small errors already split each object into two half-strength responses — accuracy quietly erodes." :
+        align > 60 ? "Small errors already split each object into two half-strength responses; accuracy quietly erodes." :
         align > 30 ? "Ghost objects everywhere: fused features now describe a scene that does not exist. This is the misalignment collapse." :
-        "At this point collaboration actively hurts — worse than not fusing at all. Compare with the single-agent line in the chart below.";
+        "At this point collaboration actively hurts, worse than not fusing at all. Compare with the single-agent line in the chart below.";
     }
 
     [tIn, rIn].forEach(function (el) { el.addEventListener("input", function () {}); });
@@ -381,7 +381,7 @@
   }
 
   /* ================================================================
-     FIG. 1 REBUILT — accuracy vs. communication volume as an
+     FIG. 1 REBUILT: accuracy vs. communication volume as an
      animated bubble chart with real Table-1 numbers. The flip
      between ideal and noisy is the paper's motivation in one click.
   ================================================================ */
@@ -407,8 +407,8 @@
     DATA.forEach(function (d) { d.cur = d.ideal; });
 
     var NOTES = {
-      ideal: "Ideal poses: everyone beats the single-agent line — collaboration pays. Note CoRA already tops the chart with the smallest bubble (3.80 MB).",
-      noisy: "0.6 m / 0.6° pose noise: most methods crash; several fall far below single-agent — their collaboration now hurts. CoRA degrades least by a wide margin (and at this extreme it still beats single-agent on AP@0.5: 0.845 vs 0.808)."
+      ideal: "Ideal poses: everyone beats the single-agent line; collaboration pays. Note CoRA already tops the chart with the smallest bubble (3.80 MB).",
+      noisy: "0.6 m / 0.6° pose noise: most methods crash; several fall far below single-agent, so their collaboration now hurts. CoRA degrades least by a wide margin (and at this extreme it still beats single-agent on AP@0.5: 0.845 vs 0.808)."
     };
     note.textContent = NOTES.ideal;
 
@@ -502,7 +502,7 @@
   }
 
   /* ================================================================
-     PARADIGM COMPARISON — the paper's core insight as an experiment:
+     PARADIGM COMPARISON: the paper's core insight as an experiment:
      the same pose error hits both paradigms; only one is repairable.
   ================================================================ */
   function initParadigm() {
@@ -516,8 +516,8 @@
     var mode = "inter";
     var fixT = null;        /* correction animation start time */
     var CAPS = {
-      inter: "Intermediate fusion: feature maps are BLENDED into one shared representation before detection. High ceiling when aligned — but once misaligned features mix, the original signals are gone.",
-      late: "Late fusion: each agent detects first, then boxes are exchanged. The ceiling is lower (low-level context is discarded) — but every box arrives intact, merely displaced."
+      inter: "Intermediate fusion: feature maps are BLENDED into one shared representation before detection. High ceiling when aligned, but once misaligned features mix, the original signals are gone.",
+      late: "Late fusion: each agent detects first, then boxes are exchanged. The ceiling is lower (low-level context is discarded), but every box arrives intact, merely displaced."
     };
     caption.textContent = CAPS.inter;
 
@@ -547,8 +547,8 @@
         fixU = U.clamp((nowMs - fixT) / 900, 0, 1);
         if (fixU >= 1) {
           verdict.textContent = mode === "late"
-            ? "✓ recovered — boxes moved back into place"
-            : "✗ unrecoverable — the blend cannot be un-mixed";
+            ? "✓ recovered: boxes moved back into place"
+            : "✗ unrecoverable: the blend cannot be un-mixed";
           verdict.style.color = mode === "late" ? C.good : C.crit;
         }
       }
@@ -601,7 +601,7 @@
   }
 
   /* ================================================================
-     ARCHITECTURE EXPLORER — CoRA's Fig. 2 as a clickable diagram
+     ARCHITECTURE EXPLORER: CoRA's Fig. 2 as a clickable diagram
      with a one-cycle trace animation.
   ================================================================ */
   function initArch() {
@@ -613,13 +613,13 @@
 
     var MODULES = {
       "collab": { x: 16, y: 60, w: 120, h: 44, name: "Collaborator j", tag: "Input",
-        desc: "Every other connected vehicle. It captures its own sensor data and — crucially — reports its own pose, which may be corrupted in transit.",
+        desc: "Every other connected vehicle. It captures its own sensor data and (crucially) reports its own pose, which may be corrupted in transit.",
         ex: "N agents; the ego fuses messages from all j ≠ i under a bandwidth budget." },
       "encoder": { x: 16, y: 130, w: 120, h: 40, name: "Encoder", tag: "Feature branch",
         desc: "A PointPillar backbone turns the collaborator's point cloud into a BEV feature map F_j, plus a confidence head that scores where it actually sees something.",
-        ex: "F_j ∈ R^{C×H×W}; confidence map M(1) is only 1×H×W — almost free to transmit." },
+        ex: "F_j ∈ R^{C×H×W}; confidence map M(1) is only 1×H×W, almost free to transmit." },
       "dethead": { x: 16, y: 310, w: 120, h: 40, name: "Local Detection Head", tag: "Object branch",
-        desc: "The collaborator also runs its own full detector locally, producing classification and regression maps — complete, self-contained detections.",
+        desc: "The collaborator also runs its own full detector locally, producing classification and regression maps: complete, self-contained detections.",
         ex: "These object-level outputs O_j stay intact no matter what the pose says." },
       "cit": { x: 200, y: 96, w: 128, h: 52, name: "CIT", tag: "Feature branch",
         desc: "Competitive Information Transmission: confidence maps up, demand computed, per-pixel winner-take-all, sparse exclusive request masks back, sparse features forward. Receiver-centric, near-constant overhead.",
@@ -629,19 +629,19 @@
         ex: "Content-aware: the gate opens only where collaborator evidence beats the ego's own." },
       "distill": { x: 370, y: 22, w: 128, h: 40, name: "Teacher (training only)", tag: "Feature branch",
         desc: "A parallel branch sees the full dense features and produces a guidance map; L_align pushes the sparse pipeline's output to match it. Train dense, transmit sparse.",
-        ex: "L_align = ‖F_out − F_teacher‖²  — deleted at inference time." },
+        ex: "L_align = ‖F_out − F_teacher‖²; deleted at inference time." },
       "pac": { x: 285, y: 304, w: 128, h: 52, name: "PAC", tag: "Object branch",
         desc: "Pose-Aware Correction: scores collaborator detections by semantic relevance to the ego's (cross-agent attention over positional-embedded descriptors), predicts a dense 2D offset field from their disagreement, and resamples via deformable convolution.",
         ex: "Walkthrough in section 06 below." },
       "egoenc": { x: 200, y: 200, w: 128, h: 40, name: "Ego encoder + detections", tag: "Ego",
         desc: "The ego's own features feed the LC fusion, and its own detections provide the reference that PAC uses to judge and correct collaborator boxes.",
-        ex: "The ego never blindly trusts — everything is measured against its own view." },
+        ex: "The ego never blindly trusts; everything is measured against its own view." },
       "fusion": { x: 520, y: 200, w: 104, h: 52, name: "Adaptive Fusion", tag: "Output",
         desc: "Both branches' classification maps are concatenated; learned uncertainty maps recalibrate each side's confidence before the final merge.",
         ex: "Clean poses → trust features. Noisy poses → the corrected object branch holds the line." },
       "nms": { x: 520, y: 290, w: 104, h: 40, name: "3D NMS → output", tag: "Output",
         desc: "All predictions enter one pool; 3D non-maximum suppression prunes duplicates, yielding the ego's definitive detections B_i.",
-        ex: "One unified output — the visitor-facing 'what the car sees'." }
+        ex: "One unified output: the visitor-facing 'what the car sees'." }
     };
 
     var rects = {}, centers = {}, flowLayer = null, highlighted = null, selectedId = null;
@@ -652,9 +652,9 @@
 
       /* branch tint bands */
       U.svg("rect", { x: 8, y: 14, width: W - 16, height: 158, rx: 10, fill: C.s1, "fill-opacity": 0.05, stroke: C.s1, "stroke-opacity": 0.3 }, svg);
-      U.svg("text", { x: 18, y: 32, "font-size": 11, fill: C.s1, "font-family": "inherit", "font-weight": "bold" }, svg).textContent = "FEATURE-LEVEL FUSION BRANCH — the performance engine";
+      U.svg("text", { x: 18, y: 32, "font-size": 11, fill: C.s1, "font-family": "inherit", "font-weight": "bold" }, svg).textContent = "FEATURE-LEVEL FUSION BRANCH: the performance engine";
       U.svg("rect", { x: 8, y: 288, width: W - 16, height: 84, rx: 10, fill: C.s7, "fill-opacity": 0.05, stroke: C.s7, "stroke-opacity": 0.3 }, svg);
-      U.svg("text", { x: 18, y: 306, "font-size": 11, fill: C.s7, "font-family": "inherit", "font-weight": "bold" }, svg).textContent = "OBJECT-LEVEL CORRECTION BRANCH — the robustness guarantee";
+      U.svg("text", { x: 18, y: 306, "font-size": 11, fill: C.s7, "font-family": "inherit", "font-weight": "bold" }, svg).textContent = "OBJECT-LEVEL CORRECTION BRANCH: the robustness guarantee";
 
       /* static connectors */
       function link(a, b) {
@@ -714,11 +714,11 @@
     panel.innerHTML =
       '<span class="arch-layer-tag">Explore</span>' +
       "<h4>Click any module</h4>" +
-      "<p>Blue band: the feature branch chasing accuracy at minimal bandwidth. Green band: the object branch guaranteeing robustness. They only meet at the adaptive fusion — that separation <em>is</em> the decoupling.</p>" +
+      "<p>Blue band: the feature branch chasing accuracy at minimal bandwidth. Green band: the object branch guaranteeing robustness. They only meet at the adaptive fusion, and that separation <em>is</em> the decoupling.</p>" +
       '<p class="arch-example">Press “Trace one perception cycle” to watch a message travel the whole system.</p>';
 
     var FLOW = [
-      { from: "encoder", to: "cit", note: "confidence map up — 1×H×W, almost free" },
+      { from: "encoder", to: "cit", note: "confidence map up: 1×H×W, almost free" },
       { from: "egoenc", to: "cit", note: "ego computes demand, runs the competition" },
       { from: "cit", to: "lc", note: "sparse requested features arrive" },
       { from: "egoenc", to: "lc", note: "fused with the ego's own features" },
@@ -769,7 +769,7 @@
   }
 
   /* ================================================================
-     CIT WALKTHROUGH — the receiver-centric protocol computed live on
+     CIT WALKTHROUGH: the receiver-centric protocol computed live on
      a BEV grid, plus the comm-volume bars that explain *why*.
   ================================================================ */
   function initCIT() {
@@ -806,11 +806,11 @@
 
     var step = 0, playing = false, timer = null, animStart = 0;
     var CAPS = [
-      "STAGE 1 — Each collaborator sends only a confidence map: one channel, 1×H×W, a rounding error next to a feature map. Orange: collaborator A. Teal: collaborator B. Bright = “I can see something here.”",
-      "STAGE 2 — The ego computes its demand D = 1 − σ(own confidence). Bright blue = the ego's perceptual gaps: exactly the regions behind its occluders and beyond its range.",
-      "STAGE 3 — Relevance S_j = D ⊙ M_j, then a per-pixel winner-take-all: each cell is assigned to the single collaborator who sees it best. No cell is served twice.",
-      "STAGE 4 — The assignments become sparse, exclusive binary request masks Q_j, sent back to each collaborator. Most of the grid is requested from no one.",
-      "STAGE 5 — Collaborators transmit features only where requested: M(2) = F_j ⊙ Q_j. The ego just sums them — the masks are disjoint, so nothing collides. Near-constant received volume, any fleet size."
+      "STAGE 1. Each collaborator sends only a confidence map: one channel, 1×H×W, a rounding error next to a feature map. Orange: collaborator A. Teal: collaborator B. Bright = “I can see something here.”",
+      "STAGE 2. The ego computes its demand D = 1 − σ(own confidence). Bright blue = the ego's perceptual gaps: exactly the regions behind its occluders and beyond its range.",
+      "STAGE 3. Relevance S_j = D ⊙ M_j, then a per-pixel winner-take-all: each cell is assigned to the single collaborator who sees it best. No cell is served twice.",
+      "STAGE 4. The assignments become sparse, exclusive binary request masks Q_j, sent back to each collaborator. Most of the grid is requested from no one.",
+      "STAGE 5. Collaborators transmit features only where requested: M(2) = F_j ⊙ Q_j. The ego just sums them; the masks are disjoint, so nothing collides. Near-constant received volume, any fleet size."
     ];
 
     var tabs = U.tabs(document.getElementById("cit-steps"), function (k) {
@@ -935,7 +935,7 @@
   }
 
   /* ================================================================
-     LC PIPELINE — a compact animated diagram of the fusion path,
+     LC PIPELINE: a compact animated diagram of the fusion path,
      with the training-only teacher hovering above it.
   ================================================================ */
   function initLC() {
@@ -1012,7 +1012,7 @@
   }
 
   /* ================================================================
-     PAC WALKTHROUGH — displaced boxes → attention match → offset
+     PAC WALKTHROUGH: displaced boxes → attention match → offset
      field → deformable snap-back, with a live IoU readout.
   ================================================================ */
   function initPAC() {
@@ -1030,10 +1030,10 @@
 
     var step = 0, animStart = 0;
     var CAPS = [
-      "The collaborator's detections arrive displaced by its pose error. Naive late fusion would paste them exactly here — creating duplicates and phantoms.",
+      "The collaborator's detections arrive displaced by its pose error. Naive late fusion would paste them exactly here, creating duplicates and phantoms.",
       "PAC first scores semantic relevance: descriptors (box parameters + positional embedding) from both agents meet in cross-agent attention. Strong links = “these are the same physical object.”",
-      "From the concatenated detection maps, a shared encoder predicts a dense 2D offset field Δp — the estimated displacement for every cell. Note it points opposite to the pose error.",
-      "Deformable convolution resamples the collaborator's maps at the corrected locations. Boxes snap back onto the truth — the residual is what the offset predictor couldn't explain."
+      "From the concatenated detection maps, a shared encoder predicts a dense 2D offset field Δp: the estimated displacement for every cell. Note it points opposite to the pose error.",
+      "Deformable convolution resamples the collaborator's maps at the corrected locations. Boxes snap back onto the truth; the residual is what the offset predictor couldn't explain."
     ];
     var tabs = U.tabs(document.getElementById("pac-steps"), function (k) {
       step = +k;
