@@ -793,3 +793,71 @@ html {
   .profile-card { transition: none; }
 }
 
+
+/* ==================================================================
+    FOOTER HORIZON (homepage)
+    One small inline-SVG silhouette of Salem, Chennai and Enschede that
+    stands on the footer rule. Ink is currentColor, so it follows the
+    theme. Fully static: no interaction, no animation.
+================================================================== */
+
+.horizon {
+  display: block; /* Franklin styles figure as inline-block with a 10px margin */
+  margin: 4.5em 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* The footer rule doubles as the ground line, so no gap above it. */
+.horizon + .page-foot {
+  margin-top: 0;
+}
+
+.horizon-svg {
+  display: block;
+  width: 460px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  color: inherit;
+  /* ink alphas per layer (dark theme retunes these) */
+  --hz-a-far: 0.11;
+  --hz-a-mid: 0.24;
+  --hz-a-near: 0.36;
+  --hz-a-line: 0.5;
+}
+
+.hz-far,
+.hz-mid,
+.hz-near {
+  fill: currentColor;
+}
+
+.hz-far  { opacity: var(--hz-a-far); }
+.hz-far2 { opacity: calc(var(--hz-a-far) + 0.05); }
+.hz-mid  { opacity: var(--hz-a-mid); }
+.hz-near { opacity: var(--hz-a-near); }
+
+.hz-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: var(--hz-a-line);
+}
+
+.hz-line.hz-soft { opacity: calc(var(--hz-a-line) * 0.6); }
+
+/* Small screens: drop the finest linework. */
+@media (max-width: 500px) {
+  .hz-detail { display: none; }
+}
+
+html[data-theme="dark"] .horizon-svg {
+  --hz-a-far: 0.13;
+  --hz-a-mid: 0.26;
+  --hz-a-near: 0.4;
+  --hz-a-line: 0.55;
+}
