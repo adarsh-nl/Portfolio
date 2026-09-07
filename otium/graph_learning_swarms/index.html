@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=19">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=19">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=21">
    <title>Adaptive Spatiotemporal Graph Learning for Drone Swarms | Adarsh Nanjaiya Latha</title>
   <meta name="description" content="A short review of recent (2024–2026) work on adaptive spatiotemporal graph learning for situational awareness in drone swarms: what it does well, and the two things it still doesn't: node-level robustness to degraded inputs, and explainability.">
   <meta property="og:title" content="Adaptive Spatiotemporal Graph Learning for Drone Swarms">
@@ -103,6 +103,110 @@
 <div class="page-foot">
 </div>
 </div><!-- CONTENT ENDS HERE -->
+
+  <!-- Site footer: a small horizon of Salem, Chennai and Enschede standing
+       on the ground line. One inline SVG; the hills and land beyond its
+       viewBox show on wide screens and are clipped at the screen edge.
+       Layers: hz-far (distant), hz-mid, hz-near (landmarks), hz-line
+       (1px linework). hz-detail is hidden on small screens. -->
+  <footer class="site-foot">
+    <svg class="horizon-svg" viewBox="0 0 460 72" role="img" aria-label="Three places that shaped me: the hills of Salem, the coast and gopuram of Chennai, and the church tower of Enschede" focusable="false">
+
+    <g class="city city--salem">
+      <g class="salem-hills">
+        <!-- Shevaroy / Yercaud plateau: a broad, rounded range -->
+        <path class="hz-far" d="M-300,72 C-240,70 -190,66 -150,60 C-110,54 -80,50 -50,48 C-30,46 -14,44 0,38 C14,32 26,24 44,23 C60,22 68,28 82,27 C98,26 108,20 124,24 C138,28 146,38 158,46 C168,53 178,62 190,72 Z"/>
+        <!-- foothills in front of the town -->
+        <path class="hz-far hz-far2" d="M-140,72 C-100,70 -60,66 -30,62 C-20,60 -10,58 0,54 C12,49 24,45 40,47 C56,49 64,55 80,56 C96,57 104,52 118,56 C130,60 140,66 152,72 Z"/>
+      </g>
+      <g class="salem-town">
+        <!-- a scattered low-rise town in the foothills -->
+        <path class="hz-mid" d="M70,65 h14 v7 h-14 Z M88,62 h8 v10 h-8 Z M136,64 h12 v8 h-12 Z"/>
+        <!-- small vimana: a quiet South Indian cue -->
+        <path class="hz-near" d="M109,72 L111,58 H121 L123,72 Z"/>
+        <path class="hz-near" d="M112,58 C112,53.5 120,53.5 120,58 Z"/>
+        <path class="hz-line" d="M116,53.5 v-2.5"/>
+      </g>
+      <g class="salem-trees">
+        <ellipse class="hz-mid" cx="-112" cy="68" rx="5" ry="3"/>
+        <ellipse class="hz-mid" cx="-62" cy="67" rx="6" ry="3.5"/>
+        <ellipse class="hz-mid" cx="-26" cy="67.5" rx="5.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="12" cy="67.5" rx="6.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="28" cy="66.5" rx="5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="50" cy="66" rx="5.5" ry="4"/>
+        <ellipse class="hz-mid" cx="102" cy="66.5" rx="4.5" ry="3"/>
+        <ellipse class="hz-mid" cx="128" cy="67" rx="5" ry="3.5"/>
+        <path class="hz-line" d="M-112,72 v-3 M-62,72 v-3 M-26,72 v-3 M28,72 v-3 M50,72 v-3 M102,72 v-3 M128,72 v-3"/>
+      </g>
+    </g>
+
+    <g class="city city--chennai">
+      <g class="chennai-far">
+        <!-- one taller block in the distance -->
+        <path class="hz-far" d="M296,36 h11 v36 h-11 Z M291,50 h5 v22 h-5 Z"/>
+      </g>
+      <g class="chennai-coast">
+        <!-- the Marina: waves and coconut palms -->
+        <path class="hz-line hz-soft" d="M158,67 q4,-2.5 8,0 t8,0 t8,0 t8,0 M164,70 q4,-2.5 8,0 t8,0 t8,0"/>
+        <path class="hz-line" d="M176,72 C176,66 177,60 179,55"/>
+        <path class="hz-line" d="M179,55 c-5,-2 -8,-1 -10,3 M179,55 c-2,-5 -1,-8 3,-9 M179,55 c4,-3 7,-2 9,2 M179,55 c3,1 5,4 5,8 M179,55 c-4,1 -6,4 -6,7"/>
+        <path class="hz-line" d="M192,72 C192,67 191,62 189,58"/>
+        <path class="hz-line" d="M189,58 c-4,-2 -7,-1 -8,3 M189,58 c-1,-5 1,-7 4,-7 M189,58 c4,-2 6,0 7,3 M189,58 c3,2 4,4 3,7"/>
+      </g>
+      <g class="chennai-gopuram">
+        <!-- Kapaleeshwarar-style rajagopuram: tapering tiers, barrel cap, finials -->
+        <path class="hz-near" d="M221.0,72 L221.6,65.2 L222.2,65.2 L222.8,58.4 L223.3,58.4 L223.9,51.6 L224.4,51.6 L225.1,44.8 L225.6,44.8 L226.2,38.0 L226.8,38.0 L227.3,31.2 L227.9,31.2 L228.5,24.4 L243.5,24.4 L244.1,31.2 L244.7,31.2 L245.2,38.0 L245.8,38.0 L246.4,44.8 L246.9,44.8 L247.6,51.6 L248.1,51.6 L248.7,58.4 L249.2,58.4 L249.8,65.2 L250.4,65.2 L251.0,72 Z"/>
+        <path class="hz-near" d="M226.9,24.4 C226.9,17.9 245.1,17.9 245.1,24.4 Z"/>
+        <path class="hz-line" d="M230.0,19.4 v-3 M233.0,19.4 v-3 M236.0,19.4 v-3 M239.0,19.4 v-3 M242.0,19.4 v-3"/>
+        <path class="hz-line" d="M234,72 v-7 h4 v7"/>
+      </g>
+      <g class="chennai-colonial">
+        <!-- Indo-Saracenic dome -->
+        <path class="hz-mid" d="M266,72 V57 H292 V72 Z"/>
+        <path class="hz-mid" d="M272,57 C272,50 286,50 286,57 Z"/>
+        <path class="hz-line" d="M279,50.5 v-3"/>
+        <path class="hz-line" d="M262,72 C262,67 261,62 259,58"/>
+        <path class="hz-line" d="M259,58 c-4,-2 -7,-1 -8,3 M259,58 c-1,-5 1,-7 4,-7 M259,58 c4,-2 6,0 7,3 M259,58 c3,2 4,4 3,7"/>
+      </g>
+    </g>
+
+    <g class="city city--enschede">
+      <g class="enschede-houses">
+        <!-- compact brick houses with pitched roofs -->
+        <path class="hz-mid" d="M340,72 V60 L346,54 L352,60 V72 Z M352,72 V57 L359,50 L366,57 V72 Z M366,72 V62 L371,57 L376,62 V72 Z"/>
+        <path class="hz-line hz-detail" d="M349,57 v-3 M363,54 v-3.5"/>
+      </g>
+      <g class="enschede-kerk">
+        <!-- Grote Kerk: heavy square tower, pointed spire, nave -->
+        <path class="hz-near" d="M384,72 V34 L389,14 L394,34 V72 Z"/>
+        <path class="hz-near" d="M394,72 V58 L398,49 H414 L418,58 V72 Z"/>
+      </g>
+      <g class="enschede-toren">
+        <!-- Alphatoren: slim square tower, glass panorama floor at the top -->
+        <path class="hz-mid" d="M427,72 V21 H439 V72 Z"/>
+        <path class="hz-far" d="M427,21 V16 H439 V21 Z"/>
+        <path class="hz-far" d="M440,72 V62 H452 V72 Z"/>
+      </g>
+      <g class="enschede-trees">
+        <!-- flat, green Twente edge -->
+        <ellipse class="hz-mid" cx="323" cy="65" rx="3.8" ry="5"/>
+        <ellipse class="hz-mid" cx="333" cy="64.5" rx="3.4" ry="4.6"/>
+        <ellipse class="hz-mid" cx="380" cy="65.5" rx="3" ry="4.2"/>
+        <ellipse class="hz-mid" cx="447" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="456" cy="66" rx="3.2" ry="4.2"/>
+        <path class="hz-line" d="M323,72 v-3 M333,72 v-3 M380,72 v-3 M447,72 v-3 M456,72 v-3"/>
+      </g>
+      <g class="enschede-land">
+        <!-- beyond the viewBox: flat land, a distant wood, a few trees -->
+        <path class="hz-far" d="M474,72 C482,68 494,67 506,68 C518,69 528,66 542,67 C556,68 566,66 580,68 C592,70 602,69 614,70 C622,71 630,72 636,72 Z"/>
+        <ellipse class="hz-mid" cx="486" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="531" cy="65.5" rx="3.2" ry="4.4"/>
+        <ellipse class="hz-mid" cx="604" cy="65" rx="3.5" ry="4.6"/>
+        <path class="hz-line" d="M486,72 v-3 M531,72 v-3 M604,72 v-3"/>
+      </g>
+    </g>
+    </svg>
+  </footer>
 
 </body>
 </html>

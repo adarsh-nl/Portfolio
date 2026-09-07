@@ -795,22 +795,41 @@ html {
 
 
 /* ==================================================================
-    FOOTER HORIZON (homepage)
-    One small inline-SVG silhouette of Salem, Chennai and Enschede that
-    stands on the footer rule. Ink is currentColor, so it follows the
-    theme. Fully static: no interaction, no animation.
+    SITE FOOTER: HORIZON (all pages)
+    A small inline-SVG silhouette of Salem, Chennai and Enschede standing
+    on a ground line that runs edge to edge at the very bottom of every
+    page. Ink is currentColor, so it follows the theme. Fully static.
 ================================================================== */
 
-.horizon {
-  display: block; /* Franklin styles figure as inline-block with a 10px margin */
-  margin: 4.5em 0 0;
-  padding: 0;
-  text-align: center;
+/* Franklin lays the page out as a centred, shrink-wrapped table cell. The
+   footer breaks out of it to the viewport edges, and on pages shorter than
+   the screen it is pushed to the bottom: sticky with top: 100vh moves it
+   as far down as its container (the page, at least viewport-high) allows. */
+html {
+  overflow-x: hidden; /* the 100vw footer must not add a horizontal scrollbar */
 }
 
-/* The footer rule doubles as the ground line, so no gap above it. */
-.horizon + .page-foot {
-  margin-top: 0;
+/* The old, empty footer div no longer draws a rule or takes space. */
+.page-foot {
+  border-top: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.site-foot {
+  position: sticky;
+  top: 100vh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw); /* symmetric, so the footer adds nothing to the page cell's intrinsic width */
+  padding-top: 4em;
+  overflow: hidden; /* clips the horizon's wings at the screen edge */
+  border-bottom: 1px solid lightgrey; /* the ground line, edge to edge */
+  line-height: 0;
+}
+
+html[data-theme="dark"] .site-foot {
+  border-bottom-color: #333333;
 }
 
 .horizon-svg {
@@ -819,6 +838,7 @@ html {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
+  overflow: visible; /* land beyond the viewBox extends on wide screens */
   color: inherit;
   /* ink alphas per layer (dark theme retunes these) */
   --hz-a-far: 0.11;
