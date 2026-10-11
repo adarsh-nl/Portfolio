@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=19">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=21">
+  <link rel="preload" href="/Portfolio/assets/cms/cmunrm.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=22">
 
-  <title>Adarsh Nanjaiya Latha</title>
-  <meta name="description" content="Adarsh Nanjaiya Latha, Doctoral Candidate in Computer Science at the University of Twente. Research in multi-sensor fusion, autonomous multi-robot perception, and search-and-rescue systems.">
+  <title>Adarsh Nanjaiya Latha | Multi-Robot Perception &amp; Sensor Fusion</title>
+  <meta name="description" content="Adarsh Nanjaiya Latha, PhD candidate at the University of Twente: multi-sensor fusion and collaborative perception for autonomous multi-robot systems and drone swarms.">
   <meta property="og:title" content="Adarsh Nanjaiya Latha">
-  <meta property="og:description" content="Doctoral Candidate in Computer Science at the University of Twente. Research in multi-sensor fusion and autonomous multi-robot perception.">
+  <meta property="og:description" content="PhD candidate in Computer Science at the University of Twente, working on multi-sensor fusion and collaborative perception for autonomous multi-robot systems.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/">
 <!-- seo:meta -->
@@ -26,31 +27,56 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
   <meta name="twitter:title" content="Adarsh Nanjaiya Latha">
-  <meta name="twitter:description" content="Doctoral Candidate in Computer Science at the University of Twente. Research in multi-sensor fusion and autonomous multi-robot perception.">
+  <meta name="twitter:description" content="PhD candidate in Computer Science at the University of Twente, working on multi-sensor fusion and collaborative perception for autonomous multi-robot systems.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Adarsh Nanjaiya Latha",
-    "url": "https://adarsh-nl.github.io/Portfolio/",
-    "image": "https://adarsh-nl.github.io/Portfolio/assets/adarsh.jpg",
-    "jobTitle": "Doctoral Candidate in Computer Science",
-    "affiliation": {
-      "@type": "CollegeOrUniversity",
-      "name": "University of Twente"
-    },
-    "knowsAbout": [
-      "Multi-sensor fusion",
-      "Autonomous multi-robot systems",
-      "Computer vision",
-      "Object detection and tracking",
-      "Search-and-rescue robotics",
-      "Machine learning"
-    ],
-    "sameAs": [
-      "https://scholar.google.com/citations?user=u5_ZYXoAAAAJ&hl=en",
-      "https://www.alphaxiv.org/@adarsh-nanjaiya-latha",
-      "https://github.com/adarsh-nl"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://adarsh-nl.github.io/Portfolio/#website",
+        "url": "https://adarsh-nl.github.io/Portfolio/",
+        "name": "Adarsh Nanjaiya Latha",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://adarsh-nl.github.io/Portfolio/#person" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://adarsh-nl.github.io/Portfolio/#profilepage",
+        "url": "https://adarsh-nl.github.io/Portfolio/",
+        "name": "Adarsh Nanjaiya Latha",
+        "isPartOf": { "@id": "https://adarsh-nl.github.io/Portfolio/#website" },
+        "mainEntity": { "@id": "https://adarsh-nl.github.io/Portfolio/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://adarsh-nl.github.io/Portfolio/#person",
+        "name": "Adarsh Nanjaiya Latha",
+        "alternateName": ["Adarsh N. L.", "A. N. Latha", "N. Adarsh"],
+        "url": "https://adarsh-nl.github.io/Portfolio/",
+        "image": "https://adarsh-nl.github.io/Portfolio/assets/adarsh.jpg",
+        "jobTitle": "Doctoral Candidate in Computer Science",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Twente",
+          "url": "https://www.utwente.nl/en/"
+        },
+        "knowsAbout": [
+          "Multi-sensor fusion",
+          "Collaborative perception",
+          "Autonomous multi-robot systems",
+          "Computer vision",
+          "Object detection and tracking",
+          "Search-and-rescue robotics",
+          "Machine learning"
+        ],
+        "sameAs": [
+          "https://people.utwente.nl/a.nanjaiyalatha",
+          "https://scholar.google.com/citations?user=u5_ZYXoAAAAJ",
+          "https://www.alphaxiv.org/@adarsh-nanjaiya-latha",
+          "https://github.com/adarsh-nl"
+        ]
+      }
     ]
   }
   </script>
@@ -65,11 +91,11 @@
     <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
     <nav>
       <ul id="site-nav">
-        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/" aria-current="page">Home</a></li>
         <li><a href="/Portfolio/cv/">Research</a></li>
         <li><a href="/Portfolio/teaching/">Teaching</a></li>
         <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
-        <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+        <li><a href="/Portfolio/otium/" lang="ta">ஓய்வு</a></li>
         <!-- <li><a href="/Portfolio/notes/">Notes</a></li> -->
       </ul>
   <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
@@ -79,11 +105,11 @@
 
 
   <!-- Content appended here -->
-  <div class="franklin-content" id="main" tabindex="-1">
+  <main class="franklin-content" id="main" tabindex="-1">
     <div class="profile-card">
       <img class="profile-card-photo" src="/Portfolio/assets/adarsh.jpg" alt="Adarsh Nanjaiya Latha" width="118" height="118">
       <div class="profile-card-info">
-        <div class="profile-card-name">Adarsh Nanjaiya Latha</div>
+        <h1 class="profile-card-name">Adarsh Nanjaiya Latha</h1>
         <div class="profile-card-title">Doctoral Candidate, Computer Science</div>
         <div class="profile-card-affil">University of Twente&nbsp;&middot;&nbsp;<span class="loc-full">The Netherlands</span><span class="loc-abbr">NL</span></div>
         <div class="profile-card-links">
@@ -96,33 +122,42 @@
       </div>
     </div>
     <p>I focus on integrating Camera, LiDAR and other sensor data to enhance perception in autonomous multi-robot systems. Key contributions include information-fusion architectures and pipelines that improve object detection, tracking, and situational awareness in cluttered, dynamic environments, with applications to search-and-rescue.</p>
+    <p>My current work is on collaborative perception, where several vehicles share what their sensors see. I am building a fault-injection benchmark that measures how cooperative LiDAR detection degrades when poses drift, messages arrive late, agents drop out, or the weather turns.</p>
     <p>You can get in touch with me at <code>a.nanjaiyalatha [at] utwente [dot] nl</code>.</p>
     <p>I also write blog posts on academic topics sometimes, which you can find in <a href="/Portfolio/otium/">ஓய்வு</a>. It means "leisure" or "rest" in Tamil.</p>
+    <h2 class="news-heading">Selected work</h2>
+    <ul class="news-list">
+      <li><span class="news-date">WIP</span><span class="news-body"><a href="/Portfolio/projects/fault-injectors/">Collaborative perception under faults</a>. An interactive benchmark with seven fault injectors, three severity tiers each, measured on cooperative LiDAR perception models. Work in progress.</span></li>
+      <li><span class="news-date">2025</span><span class="news-body"><a href="/Portfolio/projects/uxv/">The UxV Ecosystem</a> (WMNC 2025). Why aerial, ground and sea vehicles should stop evolving in silos, and how mission-level information fusion turns heterogeneous swarms into one collective.</span></li>
+      <li><span class="news-date">2024</span><span class="news-body"><a href="/Portfolio/projects/clma/">Collaborative Drift Compensation</a> (CODS-COMAD 2024). Detecting data drift in federated learning from model weights alone, and adapting by grouping similarly drifted clients.</span></li>
+      <li><span class="news-date">Note</span><span class="news-body"><a href="/Portfolio/notes/cora/">CoRA, explained interactively</a>. An unofficial explainer of a collaborative-perception paper by Chen et al. (arXiv:2512.13191) on staying robust to pose errors.</span></li>
+    </ul>
+    <p>All publications are on the <a href="/Portfolio/cv/">Research</a> page.</p>
     <h2 class="news-heading">News</h2>
     <ul class="news-list">
       <li><span class="news-date">Aug 2026</span><span class="news-body">Attended the <a href="https://mrs.fel.cvut.cz/summer-school-2026/">2026 IEEE RAS Summer School on Multi-Robot Systems</a> in Prague, hosted by the Multi-Robot Systems Group at the Czech Technical University: a week of lectures and practicals on cooperative navigation, active perception, legged robotics and reinforcement learning, closing with outdoor experiments on real UAV swarms.</span></li>
       <li><span class="news-date">Jul 2026</span><span class="news-body">Added HD-map support for the Griffin dataset to <a href="https://github.com/kesai-labs/py123d">py123d</a>, linking the bundled CARLA town maps to logs for scene filtering (<a href="https://github.com/kesai-labs/py123d/pull/159">#159</a>).</span></li>
       <li><span class="news-date">Jul 2026</span><div class="news-body">Won the hackathon at the ACM Europe &amp; 4TU.NIRICT Summer School <em>"Systems Meet AI"</em> at TU Delft.
-        <a href="#" class="news-toggle" aria-expanded="false" aria-controls="hackathon-gallery">Photos<span class="news-caret" aria-hidden="true">&#9656;</span></a>
+        <button type="button" class="news-toggle" aria-expanded="false" aria-controls="hackathon-gallery">Photos<span class="news-caret" aria-hidden="true">&#9656;</span></button>
         <div class="news-gallery" id="hackathon-gallery">
           <div class="news-gallery-inner">
             <div class="news-gallery-grid">
-              <a href="/Portfolio/assets/hackathon/award.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/award.jpg" alt="First prize, Team Code Detectives, at the Systems Meet AI hackathon, TU Delft" loading="lazy"></a>
-              <a href="/Portfolio/assets/hackathon/award-portrait.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/award-portrait.jpg" alt="Receiving the first-prize certificate" loading="lazy"></a>
-              <a href="/Portfolio/assets/hackathon/working.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/working.jpg" alt="Working on Tiny Machine Learning on Microcontrollers during the hackathon" loading="lazy"></a>
-              <a href="/Portfolio/assets/hackathon/group-seated.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/group-seated.jpg" alt="Summer school participants in the lecture hall" loading="lazy"></a>
-              <a href="/Portfolio/assets/hackathon/group-standing.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/hackathon/group-standing.jpg" alt="Summer school group photo, Delft" loading="lazy"></a>
+              <a href="/Portfolio/assets/hackathon/award.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/hackathon/thumb/award.jpg" width="640" height="480" alt="First prize, Team Code Detectives, at the Systems Meet AI hackathon, TU Delft"></a>
+              <a href="/Portfolio/assets/hackathon/award-portrait.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/hackathon/thumb/award-portrait.jpg" width="480" height="640" alt="Receiving the first-prize certificate"></a>
+              <a href="/Portfolio/assets/hackathon/working.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/hackathon/thumb/working.jpg" width="640" height="480" alt="Working on Tiny Machine Learning on Microcontrollers during the hackathon"></a>
+              <a href="/Portfolio/assets/hackathon/group-seated.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/hackathon/thumb/group-seated.jpg" width="640" height="480" alt="Summer school participants in the lecture hall"></a>
+              <a href="/Portfolio/assets/hackathon/group-standing.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/hackathon/thumb/group-standing.jpg" width="640" height="480" alt="Summer school group photo, Delft"></a>
             </div>
           </div>
         </div>
       </div></li>
       <li><span class="news-date">Jul 2026</span><span class="news-body">Two BSc students I supervised completed their theses on drone-based perception: <a href="https://purl.utwente.nl/essays/110866">S.S. Birla</a> and <a href="https://purl.utwente.nl/essays/110991">D. Buinevi&#269;ius</a>. More on the <a href="/Portfolio/teaching/">Teaching</a> page.</span></li>
       <li><span class="news-date">Jun 2026</span><div class="news-body">Part of the organising team for the Computer Science PhD Day, University of Twente.
-        <a href="#" class="news-toggle" aria-expanded="false" aria-controls="phd-day-gallery">Photo<span class="news-caret" aria-hidden="true">&#9656;</span></a>
+        <button type="button" class="news-toggle" aria-expanded="false" aria-controls="phd-day-gallery">Photo<span class="news-caret" aria-hidden="true">&#9656;</span></button>
         <div class="news-gallery" id="phd-day-gallery">
           <div class="news-gallery-inner">
             <div class="news-gallery-grid single">
-              <a href="/Portfolio/assets/phd-day.jpg" target="_blank" rel="noopener"><img src="/Portfolio/assets/phd-day.jpg" alt="Computer Science PhD Day organising team, University of Twente" loading="lazy"></a>
+              <a href="/Portfolio/assets/phd-day.jpg" target="_blank" rel="noopener"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Portfolio/assets/phd-day-thumb.jpg" width="690" height="920" alt="Computer Science PhD Day organising team, University of Twente"></a>
             </div>
           </div>
         </div>
@@ -135,7 +170,7 @@
       <!--<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> {{ fill author }}. {{isnotpage /tag/*}}Last modified: {{ fill fd_mtime }}.{{end}}
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.-->
     </div>
-  </div><!-- CONTENT ENDS HERE -->
+  </main><!-- CONTENT ENDS HERE -->
 
   <!-- Site footer: a small horizon of Salem, Chennai and Enschede standing
        on the ground line. One inline SVG; the hills and land beyond its
@@ -248,6 +283,11 @@
         if (!gallery) return;
         toggle.addEventListener("click", function (e) {
           e.preventDefault();
+          // Photos load on first open, not with the page.
+          gallery.querySelectorAll("img[data-src]").forEach(function (img) {
+            img.src = img.getAttribute("data-src");
+            img.removeAttribute("data-src");
+          });
           var open = gallery.classList.toggle("is-open");
           toggle.classList.toggle("is-open", open);
           toggle.setAttribute("aria-expanded", open ? "true" : "false");

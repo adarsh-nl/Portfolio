@@ -512,6 +512,12 @@ html[data-theme="dark"] .uxv-toc { background: rgba(23, 24, 27, 0.88); }
 .uxv-matrix button.ground[aria-pressed="true"] { border-color: var(--viz-ground); background: color-mix(in srgb, var(--viz-ground) 10%, var(--viz-surface)); }
 .uxv-matrix button.sea[aria-pressed="true"] { border-color: var(--viz-sea); background: color-mix(in srgb, var(--viz-sea) 10%, var(--viz-surface)); }
 
+@media (max-width: 400px) {
+  /* four domain columns + row labels must fit a 320px phone */
+  .uxv-matrix { grid-template-columns: auto repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .uxv-matrix-head { font-size: 0.6em; letter-spacing: 0.02em; }
+}
+
 .uxv-matrix-detail {
   margin-top: 0.9em;
   min-height: 3.4em;
@@ -875,6 +881,7 @@ html[data-theme="dark"] .uxv-toc { background: rgba(23, 24, 27, 0.88); }
 ------------------------------------------------------------------ */
 
 .uxv-resources { padding-left: 1.2em; }
+.uxv-resources a { overflow-wrap: anywhere; } /* long DOI must wrap on phones */
 .uxv-resources li { margin: 0.5em 0; }
 
 .uxv-bibbox { position: relative; margin-top: 1em; }

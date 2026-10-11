@@ -1,100 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-<url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-</url>
-<url>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/cv/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/teaching/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/otium/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/otium/how_to_write_blog/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/otium/graph_learning_swarms/</loc>
-    <lastmod>2026-07-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/otium/dataset_catalogue/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/notes/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/notes/conformal_prediction/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/notes/interest_rate_products/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/fanalysis/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/fanalysis/chap1/</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/projects/clma/</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
-    <loc>https://adarsh-nl.github.io/Portfolio/projects/uxv/</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/projects/fault-injectors/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-<url>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://adarsh-nl.github.io/Portfolio/projects/uxv/</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://adarsh-nl.github.io/Portfolio/projects/clma/</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
     <loc>https://adarsh-nl.github.io/Portfolio/notes/cora/</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
+    <lastmod>2026-09-07</lastmod>
+  </url>
 </urlset>

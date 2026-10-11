@@ -642,7 +642,7 @@ html[data-theme="dark"] .fi-toc { background: rgba(23, 24, 27, 0.9); }
   font-size: 0.85em;
   font-variant-numeric: tabular-nums;
 }
-.fi-cmp-name { font-weight: bold; }
+.fi-cmp-name { font-weight: bold; min-width: 0; overflow-wrap: anywhere; }
 .fi-cmp-bar {
   height: 10px;
   background: var(--viz-surface3);
@@ -661,7 +661,7 @@ html[data-theme="dark"] .fi-toc { background: rgba(23, 24, 27, 0.9); }
 }
 
 @media (max-width: 560px) {
-  .fi-cmp-row { grid-template-columns: 1fr 3.9em 3.9em; }
+  .fi-cmp-row { grid-template-columns: minmax(0, 1fr) 3.9em 3.9em; }
   .fi-cmp-bar { grid-column: 1 / -1; }
 }
 

@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=19">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=21">
+  <link rel="preload" href="/Portfolio/assets/cms/cmunrm.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=22">
 
-  <title>Research | Adarsh Nanjaiya Latha</title>
-  <meta name="description" content="Research by Adarsh Nanjaiya Latha: peer-reviewed publications in autonomous perception, cooperative robotics, machine learning, and sensor fusion, plus academic service.">
+  <title>Research &amp; Publications | Adarsh Nanjaiya Latha</title>
+  <meta name="description" content="Research by Adarsh Nanjaiya Latha: interactive project pages, peer-reviewed publications in autonomous perception, cooperative robotics, sensor fusion and machine learning, and academic service.">
   <meta property="og:title" content="Research | Adarsh Nanjaiya Latha">
   <meta property="og:description" content="Peer-reviewed publications in autonomous perception, cooperative robotics, machine learning, and sensor fusion, plus academic service.">
   <meta property="og:type" content="website">
@@ -35,10 +36,10 @@
 <nav>
   <ul id="site-nav">
     <li><a href="/Portfolio/">Home</a></li>
-    <li><a href="/Portfolio/cv/">Research</a></li>
+    <li><a href="/Portfolio/cv/" aria-current="page">Research</a></li>
     <li><a href="/Portfolio/teaching/">Teaching</a></li>
     <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
-    <li><a href="/Portfolio/otium/">ஓய்வு</a></li>
+    <li><a href="/Portfolio/otium/" lang="ta">ஓய்வு</a></li>
     <!-- <li><a href="/Portfolio/notes/">Notes</a></li> -->
   </ul>
   <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
@@ -48,14 +49,22 @@
 
 
 <!-- Content appended here -->
-<div class="franklin-content" id="main" tabindex="-1">
-<div class="main-heading">Research</div>
+<main class="franklin-content" id="main" tabindex="-1">
+<h1 class="main-heading">Research</h1>
 
-<p>My research develops multi-sensor fusion and perception for autonomous multi-robot systems, combining camera, LiDAR and other modalities for robust object detection, tracking, and situational awareness in cluttered, dynamic environments, with applications to search-and-rescue.</p>
+<p>My research develops multi-sensor fusion and collaborative perception for autonomous multi-robot systems, combining camera, LiDAR and other modalities for robust object detection, tracking, and situational awareness in cluttered, dynamic environments, with applications to search-and-rescue.</p>
+
+<h2 class="news-heading">Projects</h2>
+<ul class="news-list">
+  <li><span class="news-date">WIP</span><span class="news-body"><a href="/Portfolio/projects/fault-injectors/">Collaborative perception under faults</a>. An interactive benchmark with seven fault injectors, three severity tiers each, measured on cooperative LiDAR perception models. Work in progress.</span></li>
+  <li><span class="news-date">2025</span><span class="news-body"><a href="/Portfolio/projects/uxv/">The UxV Ecosystem</a>. Interactive page for the WMNC 2025 paper below: mission-level information fusion across aerial, ground and sea vehicles.</span></li>
+  <li><span class="news-date">2024</span><span class="news-body"><a href="/Portfolio/projects/clma/">Collaborative Drift Compensation</a>. Interactive page for the CODS-COMAD 2024 paper below: drift detection and cohorting in federated learning.</span></li>
+  <li><span class="news-date">Note</span><span class="news-body"><a href="/Portfolio/notes/cora/">CoRA, explained interactively</a>. An unofficial explainer of a collaborative-perception paper by Chen et al. (arXiv:2512.13191).</span></li>
+</ul>
 
 <h2 class="news-heading">Publications</h2>
 <ul class="news-list">
-  <li><span class="news-date">2025</span><span class="news-body"><strong>A. N. Latha</strong>, S. N. Anbalagan, A. Chiumento, and J. Laarhuis. <em>"Where Do We Go from Here? Charting the Future of Unmanned Vehicles."</em> In Proc. 16th IFIP Wireless and Mobile Networking Conference (WMNC), Leuven, Belgium, pp. 176&ndash;181. <a href="https://doi.org/10.23919/WMNC67099.2025.11299247">[doi]</a> <a href="/Portfolio/projects/uxv/">[project page]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2025unmanned,
+  <li><span class="news-date">2025</span><span class="news-body"><strong>A. N. Latha</strong>, S. N. Anbalagan, A. Chiumento, and J. Laarhuis. <em>"Where Do We Go from Here? Charting the Future of Unmanned Vehicles."</em> In Proc. 16th IFIP Wireless and Mobile Networking Conference (WMNC), Leuven, Belgium, pp. 176&ndash;181. <a href="https://doi.org/10.23919/WMNC67099.2025.11299247">[doi]</a> <a href="/Portfolio/projects/uxv/">[project page]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2025unmanned,
   author    = {Nanjaiya Latha, Adarsh and Anbalagan, S. N. and Chiumento, Alessandro and Laarhuis, Jan},
   title     = {Where Do We Go from Here? Charting the Future of Unmanned Vehicles},
   booktitle = {Proc. 16th IFIP Wireless and Mobile Networking Conference (WMNC)},
@@ -64,7 +73,7 @@
   year      = {2025},
   doi       = {10.23919/WMNC67099.2025.11299247}
 }</pre></span></span></li>
-  <li><span class="news-date">2025</span><span class="news-body"><strong>Adarsh N. L.</strong>, P. V. Arun, and B. K. Mohan. <em>"Bridging Online Learning and Explainability in Image Classification."</em> In Explainable AI for Earth Observation Data Analysis: Applications, Opportunities, and Challenges, pp. 191&ndash;203. CRC Press. <a href="https://doi.org/10.1201/9781003597025-11">[doi]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@incollection{latha2025bridging,
+  <li><span class="news-date">2025</span><span class="news-body"><strong>Adarsh N. L.</strong>, P. V. Arun, and B. K. Mohan. <em>"Bridging Online Learning and Explainability in Image Classification."</em> In Explainable AI for Earth Observation Data Analysis: Applications, Opportunities, and Challenges, pp. 191&ndash;203. CRC Press. <a href="https://doi.org/10.1201/9781003597025-11">[doi]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@incollection{latha2025bridging,
   author    = {Nanjaiya Latha, Adarsh and Arun, P. V. and Mohan, B. K.},
   title     = {Bridging Online Learning and Explainability in Image Classification},
   booktitle = {Explainable AI for Earth Observation Data Analysis: Applications, Opportunities, and Challenges},
@@ -73,33 +82,34 @@
   year      = {2025},
   doi       = {10.1201/9781003597025-11}
 }</pre></span></span></li>
-  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong>, Madapu Amarlingam, and Divyasheel Sharma. <em>"Collaborative Drift Compensation."</em> In Proc. 6th Joint International Conference on Data Science and Management of Data (CODS-COMAD). <a href="https://doi.org/10.1145/3703323.3703341">[doi]</a> <a href="/Portfolio/projects/clma/">[project page]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2024drift,
+  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong>, Madapu Amarlingam, and Divyasheel Sharma. <em>"Collaborative Drift Compensation."</em> In Proc. 8th International Conference on Data Science and Management of Data (CODS-COMAD 2024), pp. 116&ndash;124. <a href="https://doi.org/10.1145/3703323.3703341">[doi]</a> <a href="/Portfolio/projects/clma/">[project page]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2024drift,
   author    = {Nanjaiya Latha, Adarsh and Amarlingam, Madapu and Sharma, Divyasheel},
   title     = {Collaborative Drift Compensation},
-  booktitle = {Proc. 6th Joint International Conference on Data Science and Management of Data (CODS-COMAD)},
+  booktitle = {Proc. 8th International Conference on Data Science and Management of Data (12th ACM IKDD CODS and 30th COMAD)},
+  pages     = {116--124},
   year      = {2024},
   doi       = {10.1145/3703323.3703341}
 }</pre></span></span></li>
-  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong> and P. V. Arun. <em>"Leveraging Internal Representations of Model for Magnetic Image Classification."</em> In Proc. Computer Vision and Image Processing (CVIP), Springer. <a href="https://arxiv.org/abs/2403.06797">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2403.06797">[alphaXiv]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2024leveraging,
+  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong> and P. V. Arun. <em>"Leveraging Internal Representations of Model for Magnetic Image Classification."</em> In Proc. Computer Vision and Image Processing (CVIP), Springer. <a href="https://arxiv.org/abs/2403.06797">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2403.06797">[alphaXiv]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{latha2024leveraging,
   author    = {Nanjaiya Latha, Adarsh and Arun, P. V.},
   title     = {Leveraging Internal Representations of Model for Magnetic Image Classification},
   booktitle = {Proc. Computer Vision and Image Processing (CVIP)},
   publisher = {Springer},
   year      = {2024}
 }</pre></span></span></li>
-  <li><span class="news-date">2024</span><span class="news-body">Madapu Amarlingam, Abhishek Wani, and <strong>Adarsh N. L.</strong> <em>"Lightweight Industrial Cohorted Federated Learning for Heterogeneous Assets."</em> Submitted to Knowledge-Based Systems. <a href="https://arxiv.org/abs/2407.17999">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2407.17999">[alphaXiv]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{amarlingam2024lightweight,
+  <li><span class="news-date">2024</span><span class="news-body">Madapu Amarlingam, Abhishek Wani, and <strong>Adarsh N. L.</strong> <em>"Lightweight Industrial Cohorted Federated Learning for Heterogeneous Assets."</em> Submitted to Knowledge-Based Systems. <a href="https://arxiv.org/abs/2407.17999">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2407.17999">[alphaXiv]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{amarlingam2024lightweight,
   author  = {Amarlingam, Madapu and Wani, Abhishek and Nanjaiya Latha, Adarsh},
   title   = {Lightweight Industrial Cohorted Federated Learning for Heterogeneous Assets},
   journal = {arXiv preprint arXiv:2407.17999},
   year    = {2024}
 }</pre></span></span></li>
-  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong>, P. V. Arun, and Aravindh N. L. <em>"Enhancing Image Caption Generation Using Reinforcement Learning with Human Feedback."</em> arXiv preprint. <a href="https://arxiv.org/abs/2403.06735">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2403.06735">[alphaXiv]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{latha2024caption,
+  <li><span class="news-date">2024</span><span class="news-body"><strong>Adarsh N. L.</strong>, P. V. Arun, and Aravindh N. L. <em>"Enhancing Image Caption Generation Using Reinforcement Learning with Human Feedback."</em> arXiv preprint. <a href="https://arxiv.org/abs/2403.06735">[arXiv]</a> <a href="https://www.alphaxiv.org/abs/2403.06735">[alphaXiv]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{latha2024caption,
   author  = {Nanjaiya Latha, Adarsh and Arun, P. V. and Nanjaiya Latha, Aravindh},
   title   = {Enhancing Image Caption Generation Using Reinforcement Learning with Human Feedback},
   journal = {arXiv preprint arXiv:2403.06735},
   year    = {2024}
 }</pre></span></span></li>
-  <li><span class="news-date">2023</span><span class="news-body">Ananthi N., <strong>Adarsh N. L.</strong>, Anish M., and Arunraj G. <em>"Person Re-Identification using Deep Learning."</em> In Proc. 7th International Conference on Computing Methodologies and Communication (ICCMC), pp. 127&ndash;132. <a href="https://doi.org/10.1109/ICCMC56507.2023.10083656">[doi]</a> <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{ananthi2023reid,
+  <li><span class="news-date">2023</span><span class="news-body">Ananthi N., <strong>Adarsh N. L.</strong>, Anish M., and Arunraj G. <em>"Person Re-Identification using Deep Learning."</em> In Proc. 7th International Conference on Computing Methodologies and Communication (ICCMC), pp. 127&ndash;132. <a href="https://doi.org/10.1109/ICCMC56507.2023.10083656">[doi]</a> <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@inproceedings{ananthi2023reid,
   author    = {Ananthi, N. and Nanjaiya Latha, Adarsh and Anish, M. and Arunraj, G.},
   title     = {Person Re-Identification using Deep Learning},
   booktitle = {Proc. 7th International Conference on Computing Methodologies and Communication (ICCMC)},
@@ -107,7 +117,7 @@
   year      = {2023},
   doi       = {10.1109/ICCMC56507.2023.10083656}
 }</pre></span></span></li>
-  <li><span class="news-date">2020</span><span class="news-body">R. Hemalatha, S. Nirmala, K. Viswaja, <strong>N. Adarsh</strong>, Annie Catherine, and Priyatharshini Rajaram. <em>"Evaluation of the Effectiveness of DAD-APP in Managing Dentally Anxious Children: A Pilot Study."</em> Zeichen Journal, vol. 6, pp. 119&ndash;126. <a href="#" class="bib-toggle" aria-expanded="false">[bib]</a><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{hemalatha2020dadapp,
+  <li><span class="news-date">2020</span><span class="news-body">R. Hemalatha, S. Nirmala, K. Viswaja, <strong>N. Adarsh</strong>, Annie Catherine, and Priyatharshini Rajaram. <em>"Evaluation of the Effectiveness of DAD-APP in Managing Dentally Anxious Children: A Pilot Study."</em> Zeichen Journal, vol. 6, pp. 119&ndash;126. <button type="button" class="bib-toggle" aria-expanded="false">[bib]</button><span class="bibtex-wrap"><button class="bib-copy" type="button">copy</button><pre class="bibtex">@article{hemalatha2020dadapp,
   author  = {Hemalatha, R. and Nirmala, S. and Viswaja, K. and Adarsh, N. and Catherine, Annie and Rajaram, Priyatharshini},
   title   = {Evaluation of the Effectiveness of DAD-APP in Managing Dentally Anxious Children: A Pilot Study},
   journal = {Zeichen Journal},
@@ -128,7 +138,7 @@
 
 <div class="page-foot">
 </div>
-</div><!-- CONTENT ENDS HERE -->
+</main><!-- CONTENT ENDS HERE -->
 
   <!-- Site footer: a small horizon of Salem, Chennai and Enschede standing
        on the ground line. One inline SVG; the hills and land beyond its

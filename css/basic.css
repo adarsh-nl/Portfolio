@@ -91,7 +91,8 @@ header .blog-name a {
   text-decoration: none;
 }
 
-header li a:hover {
+header li a:hover,
+header li a[aria-current="page"] {
   color: black;
   border-bottom: 2px solid black;
 }
@@ -109,6 +110,11 @@ header li a:hover {
   display: block;
   width: 24px;
   height: auto;
+}
+
+/* The icon is a black SVG; lift it to the dark theme's text tone. */
+html[data-theme="dark"] #menu-icon img {
+  filter: invert(1) brightness(0.86);
 }
 
 @media (max-width: 480px) {
@@ -259,10 +265,13 @@ instead, display a burger menu.
   min-width: 0;
 }
 
-.profile-card-name {
+.franklin-content .profile-card-name {
   font-size: 22px;
   font-weight: bold;
   line-height: 1.15;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .profile-card-title {
@@ -272,7 +281,7 @@ instead, display a burger menu.
 
 .profile-card-affil {
   font-size: 0.82em;
-  color: #888888;
+  color: #666666;
   margin-top: 0.15em;
 }
 
@@ -291,7 +300,7 @@ instead, display a burger menu.
 }
 
 .cv-updated {
-  color: #888888;
+  color: #666666;
   font-size: 0.75em;
 }
 
@@ -308,6 +317,7 @@ instead, display a burger menu.
   .profile-card-links { justify-content: center; }
   .loc-full { display: none; }
   .loc-abbr { display: inline; }
+  .news-date { flex-basis: 5.4em; }
 }
 
 .franklin-content h2.news-heading {
@@ -335,8 +345,10 @@ instead, display a burger menu.
 }
 
 .news-date {
-  flex: 0 0 5em;
-  color: #888888;
+  flex: 0 0 6em;
+  box-sizing: border-box;
+  padding-right: 0.6em; /* "AUG 2026" no longer touches the text */
+  color: #666666;
   font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -378,6 +390,22 @@ table tbody tr td {
 /* ==================================================================
     NEWS INLINE PHOTO GALLERY
 ================================================================== */
+
+/* "Photos" and "[bib]" are buttons (they toggle, they don't navigate);
+   strip the native button chrome so they keep their link-like look. */
+button.news-toggle,
+button.bib-toggle {
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted #999999;
+  border-radius: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  line-height: inherit;
+}
+button.news-toggle { font-size: 0.85em; }
+button.bib-toggle { font-size: 0.82em; border-bottom-color: #bbbbbb; }
 
 .news-toggle {
   font-size: 0.85em;
@@ -494,7 +522,7 @@ table tbody tr td {
 
 .bib-toggle {
   font-size: 0.82em;
-  color: #888888;
+  color: #666666;
   text-decoration: none;
   border-bottom: 1px dotted #bbbbbb;
   white-space: nowrap;
@@ -585,6 +613,12 @@ table tbody tr td {
     Code blocks are deliberately left light so highlight.js stays legible.
 ================================================================== */
 
+/* Light ground set explicitly instead of relying on the browser's default
+   canvas (some webviews and dark-mode hosts paint a transparent one dark). */
+html {
+  background-color: #ffffff;
+}
+
 html[data-theme="dark"] {
   background-color: #17181b;
   color: #d8d8d6;
@@ -603,7 +637,8 @@ html[data-theme="dark"] nav li a {
   border-bottom-color: #4a4a4a;
 }
 
-html[data-theme="dark"] header li a:hover {
+html[data-theme="dark"] header li a:hover,
+html[data-theme="dark"] header li a[aria-current="page"] {
   color: #ffffff;
   border-bottom-color: #ffffff;
 }
@@ -693,6 +728,13 @@ html[data-theme="dark"] .news-gallery-grid a:focus-visible img {
   border-color: #555555;
 }
 
+/* Blog index illustration is black ink on white: invert it and let the
+   page ground show through the (now black) paper. */
+html[data-theme="dark"] .otium-figure {
+  filter: invert(1) brightness(0.86);
+  mix-blend-mode: lighten;
+}
+
 /* Content borders and rules */
 html[data-theme="dark"] .franklin-content blockquote {
   border-left-color: #555555;
@@ -760,13 +802,28 @@ html {
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 0% 1px;
-  transition: background-size 0.28s ease, color 0.2s ease;
+  transition: background-size 0.28s ease, color 0.2s ease, text-decoration-color 0.28s ease;
+}
+
+/* Links inside running text also carry a faint underline at rest, so they
+   are recognisable without relying on colour (WCAG 1.4.1). It fades out as
+   the drawn underline takes over on hover. Classed links (buttons, tabs on
+   the project pages) keep their own styling. */
+:root { --link-rest-line: rgba(20, 20, 20, 0.32); }
+html[data-theme="dark"] { --link-rest-line: rgba(216, 216, 214, 0.38); }
+
+.franklin-content :is(p, li, dd, td, figcaption, blockquote) a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: var(--link-rest-line);
 }
 
 .franklin-content a:hover,
-.franklin-content a:focus-visible {
+.franklin-content a:focus-visible,
+.franklin-content :is(p, li, dd, td, figcaption, blockquote) a:not([class]):is(:hover, :focus-visible) {
   background-size: 100% 1px;
-  text-decoration: none; /* the gradient is the underline */
+  text-decoration-color: transparent; /* the gradient is the underline */
 }
 
 /* Links that already carry their own affordance opt out of the sliding rule */
