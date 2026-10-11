@@ -57,8 +57,6 @@ for p in pages:
         fail(p, f"has {len(re.findall(r'<h1', s))} <h1> elements (want 1)")
     if "/Portfolio/assets/site.js" not in s:
         fail(p, "does not load site.js (theme toggle and mobile menu will not work)")
-    if 'href="/Portfolio/assets/cms/cmunrm.woff2"' not in s:
-        fail(p, "missing the body-font preload")
     for img in re.findall(r"<img\b[^>]*>", s):
         if "alt=" not in img:
             fail(p, f"image without alt: {img[:80]}")

@@ -1,0 +1,81 @@
+/* ==================================================================
+    ஓய்வு (blog index) only. The one page allowed a little play:
+    live Brownian walks in the figure, entries that settle in, and
+    bullets that jitter like particles when you point at them.
+    The html.otium-js class is set by an inline script in <head>, so
+    nothing here applies (and the JPEG fallback shows) without JS.
+================================================================== */
+
+.franklin-content .otium-hero {   /* beats Franklin's inline-block figure rule */
+  display: block;
+  margin: 0.2em 0 1.4em;
+  padding: 0;
+  text-align: center;
+}
+
+.otium-canvas {
+  display: none;
+  width: 100%;
+  aspect-ratio: 1520 / 459;   /* same proportions as the old image */
+  color: inherit;              /* the walks are drawn in the text colour */
+  cursor: crosshair;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.otium-hero figcaption {
+  display: none;
+  font-size: 0.78em;
+  color: #666666;
+  margin-top: 0.5em;
+}
+
+.otium-js .otium-canvas,
+.otium-js .otium-hero figcaption {
+  display: block;
+}
+
+/* Phones: a taller strip so each walk keeps a legible size. */
+@media (max-width: 500px) {
+  .otium-canvas { aspect-ratio: 2 / 1; }
+}
+
+.otium-canvas:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+html[data-theme="dark"] .otium-hero figcaption {
+  color: #8a8a8a;
+}
+
+@keyframes otium-settle {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* A short random walk for the bullet: small, jagged, back to rest. */
+@keyframes otium-jitter {
+  0%   { transform: translate(0, 0); }
+  12%  { transform: translate(1.5px, -1px); }
+  25%  { transform: translate(-1px, 1.5px); }
+  37%  { transform: translate(2px, 0.5px); }
+  50%  { transform: translate(-1.5px, -1.5px); }
+  62%  { transform: translate(1px, 2px); }
+  75%  { transform: translate(-2px, 0.5px); }
+  87%  { transform: translate(0.5px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .otium-js .blog-entry,
+  .otium-js .blog-desc {
+    animation: otium-settle 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(0.6s + var(--i, 0) * 0.14s);
+  }
+
+  .otium-js .blog-entry:hover::before {
+    animation: otium-jitter 0.9s linear;
+  }
+}
