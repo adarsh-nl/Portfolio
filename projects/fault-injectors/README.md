@@ -272,10 +272,13 @@ Section 10 of the page states all of this to the reader.
 
 ## Real data, dropped in later
 
-The page fetches `real/manifest.json` at load. If it is absent or malformed,
-nothing happens and no error appears; the page is complete without it. If it is
-present, every injector listed in it grows a toggle that shows the exported
-asset beside the synthetic scene.
+Publish `real/manifest.json` next to the page and switch it on by adding
+`data-real-manifest="real/manifest.json"` to the page's `<main>` element. Only
+then does the page fetch it; without the attribute nothing is requested, so a
+missing file never shows up as a console 404. If the manifest is absent or
+malformed, nothing happens; the page is complete without it. When present,
+every injector listed in it grows a toggle that shows the exported asset beside
+the synthetic scene.
 
 ```json
 {

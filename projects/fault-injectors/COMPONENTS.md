@@ -27,7 +27,7 @@ scene state and the measured data added.
 | `FI.PARAMS` | Injector parameters | The physical tier values the visuals use (σ, Δt, p, keep fraction, fog mean intensity and relocation fraction, snow removal/attenuation/addition). Separate from `FI.DATA` because some of these are rendering parameters rather than measurements; the README says which. |
 | `FI.tierControl(host, inj, cb)` | Severity slider | Builds a four-stop range (clean plus the three measured tiers) with a clickable, labelled tick under each stop carrying `aria-current`, updates the live value in the label, and highlights the matching row in that injector's numbers table. Discrete on purpose: a measurement exists only at those four points. |
 | `FI.numbersTable(host, inj)` | Measured-degradation panel | Generates the captioned table from `FI.DATA`. Handles a null `d50` by printing "n/a" plus a footnote rather than a fabricated value. |
-| `FI.real` | Optional real-data layer | Fetches `real/manifest.json`, silent on absence. `has(key)` / `get(key, tier)`. |
+| `FI.real` | Optional real-data layer | Fetches the manifest named by `<main data-real-manifest>` (opt-in), silent on absence. `has(key)` / `get(key, tier)`. |
 | `FI.tooltip`, `FI.tabs`, `FI.svg`, `FI.fmt`, `FI.clamp/lerp/ease` | Small shared utilities | `FI.fmt.d` is the signed three-decimal delta formatter used everywhere a Δ is printed. |
 | Page furniture | Scrollspy, scroll reveal, KaTeX, copy buttons | Scrollspy also scrolls the sticky nav so the active chip stays visible on narrow screens. |
 

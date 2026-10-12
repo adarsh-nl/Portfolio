@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
-  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=22">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=24">
   <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
   <link rel="stylesheet" href="/Portfolio/projects/fault-injectors/fi.css?v=2">
   <title>Fault Injection for Collaborative Perception | Adarsh Nanjaiya Latha</title>
@@ -18,7 +18,10 @@
   <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/fault-injectors/">
   <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
   <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
-  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og-card.png">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og/fault-injectors.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="https://adarsh-nl.github.io/Portfolio/assets/og/fault-injectors.png">
   <meta property="og:image:alt" content="Collaborative Perception, a fault injection benchmark. Interactive project page.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Collaborative Perception: A Fault Injection Benchmark">
@@ -521,7 +524,7 @@
       </ul>
 
       <h3 class="fi-h3">Dropping in real data later</h3>
-      <p>The page checks for <code>real/manifest.json</code> at load. If it exists, any injector listed in it gains a toggle that shows an exported clip or frame from the cluster next to the synthetic scene. If it does not exist, nothing changes and no error appears. Format:</p>
+      <p>Once real clips are published, a <code>real/manifest.json</code> next to this page switches them on: any injector listed in it gains a toggle that shows an exported clip or frame from the cluster next to the synthetic scene. If it does not exist, nothing changes and no error appears. Format:</p>
       <div class="fi-codebox">
         <button class="fi-copy" type="button">copy</button>
         <pre>{
@@ -665,10 +668,10 @@
     <p style="text-align:center; font-size: 0.85em;">Every figure on this page is generated live in the browser, so JavaScript is required. The written explanation of each injector, and the measured numbers in the text, remain readable without it.</p>
   </noscript>
 
-  <script src="/Portfolio/assets/site.js?v=4"></script>
+  <script src="/Portfolio/assets/site.js?v=5"></script>
   <script defer src="/Portfolio/libs/katex/katex.min.js"></script>
   <script defer src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
-  <script defer src="/Portfolio/projects/fault-injectors/fi-core.js?v=1"></script>
+  <script defer src="/Portfolio/projects/fault-injectors/fi-core.js?v=2"></script>
   <script defer src="/Portfolio/projects/fault-injectors/fi-scene.js?v=1"></script>
   <script defer src="/Portfolio/projects/fault-injectors/fi-widgets.js?v=1"></script>
   <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

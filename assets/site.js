@@ -2,23 +2,37 @@
   var root = document.documentElement;
 
   // ---- Dark-mode toggle ----
+  // The header icon is hidden on phones, so the same switch is also added as
+  // the last row of the mobile menu (shown only below 500px by basic.css).
   var btn = document.getElementById("theme-toggle");
+  var menuBtn = null;
+  var list = document.getElementById("site-nav");
+  if (btn && list) {
+    var li = document.createElement("li");
+    li.className = "menu-theme";
+    menuBtn = document.createElement("button");
+    menuBtn.type = "button";
+    li.appendChild(menuBtn);
+    list.appendChild(li);
+  }
   function paint() {
-    if (!btn) return;
     var dark = root.getAttribute("data-theme") === "dark";
-    btn.innerHTML = dark ? "&#9728;" : "&#9790;"; // sun in dark, moon in light
-    btn.setAttribute("aria-pressed", dark ? "true" : "false");
+    if (btn) {
+      btn.innerHTML = dark ? "&#9728;" : "&#9790;"; // sun in dark, moon in light
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+    }
+    if (menuBtn) menuBtn.textContent = dark ? "Light mode" : "Dark mode";
+  }
+  function toggleTheme() {
+    var dark = root.getAttribute("data-theme") === "dark";
+    if (dark) root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", "dark");
+    try { localStorage.setItem("theme", dark ? "light" : "dark"); } catch (e) {}
+    paint();
   }
   paint();
-  if (btn) {
-    btn.addEventListener("click", function () {
-      var dark = root.getAttribute("data-theme") === "dark";
-      if (dark) root.removeAttribute("data-theme");
-      else root.setAttribute("data-theme", "dark");
-      try { localStorage.setItem("theme", dark ? "light" : "dark"); } catch (e) {}
-      paint();
-    });
-  }
+  if (btn) btn.addEventListener("click", toggleTheme);
+  if (menuBtn) menuBtn.addEventListener("click", toggleTheme);
 
   // ---- BibTeX toggles + copy (Research page) ----
   document.querySelectorAll(".bib-toggle").forEach(function (t) {

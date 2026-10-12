@@ -542,7 +542,8 @@
 
   /* ==================================================================
      OPTIONAL REAL-DATA LAYER
-     If projects/fault-injectors/real/manifest.json exists, each injector
+     If <main> carries data-real-manifest (normally "real/manifest.json")
+     and that file exists, each injector
      that has an entry gains a "Real data" toggle that swaps the
      synthetic canvas for an exported clip from the cluster. The page is
      complete without it; a missing or malformed manifest is silent.
@@ -560,8 +561,13 @@
   };
 
   (function loadManifest() {
-    if (!window.fetch) return;
-    var url = "/Portfolio/projects/fault-injectors/real/manifest.json";
+    // Opt-in: <main data-real-manifest="real/manifest.json"> once clips are
+    // published. Without the attribute nothing is requested, so a missing
+    // manifest never shows up as a 404 in the console.
+    var main = document.getElementById("main");
+    var rel = main && main.getAttribute("data-real-manifest");
+    if (!window.fetch || !rel) return;
+    var url = "/Portfolio/projects/fault-injectors/" + rel;
     fetch(url, { cache: "no-cache" })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {

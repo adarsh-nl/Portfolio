@@ -17,21 +17,15 @@
   display: none;
   width: 100%;
   aspect-ratio: 1520 / 459;   /* same proportions as the old image */
-  color: inherit;              /* the walks are drawn in the text colour */
+  /* Ink colour for the walks. Set here, not inherited: <html> cross-fades
+     its colour on theme change, and the script would read a mid-fade value. */
+  color: #141414;
   cursor: crosshair;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.otium-hero figcaption {
-  display: none;
-  font-size: 0.78em;
-  color: #666666;
-  margin-top: 0.5em;
-}
-
-.otium-js .otium-canvas,
-.otium-js .otium-hero figcaption {
+.otium-js .otium-canvas {
   display: block;
 }
 
@@ -40,14 +34,14 @@
   .otium-canvas { aspect-ratio: 2 / 1; }
 }
 
+html[data-theme="dark"] .otium-canvas {
+  color: #d8d8d6;
+}
+
 .otium-canvas:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
   border-radius: 2px;
-}
-
-html[data-theme="dark"] .otium-hero figcaption {
-  color: #8a8a8a;
 }
 
 @keyframes otium-settle {

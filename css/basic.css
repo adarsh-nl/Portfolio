@@ -106,6 +106,32 @@ header li a[aria-current="page"] {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Theme switch row in the mobile menu: hidden except on phones */
+nav li.menu-theme {
+  display: none;
+}
+
+.menu-theme button {
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555555;
+  padding: 10px 2px 7px;
+  margin: 0 7px;
+  cursor: pointer;
+  text-align: left;
+}
+
+html[data-theme="dark"] .menu-theme button {
+  color: #9a9a9a;
+}
+
+html[data-theme="dark"] nav li.menu-theme {
+  border-top-color: #333333;
+}
+
 #menu-icon img {
   display: block;
   width: 24px;
@@ -203,7 +229,7 @@ instead, display a burger menu.
     background: #fff;
     border: 1px solid #444;
     right: 10px;
-    top: 55px;
+    top: 88px; /* below the header row, so the panel no longer covers its own button */
     width: 40%;
     min-width: 160px;
     border-radius: 4px 0 4px 4px;
@@ -221,6 +247,13 @@ instead, display a burger menu.
 
   nav.open ul {
     display: block;
+  }
+
+  /* Theme switch row that site.js appends to the menu */
+  nav li.menu-theme {
+    display: block;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 4px;
   }
 
   #menu-icon {
@@ -514,6 +547,18 @@ button.bib-toggle { font-size: 0.82em; border-bottom-color: #bbbbbb; }
   .news-caret {
     transition: none;
   }
+}
+
+/* One-line plain-language takeaway under each publication */
+.pub-takeaway {
+  display: block;
+  margin-top: 0.25em;
+  font-size: 0.9em;
+  color: #444444;
+}
+
+html[data-theme="dark"] .pub-takeaway {
+  color: #b5b5b3;
 }
 
 /* ==================================================================
