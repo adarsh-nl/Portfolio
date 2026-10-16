@@ -5,8 +5,15 @@
     <link>https://adarsh-nl.github.io/Portfolio/</link>
     <description>News and updates from Adarsh Nanjaiya Latha, Doctoral Candidate in Computer Science, University of Twente.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://adarsh-nl.github.io/Portfolio/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Paper accepted at WACV 2027: agent-dependent ground truth in collaborative perception</title>
+      <link>https://adarsh-nl.github.io/Portfolio/</link>
+      <description>"Agent-Dependent Ground Truth Biases Robustness Evaluation in Collaborative Perception" was accepted at the CVF/IEEE Winter Conference on Applications of Computer Vision (WACV 2027).</description>
+      <pubDate>Fri, 16 Oct 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="false">adarsh-news-2026-10-wacv2027</guid>
+    </item>
     <item>
       <title>Attended the 2026 IEEE RAS Summer School on Multi-Robot Systems, Prague</title>
       <link>https://mrs.fel.cvut.cz/summer-school-2026/</link>
