@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=24">
+  <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
+  <link rel="stylesheet" href="/Portfolio/projects/agent-dependent-gt/adgt.css?v=6">
+  <title>Agent-Dependent Ground Truth in Collaborative Perception (WACV 2027) | Adarsh Nanjaiya Latha</title>
+  <meta name="description" content="WACV 2027 paper by Adarsh Nanjaiya Latha, Alessandro Chiumento, Jan Laarhuis and Ozlem Durmaz Incel. Collaborative perception is scored against a ground truth built from the agents under test, so dropping a collaborator also shrinks the answer key. Interactive explanation, measurements and a fixed-reference scoring protocol.">
+  <meta name="author" content="Adarsh Nanjaiya Latha">
+  <meta property="og:title" content="Agent-Dependent Ground Truth Biases Robustness Evaluation in Collaborative Perception">
+  <meta property="og:description" content="Drop a collaborator and the ground truth shrinks with it. An interactive look at agent-dependent ground truth in collaborative perception (WACV 2027).">
+  <meta property="og:type" content="article">
+  <meta property="article:author" content="Adarsh Nanjaiya Latha">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/agent-dependent-gt/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/agent-dependent-gt/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta property="og:image" content="https://adarsh-nl.github.io/Portfolio/assets/og/agent-dependent-gt.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="https://adarsh-nl.github.io/Portfolio/assets/og/agent-dependent-gt.png">
+  <meta property="og:image:alt" content="The same detections scored against a union reference of 29 objects, a shrunken union of 22, and a fixed reference of 29.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agent-Dependent Ground Truth in Collaborative Perception (WACV 2027)">
+  <meta name="twitter:description" content="Drop a collaborator and the ground truth shrinks with it. An interactive look at agent-dependent ground truth in collaborative perception (WACV 2027).">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://adarsh-nl.github.io/Portfolio/projects/agent-dependent-gt/",
+  "url": "https://adarsh-nl.github.io/Portfolio/projects/agent-dependent-gt/",
+  "name": "Agent-Dependent Ground Truth Biases Robustness Evaluation in Collaborative Perception, an interactive project page",
+  "isPartOf": { "@id": "https://adarsh-nl.github.io/Portfolio/#website" },
+  "author": { "@type": "Person", "@id": "https://adarsh-nl.github.io/Portfolio/#person", "name": "Adarsh Nanjaiya Latha", "url": "https://adarsh-nl.github.io/Portfolio/" },
+  "about": {
+    "@type": "ScholarlyArticle",
+    "headline": "Agent-Dependent Ground Truth Biases Robustness Evaluation in Collaborative Perception",
+    "author": [
+      { "@type": "Person", "@id": "https://adarsh-nl.github.io/Portfolio/#person", "name": "Adarsh Nanjaiya Latha" },
+      { "@type": "Person", "name": "Alessandro Chiumento" },
+      { "@type": "Person", "name": "Jan Laarhuis" },
+      { "@type": "Person", "name": "Ozlem Durmaz Incel" }
+    ],
+    "datePublished": "2027",
+    "isPartOf": { "@type": "PublicationEvent", "name": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027)" },
+    "keywords": ["collaborative perception", "cooperative perception", "robustness evaluation", "ground truth", "average precision", "fault injection"]
+  }
+}
+  </script>
+  <!-- Dark first, like the companion fault-injector page: dark unless the visitor chose light. -->
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.setAttribute("data-theme","dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul id="site-nav">
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/" lang="ta">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <button id="menu-icon" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><img src="/Portfolio/assets/hamburger.svg" alt=""></button>
+    </nav>
+  </header>
+
+  <nav class="ag-toc" aria-label="On this page">
+    <div class="ag-toc-inner">
+      <a href="#problem">Problem</a>
+      <a href="#mechanism">Mechanism</a>
+      <a href="#code">In the code</a>
+      <a href="#radius">Radius</a>
+      <a href="#protocol">Protocol</a>
+      <a href="#magnitude">Magnitude</a>
+      <a href="#cost">Corrected cost</a>
+      <a href="#faults">Faults</a>
+      <a href="#findings">More findings</a>
+      <a href="#contributions">Contributions</a>
+      <a href="#practice">Practice</a>
+      <a href="#limits">Limitations</a>
+      <a href="#cite">Cite</a>
+    </div>
+  </nav>
+
+  <main class="franklin-content ag" id="main" tabindex="-1">
+
+    <!-- ================================================================
+         HERO
+    ================================================================= -->
+    <section class="ag-hero" id="top">
+      <p class="ag-venue"><b>WACV 2027</b><span class="ag-dot">·</span>Datasets Track<span class="ag-dot">·</span>Accepted</p>
+      <h1 class="ag-title">Agent-Dependent Ground Truth Biases Robustness Evaluation <span class="ag-title-l2">in Collaborative Perception</span></h1>
+      <p class="ag-thesis">Collaborative perception is scored against an answer key assembled from the agents under test. Remove a collaborator and the key shrinks with it, so losing an agent looks cheaper than it is.</p>
+      <div>
+        <p class="ag-authors">
+          <span class="ag-author"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></span>
+          <span class="ag-author">Alessandro Chiumento</span>
+          <span class="ag-author">Jan Laarhuis</span>
+          <span class="ag-author">Ozlem Durmaz Incel</span>
+        </p>
+        <p class="ag-affils">University of Twente, The Netherlands</p>
+      </div>
+      <div class="ag-actions">
+        <a class="ag-btn ag-btn-primary" href="#mechanism">Explore the mechanism</a>
+        <a class="ag-btn" data-link="paper" href="#cite">Paper <small>soon</small></a>
+        <a class="ag-btn" data-link="code" href="#cite">Code &amp; fault grid <small>soon</small></a>
+        <a class="ag-btn" href="#cite">Cite</a>
+      </div>
+
+      <p class="ag-notice" role="note"><b>Values from the submitted version.</b> All numbers on this page are reported from the paper as submitted to WACV 2027 and may change in the camera-ready version.</p>
+
+      <figure class="ag-fig ag-wide ag-hero-fig" id="w-hero">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">Same detections, three answer keys <span class="ag-label-illus">schematic</span></span>
+          <div class="ag-seg" role="tablist" aria-label="Scoring condition">
+            <button type="button" role="tab" data-v="a" aria-selected="true">(a) Both agents</button>
+            <button type="button" role="tab" data-v="b">(b) Drop, union</button>
+            <button type="button" role="tab" data-v="c">(c) Drop, fixed</button>
+          </div>
+        </div>
+        <canvas role="img" aria-label="Top-down road scene. The ego vehicle on the left and a collaborator on the right. A bus ahead of the ego casts a shadow; six cars inside it, plus the ego's own box, can be annotated only by the collaborator. Filled blue boxes are reference objects that were detected, orange ones were missed, dashed outlines are objects not in the current reference, red crosses are detections matching nothing."></canvas>
+        <div class="ag-refbar" aria-hidden="true">
+          <div class="ag-refbar-row"><span>answer key</span><span class="ag-refbar-cells"></span><span class="ag-refbar-num">29</span></div>
+        </div>
+        <div class="ag-controls">
+          <div class="ag-tally" aria-live="polite"></div>
+          <button type="button" class="ag-ctl" data-act="play" aria-pressed="false" style="margin-left:auto">Play</button>
+        </div>
+        <p class="ag-cap ag-hero-caption" aria-live="polite"></p>
+        <div class="ag-legend" aria-hidden="true">
+          <span><i class="ag-swatch" style="background:var(--ag-tp)"></i>in reference, detected</span>
+          <span><i class="ag-swatch" style="background:var(--ag-fn)"></i>in reference, missed</span>
+          <span><i class="ag-swatch" style="box-shadow:inset 0 0 0 1px var(--ag-out)"></i>in scene, not in this reference</span>
+          <span><i class="ag-swatch" style="background:var(--ag-uniq);box-shadow:inset 0 0 0 1px var(--ag-fn)"></i>outside the ego's sightlines, inside the collaborator's</span>
+          <span style="color:var(--ag-fp)">× detection matching nothing</span>
+        </div>
+        <p class="ag-note">Redrawn from the paper's Fig. 1, one V2XSet frame (scenario 2021_08_22_07_52_02, five CAVs; ego and one collaborator shown). Object positions are schematic; the reference sizes and TP / FP / FN counts are the paper's.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         01 · PROBLEM
+    ================================================================= -->
+    <section id="problem" class="ag-section">
+      <p class="ag-kicker ag-reveal">01 · The problem</p>
+      <h2 class="ag-h2 ag-reveal">Average Precision assumes the answer key stays still</h2>
+      <p class="ag-lede">Collaborative perception lets a vehicle see past its own sensors by fusing what nearby agents broadcast. Its robustness is now studied by injecting faults (weather, sensor degradation, pose error, latency, agent dropout) and reading off the change in Average Precision. AP compares detections against a set of ground-truth objects, and it is normally safe to treat that set as a fixed property of the scene. Here it is not.</p>
+
+      <ol class="ag-steps">
+        <li><b>What the toolchain does.</b> OpenCOOD, and the two robustness benchmarks built on it, assemble ground truth as the <em>union</em> of the objects each participating agent annotates, after discarding agents beyond a 70 m communication radius.</li>
+        <li><b>Where that breaks.</b> Drop a collaborator and the union loses every object only that collaborator could see: exactly the objects beyond the ego's view that the collaboration was recovering.</li>
+        <li><b>The consequence.</b> Two effects partly cancel. Detections get worse, but the denominator shrinks with them, so recall is inflated and losing a collaborator appears less costly than it is.</li>
+        <li><b>The question.</b> How much of a reported degradation is the model losing information, and how much is the evaluation moving its own target?</li>
+      </ol>
+
+      <figure class="ag-fig ag-reveal" id="w-units">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">Recall is a fraction. Watch the denominator. <span class="ag-label-illus ag-label-real">paper counts</span></span>
+          <span class="ag-fig-sub">Each square is one ground-truth object of the Fig. 1 frame. Squares with an underline are the seven only the collaborator can annotate.</span>
+        </div>
+        <div class="ag-units">
+          <div class="ag-units-row" data-row="a">
+            <div class="ag-units-head"><span><b>Both agents present</b>, union reference</span><span class="ag-frac"></span></div>
+            <div class="ag-units-cells" role="img"></div>
+          </div>
+          <div class="ag-units-row" data-row="d">
+            <div class="ag-units-head"><span><b>Collaborator dropped</b>, scored against</span><span class="ag-frac"></span></div>
+            <div class="ag-units-cells" role="img"></div>
+          </div>
+        </div>
+        <div class="ag-controls">
+          <div class="ag-seg" aria-label="Reference for the dropped case">
+            <button type="button" data-v="b" aria-pressed="true">the union (standard)</button>
+            <button type="button" data-v="c">the fixed reference</button>
+          </div>
+        </div>
+        <p class="ag-cap ag-units-note" aria-live="polite"></p>
+        <p class="ag-note">Recall and precision are computed here from the paper's counts (TP / reference and TP / detections). The split of hits between the two groups in the top row is illustrative; its totals are the paper's.</p>
+      </figure>
+
+      <p class="ag-statement ag-reveal">The bias is not that the union is wrong. It is that an agent-set experiment silently changes the reference along with the agents.</p>
+
+      <p>Existing corruption benchmarks do not expose this, for a structural reason: the faults that trigger it are the ones that change the agent set. Corrupting a point cloud leaves every agent present and the union unchanged. Agent-count experiments, and the communication radius itself, are exposed.</p>
+    </section>
+
+    <!-- ================================================================
+         02 · MECHANISM
+    ================================================================= -->
+    <section id="mechanism" class="ag-section">
+      <p class="ag-kicker ag-reveal">02 · The mechanism</p>
+      <h2 class="ag-h2 ag-reveal">Build the reference yourself</h2>
+      <p>Each agent \(i\) annotates the objects in its own sightlines, \(\mathcal{O}_i(s)\). The framework first keeps the agents within radius \(R\) of the ego, Eq. (1), then takes the union over whoever participates, Eq. (2). The standard protocol reports \(\mathrm{AP}(\mathcal{D}(\mathcal{A}'), \mathcal{G}(\mathcal{A}'))\): the same agent set determines both the predictions and the reference used to score them.</p>
+
+      <figure class="ag-fig ag-wide ag-reveal" id="w-builder">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">The reference builder <span class="ag-label-illus">synthetic scene</span></span>
+          <span class="ag-fig-sub">Toggle agents, move the radius, hover an agent to see the objects only it contributes (its \(\mathcal{U}_j\)). Shaded regions are each agent's sightlines, ray-cast against buildings and other vehicles. Tinted objects are seen by exactly one participating agent; grey ones by several.</span>
+        </div>
+        <canvas role="img" aria-label="Synthetic intersection with buildings, an ego vehicle, four collaborators and about fifty other vehicles. A dashed circle marks the communication radius around the ego. Objects in the current union reference are filled; objects outside it are dashed outlines."></canvas>
+        <div class="ag-controls">
+          <label class="ag-range" for="builder-r">Radius R
+            <input type="range" id="builder-r" min="20" max="140" step="1" value="70">
+            <output id="builder-r-out" for="builder-r">70 m</output>
+          </label>
+          <div class="ag-seg" data-ctl="mode" aria-label="Highlight">
+            <button type="button" data-v="union" aria-pressed="true">Union only</button>
+            <button type="button" data-v="fixed">Also mark what the fixed reference keeps</button>
+          </div>
+        </div>
+        <div class="ag-builder-grid">
+          <div class="ag-side">
+            <div>
+              <span class="ag-panel-label">Agents: click to drop or restore</span>
+              <div class="ag-agents"></div>
+            </div>
+            <div class="ag-ctl-group">
+              <button type="button" class="ag-ctl" data-act="drop-all">Drop every collaborator</button>
+              <button type="button" class="ag-ctl" data-act="reset">Reset</button>
+              <button type="button" class="ag-ctl" data-act="reseed">New scene</button>
+            </div>
+            <div class="ag-stats" aria-live="polite"></div>
+            <p class="visually-hidden ag-builder-status" aria-live="polite"></p>
+          </div>
+          <div class="ag-eqs">
+            <div class="ag-eq" data-eq="1"><span>\(\mathcal{A}_R(s) = \{\, i \in \mathcal{A}(s) : \lVert p_i - p_e \rVert \le R \,\}\)</span><span class="ag-eq-n">(1)</span><span class="ag-eq-live"></span></div>
+            <div class="ag-eq" data-eq="2"><span>\(\mathcal{G}(\mathcal{A}') = \bigcup_{i \in \mathcal{A}'} \mathcal{O}_i(s),\ \ \mathcal{A}' \subseteq \mathcal{A}_R(s)\)</span><span class="ag-eq-n">(2)</span><span class="ag-eq-live"></span></div>
+            <div class="ag-eq" data-eq="5"><span>\(\mathcal{U}_j(\mathcal{A}') = \mathcal{O}_j(s) \setminus \bigcup_{i \in \mathcal{A}' \setminus \{j\}} \mathcal{O}_i(s)\)</span><span class="ag-eq-n">(5)</span><span class="ag-eq-live"></span></div>
+            <div class="ag-eq" data-eq="6"><span>\(\mathcal{G}(\mathcal{A}') = \mathcal{G}(\mathcal{A}' \setminus \{j\}) \cup \mathcal{U}_j(\mathcal{A}')\)</span><span class="ag-eq-n">(6)</span><span class="ag-eq-live"></span></div>
+          </div>
+        </div>
+        <p class="ag-note">Illustrative geometry: the scene is procedurally generated, and each agent's sensing range here is 50 m. No detector runs in your browser. What is exact is the set algebra: the reference shown is Eq. (1) followed by Eq. (2), and each \(\mathcal{U}_j\) is Eq. (5).</p>
+      </figure>
+
+      <h3 class="ag-h3">The sign is fixed</h3>
+      <p>Because \(\mathcal{U}_j\) is by construction the set of objects no remaining agent annotates, dropping \(j\) removes precisely the objects the collaboration was recovering, Eq. (6). The effect therefore has a fixed sign and grows with \(|\mathcal{U}_j| / |\mathcal{G}(\mathcal{A}')|\), the fraction of the reference that only the removed agent contributed.</p>
+      <p><b>The limiting case is the ego itself.</b> The ego cannot observe itself through its own sensors, so its box enters the reference only through another agent's annotation. In the Fig. 1 frame it sits at (0.51, 0.00) m in the ego frame. Remove the collaborator that annotated it and it leaves the reference together with the observation that could have supplied it. In the builder above, the ego's ring turns dashed when no participating agent sees it.</p>
+
+      <div class="ag-callout">
+        <p><b>Which reference is correct is a choice, not a fact.</b> The union answers a coherent question: how well do the surviving agents perceive what they collectively observe? An agent-dropout experiment usually asks a different one: what information is lost when that agent is gone? The departed collaborator's objects are still physically there. The paper reports both scorings side by side rather than declaring one universally correct.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         03 · IN THE CODE
+    ================================================================= -->
+    <section id="code" class="ag-section">
+      <p class="ag-kicker ag-reveal">03 · Reading the assembly code</p>
+      <h2 class="ag-h2 ag-reveal">One idiom, three codebases</h2>
+      <p>The ground-truth assembly in OpenCOOD, DSRC and HEAL iterates over the agents present in the sample, collects object identifiers and deduplicates them by first occurrence, which is Eq. (2). All three use the same line:</p>
+      <pre class="ag-code"><span class="c"># base_postprocessor.py, in all three codebases</span>
+<span class="k">[ids.index(x) for x in set(ids)]</span></pre>
+      <p class="ag-note">The deduplication idiom as quoted in the paper's Tab. 1.</p>
+
+      <div class="ag-table-wrap ag-reveal">
+        <table class="ag-table">
+          <caption class="visually-hidden">Ground-truth assembly in the three evaluated codebases</caption>
+          <thead><tr><th>Codebase</th><th>Union (base_postprocessor.py)</th><th>Radius</th><th>Difference that does not touch the union</th></tr></thead>
+          <tbody class="ag-codebases"></tbody>
+        </table>
+      </div>
+      <p>A search of all three codebases found no mechanism that records the reference-set size or fixes the object set independently of the participating agents. RCP-Bench is built on HEAL and inherits the same construction. So the bias is present but uncorrected wherever an evaluation perturbs which agents participate.</p>
+    </section>
+
+    <!-- ================================================================
+         04 · RADIUS
+    ================================================================= -->
+    <section id="radius" class="ag-section">
+      <p class="ag-kicker ag-reveal">04 · No fault required</p>
+      <h2 class="ag-h2 ag-reveal">The radius moves the denominator too</h2>
+      <p>The radius filter of Eq. (1) runs before the union, so the reference depends on where the agents are. As traffic evolves, agents cross \(R\) and the reference changes with no fault injected and no agent explicitly removed.</p>
+
+      <figure class="ag-fig ag-wide ag-reveal" id="w-radius">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">A clean drive, a moving reference <span class="ag-label-illus">synthetic street</span></span>
+          <span class="ag-fig-sub">The view follows the ego. Agents beyond ±R drop out of the union; arrows at the edges point to agents off screen. Below: agents within R (blue, left axis) and reference size (orange, right axis) over a 60 s loop. Shaded samples have at least one collaborator beyond R.</span>
+        </div>
+        <canvas class="ag-bev" role="img" aria-label="A street seen from above, following the ego vehicle. Dashed lines mark minus R and plus R. Collaborators move at different speeds and cross the radius."></canvas>
+        <p class="ag-cap ag-radius-read" aria-live="off" style="margin-top:0.5em"></p>
+        <canvas class="ag-timeline" tabindex="0" role="img" aria-label="Timeline of agents within the radius and reference size. Use left and right arrow keys to scrub."></canvas>
+        <div class="ag-controls">
+          <div class="ag-ctl-group">
+            <button type="button" class="ag-ctl" data-act="back" aria-label="Step back">◀</button>
+            <button type="button" class="ag-ctl" data-act="play" aria-pressed="false">Play</button>
+            <button type="button" class="ag-ctl" data-act="fwd" aria-label="Step forward">▶</button>
+            <button type="button" class="ag-ctl" data-act="restart">Replay</button>
+          </div>
+          <div class="ag-seg" data-ctl="speed" aria-label="Playback speed">
+            <button type="button" data-v="0.5">0.5×</button>
+            <button type="button" data-v="1" aria-pressed="true">1×</button>
+            <button type="button" data-v="2">2×</button>
+          </div>
+          <label class="ag-range" for="radius-r">R
+            <input type="range" id="radius-r" min="30" max="150" step="5" value="70">
+            <output id="radius-r-out" for="radius-r">70 m</output>
+          </label>
+        </div>
+        <p class="ag-cap ag-radius-toy"></p>
+      </figure>
+
+      <div class="ag-stats ag-reveal" style="margin:1.4em 0">
+        <div><span class="ag-stat-label">Clean frames losing an agent</span><span class="ag-stat-value" data-num="framesLosingAgent">25.5%</span><span class="ag-stat-sub">to the radius filter, no fault</span></div>
+        <div><span class="ag-stat-label">r, pooled</span><span class="ag-stat-value">0.59</span><span class="ag-stat-sub">agents surviving vs. reference size</span></div>
+        <div><span class="ag-stat-label">r, within stratum</span><span class="ag-stat-value">0.25</span><span class="ag-stat-sub">same, inside one agent count</span></div>
+      </div>
+      <p class="ag-note">Measured on the 400-frame stratified sample of the V2XSet test split (Sec. 3.3). The toy figures above the measured ones are computed live from the synthetic street and are not comparable to them.</p>
+    </section>
+
+    <!-- ================================================================
+         05 · PROTOCOL
+    ================================================================= -->
+    <section id="protocol" class="ag-section">
+      <p class="ag-kicker ag-reveal">05 · The protocol</p>
+      <h2 class="ag-h2 ag-reveal">Score the same detections twice</h2>
+      <p>Official reference implementations of four collaborative detection models are wrapped in a fault-injection layer, without retraining or altering them. Every perturbed cell is scored twice from a single forward pass: once against the standard union reference, Eq. (3), and once against the reference held at the unperturbed scene, Eq. (4).</p>
+      <div class="ag-two-eq">
+        <p>Standard, Eq. (3) \[ \mathrm{AP}\big(\mathcal{D}(\mathcal{A}'),\ \mathcal{G}(\mathcal{A}')\big) \]</p>
+        <p>Fixed, Eq. (4) \[ \mathrm{AP}\big(\mathcal{D}(\mathcal{A}'),\ \mathcal{G}_{\text{fix}}\big) \]</p>
+      </div>
+      <p>with \(\mathcal{G}_{\text{fix}} = \mathcal{G}(\mathcal{A}_R(s))\), the object set of the unperturbed scene. Only the reference argument differs.</p>
+
+      <figure class="ag-fig ag-wide ag-reveal" id="w-flow">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">Dual scoring, stage by stage</span>
+          <span class="ag-fig-sub">Run the protocol, step through it, or select any stage for what it does. Dashed: the standard path whose reference moves with the agent set.</span>
+        </div>
+        <div class="ag-flow"></div>
+        <div class="ag-controls">
+          <button type="button" class="ag-ctl" data-act="run" aria-pressed="false">Run the protocol</button>
+          <div class="ag-ctl-group">
+            <button type="button" class="ag-ctl" data-act="back" aria-label="Previous stage">◀</button>
+            <button type="button" class="ag-ctl" data-act="fwd" aria-label="Next stage">▶</button>
+          </div>
+          <span class="ag-note ag-flow-step" style="margin:0"></span>
+        </div>
+        <div class="ag-detail" aria-live="polite"></div>
+      </figure>
+
+      <h3 class="ag-h3">Models at their released settings</h3>
+      <p>Rather than retraining every method into one pipeline, as the existing benchmarks do, each model runs under its released configuration and checkpoint, on its authors' dataset, and is compared against its released benchmark number before anything is injected. That reproduction is what licenses the rest of the paper: degradation after injection is attributable to the fault, not to an unvalidated baseline. The trade-off is explicit: cross-model AP values are not strictly comparable, so degradation is reported within each model, never as a leaderboard.</p>
+
+      <figure class="ag-fig ag-reveal" id="w-models">
+        <div class="ag-table-wrap">
+          <table class="ag-table">
+            <caption class="visually-hidden">Clean AP@0.7 at released settings against the released benchmark (Tab. 2)</caption>
+            <thead><tr><th>Model</th><th>Data</th><th>Setting</th><th class="num">Clean AP@0.7</th><th class="num">Benchmark</th><th class="num">Δ</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="ag-cap ag-models-detail" aria-live="polite"></p>
+        <p class="ag-note">Select a row. Benchmark column for the three V2XSet models: the OpenCOOD V2XSet LiDAR-Track table (Perfect row for CoBEVT, Noisy for the others). Noise floors are the largest within-session spread on one node; every comparison in the paper is made within a session and reported against the applicable floor, because a single protocol-wide threshold would be wrong when two models have no measurable floor.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         06 · MAGNITUDE
+    ================================================================= -->
+    <section id="magnitude" class="ag-section">
+      <p class="ag-kicker ag-reveal">06 · Magnitude</p>
+      <h2 class="ag-h2 ag-reveal">Drop every collaborator and 13.1% of the answer key disappears</h2>
+
+      <figure class="ag-fig ag-reveal" id="w-shrink">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">Reference-set shrinkage under agent drop <span class="ag-label-illus ag-label-real">measured</span></span>
+          <div class="ag-seg" style="margin-top:0.6em" aria-label="Breakdown">
+            <button type="button" data-v="p" aria-pressed="true">By drop probability</button>
+            <button type="button" data-v="s">By scene agent count</button>
+          </div>
+        </div>
+        <div class="ag-chart-host"></div>
+        <p class="ag-cap ag-shrink-cap" aria-live="polite"></p>
+      </figure>
+
+      <p>The sample is stratified by the scene agent-count distribution of the split, and every frame's union count is checked against an independently built ground-truth cache; a disagreement fails the run rather than entering the results. In two-agent scenes, removing the collaborator is an ablation to single-agent perception rather than a graded change in collaboration.</p>
+    </section>
+
+    <!-- ================================================================
+         07 · CORRECTED COST
+    ================================================================= -->
+    <section id="cost" class="ag-section">
+      <p class="ag-kicker ag-reveal">07 · The corrected cost of losing a collaborator</p>
+      <h2 class="ag-h2 ag-reveal">Fix the reference and AP drops at every severity</h2>
+      <p>CoBEVT under agent drop, the same detections scored against the as-is union and against the fixed reference, pooled over the 400-frame stratified sample (Tab. 3).</p>
+
+      <figure class="ag-fig ag-reveal" id="w-corrected">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">As-is <span style="color:var(--ag-tp)">○</span> vs. fixed <span style="color:var(--ag-fn)">●</span> <span class="ag-label-illus ag-label-real">measured</span></span>
+          <div class="ag-seg" style="margin-top:0.6em" aria-label="Metric">
+            <button type="button" data-v="70" aria-pressed="true">AP@0.7</button>
+            <button type="button" data-v="50">AP@0.5</button>
+          </div>
+        </div>
+        <div class="ag-chart-host"></div>
+        <div class="ag-chart-host-2" style="margin-top:1em"></div>
+        <p class="ag-cap ag-corr-read" aria-live="polite"></p>
+        <p class="ag-note">The floor and the interval answer different questions: whether the measurement reproduces on one node, and whether it generalises across scenes. The scene count (19 scenarios, 1,000 replicates, seed 20260826) sets the interval width, not the frame total.</p>
+      </figure>
+
+      <div class="ag-stats ag-reveal" style="margin:1.6em 0">
+        <div><span class="ag-stat-label">Reference shrinks (mild)</span><span class="ag-stat-value">1.8%</span></div>
+        <div><span class="ag-stat-label">AP changes by</span><span class="ag-stat-value">0.91%</span></div>
+        <div><span class="ag-stat-label">So roughly</span><span class="ag-stat-value">half</span><span class="ag-stat-sub">of the shrinkage reaches AP</span></div>
+      </div>
+      <p>Reporting the shrinkage alone would overstate the inflation. And there is a second mechanism, separate from recall inflation: <b>restoring objects can raise precision</b>. At four agents the corrected AP is <em>higher</em> than the as-is value, by 0.0007 at moderate and 0.0047 at severe severity, because detections the union scoring counted as false positives find their targets again: precision rises from 0.721 to 0.754 at the severe tier while recall dips slightly.</p>
+    </section>
+
+    <!-- ================================================================
+         08 · FAULTS
+    ================================================================= -->
+    <section id="faults" class="ag-section">
+      <p class="ag-kicker ag-reveal">08 · The fault suite</p>
+      <h2 class="ag-h2 ag-reveal">Fourteen injectors, one that moves the target</h2>
+      <p>The released suite covers the ways a collaborative system degrades, each at three severity levels: cooperative faults on the vehicle-to-everything link, LiDAR faults on the point cloud, camera faults on the image stream, and a cross-modal desynchroniser. All four evaluated models are LiDAR-only, so seven are exercised. Select one to see its tiers and whether it moves the reference.</p>
+
+      <figure class="ag-fig ag-reveal" id="w-suite">
+        <div class="ag-seg" aria-label="Filter injectors" style="margin-bottom:0.8em">
+          <button type="button" data-v="all" aria-pressed="true">All 14</button>
+          <button type="button" data-v="run">Exercised here</button>
+          <button type="button" data-v="moves">Changes the agent set</button>
+        </div>
+        <div class="ag-inj-grid"></div>
+        <p class="ag-cap ag-inj-detail" aria-live="polite"></p>
+      </figure>
+
+      <p>The grid has 109 cells: 31 for each V2XSet model (one clean run, six injectors at three severities, and agent drop in four agent-count strata at three severities) plus 16 for CoSDH, whose released inference path raises an exception when a collaborator is removed. That is 221,764 frame-evaluations in total.</p>
+
+      <figure class="ag-fig ag-reveal" id="w-ranking">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">Severe-tier ranking: mean relative AP@0.7 drop across models <span class="ag-label-illus ag-label-real">measured</span></span>
+          <span class="ag-fig-sub">Corrupting the sensed data costs the most; losing collaborators the least, as scored by the standard protocol.</span>
+        </div>
+        <div class="ag-chart-host"></div>
+        <div class="ag-controls">
+          <button type="button" class="ag-ctl" data-act="moves" aria-pressed="false">Highlight the fault whose reference moves</button>
+        </div>
+        <p class="ag-note">† Agent drop is the two-agent stratum only, and its reference moves with the fault, so its position relative to modality dropout is not reliable; the separation between the two bands is what this ranking asserts. Modality dropout leaves the agent set, and the reference, unchanged. The fog figure is the corrected one: the released fog injector saturated at every tier through an intensity-scale defect, identified and fixed in the supplementary material.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         09 · FINDINGS
+    ================================================================= -->
+    <section id="findings" class="ag-section">
+      <p class="ag-kicker ag-reveal">09 · Two further findings</p>
+      <h2 class="ag-h2 ag-reveal">What the common protocol makes visible</h2>
+      <figure class="ag-fig ag-reveal" id="w-findings">
+        <div class="ag-seg" role="tablist" aria-label="Finding" style="margin-bottom:0.8em">
+          <button type="button" role="tab" data-v="iou" aria-selected="true">Strict-IoU asymmetry</button>
+          <button type="button" role="tab" data-v="snow">Snow inverts, AP mostly does not</button>
+        </div>
+        <div class="ag-chart-host"></div>
+        <p class="ag-cap ag-findings-cap" aria-live="polite"></p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         10 · CONTRIBUTIONS
+    ================================================================= -->
+    <section id="contributions" class="ag-section">
+      <p class="ag-kicker ag-reveal">10 · Contributions</p>
+      <h2 class="ag-h2 ag-reveal">What the paper adds</h2>
+      <div class="ag-contrib">
+        <div class="ag-reveal">
+          <span class="ag-contrib-n">Identify</span>
+          <h3>The bias, formalised and found in code</h3>
+          <p>Agent-dependent ground truth, with its sign and magnitude derived from the set algebra, and a reading of the assembly code showing the same union shared across OpenCOOD, DSRC and HEAL with no mechanism that fixes the object set.</p>
+          <p class="ag-evidence">Evidence: Eqs. (1)–(6), Tab. 1. <a href="#mechanism">Mechanism</a> · <a href="#code">Code</a></p>
+        </div>
+        <div class="ag-reveal">
+          <span class="ag-contrib-n">Release</span>
+          <h3>A fault suite and scoring protocol</h3>
+          <p>Fourteen injectors across camera, LiDAR, cooperative and cross-modal faults at three severities, with the fault grid, per-cell reference counts and CPU-reproducible scripts (MIT for code, CC BY 4.0 for the measurements).</p>
+          <p class="ag-evidence">Evidence: 109 evaluations across four models. <a href="#faults">Faults</a></p>
+        </div>
+        <div class="ag-reveal">
+          <span class="ag-contrib-n">Quantify</span>
+          <h3>The bias, measured and corrected</h3>
+          <p>Record the reference size per cell, then score the same detections a second time against a fixed object set. Dropping every collaborator removes 13.1% of reference objects; correcting the reference lowers CoBEVT's AP@0.7 by up to 0.0145.</p>
+          <p class="ag-evidence">Evidence: Secs. 5.1–5.2, Tab. 3. <a href="#magnitude">Magnitude</a> · <a href="#cost">Corrected cost</a></p>
+        </div>
+        <div class="ag-reveal">
+          <span class="ag-contrib-n">Verify</span>
+          <h3>Evaluation at shipped settings</h3>
+          <p>Each model runs under its released configuration and checkpoint and is checked against its released benchmark before any fault, instead of being transplanted into a homogenised pipeline.</p>
+          <p class="ag-evidence">Evidence: Tab. 2, Sec. 4.3. <a href="#protocol">Protocol</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         11 · PRACTICE
+    ================================================================= -->
+    <section id="practice" class="ag-section">
+      <p class="ag-kicker ag-reveal">11 · Implications for evaluation practice</p>
+      <h2 class="ag-h2 ag-reveal">Three habits, each costing a quantity you already compute</h2>
+      <ol class="ag-practices">
+        <li class="ag-reveal"><div><b>Record the reference-set size per cell.</b> One integer. Without it a grid cannot be corrected after the fact, and a reader cannot tell whether a denominator moved between two compared cells.</div></li>
+        <li class="ag-reveal"><div><b>State which reference an agent-set intervention is scored against.</b> Both choices are coherent, but the default is silent. Where the two scorings differ materially, as at every tier here, reporting both costs one column.</div></li>
+        <li class="ag-reveal"><div><b>Keep agent-set results per stratum and per model.</b> Per-stratum clean references differ by up to 10.2 AP@0.7 within one model, so a pooled number describes no regime in the data; the noise floor is model-specific too.</div></li>
+      </ol>
+    </section>
+
+    <!-- ================================================================
+         12 · LIMITATIONS
+    ================================================================= -->
+    <section id="limits" class="ag-section">
+      <p class="ag-kicker ag-reveal">12 · Limitations</p>
+      <h2 class="ag-h2 ag-reveal">What this does not yet show</h2>
+      <ul>
+        <li>The camera and cross-modal injectors are released but not exercised, because all four models are LiDAR-only. Occlusion that removes part of the scene while leaving the agent present is therefore outside the faults run.</li>
+        <li>The corrected scoring is measured on CoBEVT alone, on a 400-frame stratified sample. CoBEVT reproduces its benchmark and ships no injected noise, which isolates the denominator effect from any interaction with a noise-trained model; the released protocol applies unchanged to the other models.</li>
+        <li>At 19 test scenarios, the AP@0.7 correction has a consistent sign but its scene-bootstrap intervals include zero.</li>
+        <li>CoSDH cannot be graded against a released benchmark and is marked wherever it appears.</li>
+        <li>The code reading shows the same union in three codebases, so their agent-count evaluations are exposed. Those published agent-count results have <b>not</b> been re-scored under the fixed reference; that magnitude is not yet measured, and doing so is the natural next step.</li>
+      </ul>
+    </section>
+
+    <!-- ================================================================
+         13 · RESOURCES AND CITATION
+    ================================================================= -->
+    <section id="cite" class="ag-section">
+      <p class="ag-kicker ag-reveal">13 · Resources</p>
+      <h2 class="ag-h2 ag-reveal">Paper, code and citation</h2>
+      <ul class="ag-res">
+        <li><span>Paper</span><span data-res="paper" data-label="Camera-ready PDF"><span class="ag-pending">Camera-ready version: link added at publication.</span></span></li>
+        <li><span>Venue</span><span><a href="https://wacv.thecvf.com/">IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027)</a>, Datasets Track</span></li>
+        <li><span>Code and data</span><span data-res="code" data-label="Fault-injection suite, fault grid and scoring protocol"><span class="ag-pending">Fault-injection suite, fault grid, per-cell reference counts and scripts: link added at release.</span></span></li>
+        <li><span>Datasets</span><span><a href="https://mobility-lab.seas.ucla.edu/opv2v/">OPV2V</a> (test split, 2,170 frames) and V2XSet (released with <a href="https://github.com/DerrickXuNu/v2x-vit">V2X-ViT</a>; test split, 2,834 frames)</span></li>
+        <li><span>Toolchains read</span><span><a href="https://github.com/DerrickXuNu/OpenCOOD">OpenCOOD</a>, DSRC, <a href="https://github.com/yifanlu0227/HEAL">HEAL</a></span></li>
+        <li><span>Companion page</span><span><a href="/Portfolio/projects/fault-injectors/">Collaborative perception under faults</a>: each LiDAR-family injector, live in a synthetic scene</span></li>
+      </ul>
+
+      <div class="ag-bib">
+        <pre id="bibtex" aria-label="BibTeX citation">@inproceedings{nanjaiyalatha2027agentgt,
+  title     = {Agent-Dependent Ground Truth Biases Robustness Evaluation
+               in Collaborative Perception},
+  author    = {Nanjaiya Latha, Adarsh and Chiumento, Alessandro and
+               Laarhuis, Jan and Durmaz Incel, Ozlem},
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on
+               Applications of Computer Vision (WACV)},
+  year      = {2027}
+}</pre>
+        <button type="button" class="ag-btn ag-copy" id="bib-copy">Copy BibTeX</button>
+        <p class="visually-hidden" id="bib-status" aria-live="polite"></p>
+      </div>
+      <p class="ag-note">Pages and DOI are added when the proceedings appear. The values on this page are reported from the submitted version and are subject to change in the camera-ready version.</p>
+
+      <nav class="ag-neighbors" aria-label="More projects">
+        <a href="/Portfolio/projects/fault-injectors/">← Collaborative perception under faults</a>
+        <a href="/Portfolio/cv/">All research and publications →</a>
+      </nav>
+    </section>
+
+    <div class="page-foot"></div>
+  </main>
+
+  <!-- Site footer: a small horizon of Salem, Chennai and Enschede standing
+       on the ground line. One inline SVG; the hills and land beyond its
+       viewBox show on wide screens and are clipped at the screen edge.
+       Layers: hz-far (distant), hz-mid, hz-near (landmarks), hz-line
+       (1px linework). hz-detail is hidden on small screens. -->
+  <footer class="site-foot">
+    <svg class="horizon-svg" viewBox="0 0 460 72" role="img" aria-label="Three places that shaped me: the hills of Salem, the coast and gopuram of Chennai, and the church tower of Enschede" focusable="false">
+
+    <g class="city city--salem">
+      <g class="salem-hills">
+        <!-- Shevaroy / Yercaud plateau: a broad, rounded range -->
+        <path class="hz-far" d="M-300,72 C-240,70 -190,66 -150,60 C-110,54 -80,50 -50,48 C-30,46 -14,44 0,38 C14,32 26,24 44,23 C60,22 68,28 82,27 C98,26 108,20 124,24 C138,28 146,38 158,46 C168,53 178,62 190,72 Z"/>
+        <!-- foothills in front of the town -->
+        <path class="hz-far hz-far2" d="M-140,72 C-100,70 -60,66 -30,62 C-20,60 -10,58 0,54 C12,49 24,45 40,47 C56,49 64,55 80,56 C96,57 104,52 118,56 C130,60 140,66 152,72 Z"/>
+      </g>
+      <g class="salem-town">
+        <!-- a scattered low-rise town in the foothills -->
+        <path class="hz-mid" d="M70,65 h14 v7 h-14 Z M88,62 h8 v10 h-8 Z M136,64 h12 v8 h-12 Z"/>
+        <!-- small vimana: a quiet South Indian cue -->
+        <path class="hz-near" d="M109,72 L111,58 H121 L123,72 Z"/>
+        <path class="hz-near" d="M112,58 C112,53.5 120,53.5 120,58 Z"/>
+        <path class="hz-line" d="M116,53.5 v-2.5"/>
+      </g>
+      <g class="salem-trees">
+        <ellipse class="hz-mid" cx="-112" cy="68" rx="5" ry="3"/>
+        <ellipse class="hz-mid" cx="-62" cy="67" rx="6" ry="3.5"/>
+        <ellipse class="hz-mid" cx="-26" cy="67.5" rx="5.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="12" cy="67.5" rx="6.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="28" cy="66.5" rx="5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="50" cy="66" rx="5.5" ry="4"/>
+        <ellipse class="hz-mid" cx="102" cy="66.5" rx="4.5" ry="3"/>
+        <ellipse class="hz-mid" cx="128" cy="67" rx="5" ry="3.5"/>
+        <path class="hz-line" d="M-112,72 v-3 M-62,72 v-3 M-26,72 v-3 M28,72 v-3 M50,72 v-3 M102,72 v-3 M128,72 v-3"/>
+      </g>
+    </g>
+
+    <g class="city city--chennai">
+      <g class="chennai-far">
+        <!-- one taller block in the distance -->
+        <path class="hz-far" d="M296,36 h11 v36 h-11 Z M291,50 h5 v22 h-5 Z"/>
+      </g>
+      <g class="chennai-coast">
+        <!-- the Marina: waves and coconut palms -->
+        <path class="hz-line hz-soft" d="M158,67 q4,-2.5 8,0 t8,0 t8,0 t8,0 M164,70 q4,-2.5 8,0 t8,0 t8,0"/>
+        <path class="hz-line" d="M176,72 C176,66 177,60 179,55"/>
+        <path class="hz-line" d="M179,55 c-5,-2 -8,-1 -10,3 M179,55 c-2,-5 -1,-8 3,-9 M179,55 c4,-3 7,-2 9,2 M179,55 c3,1 5,4 5,8 M179,55 c-4,1 -6,4 -6,7"/>
+        <path class="hz-line" d="M192,72 C192,67 191,62 189,58"/>
+        <path class="hz-line" d="M189,58 c-4,-2 -7,-1 -8,3 M189,58 c-1,-5 1,-7 4,-7 M189,58 c4,-2 6,0 7,3 M189,58 c3,2 4,4 3,7"/>
+      </g>
+      <g class="chennai-gopuram">
+        <!-- Kapaleeshwarar-style rajagopuram: tapering tiers, barrel cap, finials -->
+        <path class="hz-near" d="M221.0,72 L221.6,65.2 L222.2,65.2 L222.8,58.4 L223.3,58.4 L223.9,51.6 L224.4,51.6 L225.1,44.8 L225.6,44.8 L226.2,38.0 L226.8,38.0 L227.3,31.2 L227.9,31.2 L228.5,24.4 L243.5,24.4 L244.1,31.2 L244.7,31.2 L245.2,38.0 L245.8,38.0 L246.4,44.8 L246.9,44.8 L247.6,51.6 L248.1,51.6 L248.7,58.4 L249.2,58.4 L249.8,65.2 L250.4,65.2 L251.0,72 Z"/>
+        <path class="hz-near" d="M226.9,24.4 C226.9,17.9 245.1,17.9 245.1,24.4 Z"/>
+        <path class="hz-line" d="M230.0,19.4 v-3 M233.0,19.4 v-3 M236.0,19.4 v-3 M239.0,19.4 v-3 M242.0,19.4 v-3"/>
+        <path class="hz-line" d="M234,72 v-7 h4 v7"/>
+      </g>
+      <g class="chennai-colonial">
+        <!-- Indo-Saracenic dome -->
+        <path class="hz-mid" d="M266,72 V57 H292 V72 Z"/>
+        <path class="hz-mid" d="M272,57 C272,50 286,50 286,57 Z"/>
+        <path class="hz-line" d="M279,50.5 v-3"/>
+        <path class="hz-line" d="M262,72 C262,67 261,62 259,58"/>
+        <path class="hz-line" d="M259,58 c-4,-2 -7,-1 -8,3 M259,58 c-1,-5 1,-7 4,-7 M259,58 c4,-2 6,0 7,3 M259,58 c3,2 4,4 3,7"/>
+      </g>
+    </g>
+
+    <g class="city city--enschede">
+      <g class="enschede-houses">
+        <!-- compact brick houses with pitched roofs -->
+        <path class="hz-mid" d="M340,72 V60 L346,54 L352,60 V72 Z M352,72 V57 L359,50 L366,57 V72 Z M366,72 V62 L371,57 L376,62 V72 Z"/>
+        <path class="hz-line hz-detail" d="M349,57 v-3 M363,54 v-3.5"/>
+      </g>
+      <g class="enschede-kerk">
+        <!-- Grote Kerk: heavy square tower, pointed spire, nave -->
+        <path class="hz-near" d="M384,72 V34 L389,14 L394,34 V72 Z"/>
+        <path class="hz-near" d="M394,72 V58 L398,49 H414 L418,58 V72 Z"/>
+      </g>
+      <g class="enschede-toren">
+        <!-- Alphatoren: slim square tower, glass panorama floor at the top -->
+        <path class="hz-mid" d="M427,72 V21 H439 V72 Z"/>
+        <path class="hz-far" d="M427,21 V16 H439 V21 Z"/>
+        <path class="hz-far" d="M440,72 V62 H452 V72 Z"/>
+      </g>
+      <g class="enschede-trees">
+        <!-- flat, green Twente edge -->
+        <ellipse class="hz-mid" cx="323" cy="65" rx="3.8" ry="5"/>
+        <ellipse class="hz-mid" cx="333" cy="64.5" rx="3.4" ry="4.6"/>
+        <ellipse class="hz-mid" cx="380" cy="65.5" rx="3" ry="4.2"/>
+        <ellipse class="hz-mid" cx="447" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="456" cy="66" rx="3.2" ry="4.2"/>
+        <path class="hz-line" d="M323,72 v-3 M333,72 v-3 M380,72 v-3 M447,72 v-3 M456,72 v-3"/>
+      </g>
+      <g class="enschede-land">
+        <!-- beyond the viewBox: flat land, a distant wood, a few trees -->
+        <path class="hz-far" d="M474,72 C482,68 494,67 506,68 C518,69 528,66 542,67 C556,68 566,66 580,68 C592,70 602,69 614,70 C622,71 630,72 636,72 Z"/>
+        <ellipse class="hz-mid" cx="486" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="531" cy="65.5" rx="3.2" ry="4.4"/>
+        <ellipse class="hz-mid" cx="604" cy="65" rx="3.5" ry="4.6"/>
+        <path class="hz-line" d="M486,72 v-3 M531,72 v-3 M604,72 v-3"/>
+      </g>
+    </g>
+    </svg>
+  </footer>
+
+  <noscript>
+    <style>.ag-fig .ag-controls, .ag-fig canvas, .ag-refbar, .ag-seg { display: none; }</style>
+    <p style="text-align:center; font-size: 0.85em;">The figures on this page are drawn in the browser and need JavaScript. Every finding and number is also stated in the text.</p>
+  </noscript>
+
+  <script src="/Portfolio/assets/site.js?v=5"></script>
+  <script defer src="/Portfolio/libs/katex/katex.min.js"></script>
+  <script defer src="/Portfolio/libs/katex/contrib/auto-render.min.js"></script>
+  <script defer src="/Portfolio/projects/agent-dependent-gt/adgt-data.js?v=2"></script>
+  <script defer src="/Portfolio/projects/agent-dependent-gt/adgt-core.js?v=1"></script>
+  <script defer src="/Portfolio/projects/agent-dependent-gt/adgt-scene.js?v=1"></script>
+  <script defer src="/Portfolio/projects/agent-dependent-gt/adgt-widgets.js?v=1"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
