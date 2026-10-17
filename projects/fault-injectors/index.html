@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="/Portfolio/css/basic.css?v=24">
   <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
   <link rel="stylesheet" href="/Portfolio/projects/fault-injectors/fi.css?v=2">
-  <title>Fault Injection for Collaborative Perception | Adarsh Nanjaiya Latha</title>
-  <meta name="description" content="Work in progress by Adarsh Nanjaiya Latha. Seven fault injectors, three severity tiers each, measured on cooperative LiDAR perception models. Every injector has a live synthetic bird's-eye-view scene you can break yourself.">
+  <title>CoopFaultBench: interactive walkthrough of the fault injectors | Adarsh Nanjaiya Latha</title>
+  <meta name="description" content="Interactive walkthrough of the CoopFaultBench fault injectors by Adarsh Nanjaiya Latha et al. Seven fault injectors, three severity tiers each, measured on cooperative LiDAR perception models. Every injector has a live synthetic bird's-eye-view scene you can break yourself.">
   <meta name="author" content="Adarsh Nanjaiya Latha">
-  <meta property="og:title" content="Collaborative Perception: A Fault Injection Benchmark">
-  <meta property="og:description" content="What happens to multi-vehicle LiDAR fusion when poses drift, messages arrive late, agents vanish, and the weather turns. Seven injectors, live and interactive. Work in progress.">
+  <meta property="og:title" content="CoopFaultBench: an interactive walkthrough of the fault injectors">
+  <meta property="og:description" content="What happens to multi-vehicle LiDAR fusion when poses drift, messages arrive late, agents vanish, and the weather turns. Seven injectors, live and interactive.">
   <meta property="og:type" content="article">
   <meta property="article:author" content="Adarsh Nanjaiya Latha">
   <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/fault-injectors/">
@@ -24,8 +24,8 @@
   <meta name="twitter:image" content="https://adarsh-nl.github.io/Portfolio/assets/og/fault-injectors.png">
   <meta property="og:image:alt" content="Collaborative Perception, a fault injection benchmark. Interactive project page.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Collaborative Perception: A Fault Injection Benchmark">
-  <meta name="twitter:description" content="Seven fault injectors for multi-vehicle LiDAR fusion, each one live and interactive. Work in progress.">
+  <meta name="twitter:title" content="CoopFaultBench: an interactive walkthrough of the fault injectors">
+  <meta name="twitter:description" content="Seven fault injectors for multi-vehicle LiDAR fusion, each one live and interactive.">
   <!-- Dark first: this page opts into dark unless the visitor has chosen light. -->
   <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.setAttribute("data-theme","dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 </head>
@@ -69,21 +69,21 @@
          HERO
     ================================================================= -->
     <section class="fi-hero" id="hero">
-      <p class="fi-venue">Work in progress &middot; unpublished</p>
-      <h1 class="fi-title">Collaborative Perception</h1>
+      <p class="fi-venue">Interactive walkthrough</p>
+      <h1 class="fi-title">CoopFaultBench</h1>
       <p class="fi-subtitle">A fault injection benchmark for cooperative LiDAR perception</p>
       <p class="fi-tagline">Seven ways a fleet of vehicles can stop seeing straight, three severity tiers each, measured on published fusion models. Every injector below is live, so you can break the scene yourself.</p>
       <p class="fi-authors">
         <span class="fi-author"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></span>
+        <span class="fi-author"><a href="http://alexchiumento.eu/">Alessandro Chiumento</a></span>
+        <span class="fi-author">Jan Laarhuis</span>
+        <span class="fi-author"><a href="https://ozlemdurmazincel.github.io/">Ozlem Durmaz Incel</a></span>
       </p>
       <p class="fi-affils">University of Twente, The Netherlands</p>
       <p class="fi-hero-links">
         <a class="fi-btn" href="#setup">How to read this</a>
         <a class="fi-btn" href="#ranking">Jump to the ranking</a>
         <a class="fi-btn" href="#notes">Scope and caveats</a>
-      </p>
-      <p>
-        <span class="fi-badge fi-badge-wip"><b>Work in progress.</b> Results are preliminary and not peer reviewed.</span>
       </p>
       <p>
         <span class="fi-badge">Numbers on this page: <b>CoBEVT</b> on <b>V2XSet</b>, <b>Perfect</b> setting</span>
@@ -545,15 +545,13 @@
       <p>The scene is fully determined by two values, the agent count and the world seed, both in the shared control. Every fault draw is seeded from the world seed too, so a given configuration renders identically on every machine and every reload. The resample buttons advance the fault seed only, leaving the world alone.</p>
 
       <ul class="fi-resources">
-        <li><strong>Work:</strong> Collaborative Perception, a fault injection benchmark for cooperative LiDAR perception. Adarsh Nanjaiya Latha, University of Twente. Work in progress, unpublished, no preprint yet.</li>
-        <li><strong>Status:</strong> the title is a working one and may change. Results on this page are preliminary and have not been peer reviewed. Please do not cite them.</li>
-        <li><strong>Baselines in the suite:</strong> three published cooperative perception models, LiDAR-only. CoBEVT results are on this page; the other two are pending.</li>
-        <li><strong>Datasets:</strong> OPV2V, V2XSet, Griffin. This page covers V2XSet.</li>
+        <li><strong>Work:</strong> <a href="/Portfolio/projects/coopfaultbench/">CoopFaultBench</a>, fault injection and dual-reference evaluation for cooperative perception. Adarsh Nanjaiya Latha, <a href="http://alexchiumento.eu/">Alessandro Chiumento</a>, Jan Laarhuis and <a href="https://ozlemdurmazincel.github.io/">Ozlem Durmaz Incel</a>, University of Twente. Code on <a href="https://github.com/adarsh-nl/CoopFaultBench">GitHub</a>; paper: <a href="/Portfolio/projects/agent-dependent-gt/">WACV 2027</a>.</li>
+        <li><strong>Status:</strong> the measured values on this page are from the CoBEVT run shown here, to illustrate each fault. They are not the paper's tables; for published results, see and cite <a href="/Portfolio/projects/agent-dependent-gt/">the paper</a>.</li>
         <li><strong>Page source:</strong> <code>projects/fault-injectors/</code> in the site repository. See <code>README.md</code> there for how each figure maps to its measurement, and <code>COMPONENTS.md</code> for the component breakdown.</li>
         <li><strong>Related work of mine:</strong> <a href="/Portfolio/projects/uxv/">the UxV ecosystem paper</a> on cross-domain unmanned vehicle cooperation, and <a href="/Portfolio/projects/clma/">collaborative drift compensation</a> on keeping federated models honest as conditions change.</li>
       </ul>
 
-      <p class="fi-disclaimer">This page describes work in progress by Adarsh Nanjaiya Latha. The measured values are current as of the CoBEVT run and will be revised if the evaluation changes. Nothing here has been peer reviewed.</p>
+      <p class="fi-disclaimer">The measured values on this page are from the CoBEVT run shown here and are not the paper's tables. For published results, see <a href="/Portfolio/projects/agent-dependent-gt/">the paper</a>.</p>
     </section>
 
     <div class="page-foot"></div>

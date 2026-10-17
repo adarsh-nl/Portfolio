@@ -24,9 +24,9 @@
 
     authors: [
       { name: "Adarsh Nanjaiya Latha", url: "/Portfolio/" },
-      { name: "Alessandro Chiumento" },
+      { name: "Alessandro Chiumento", url: "http://alexchiumento.eu/" },
       { name: "Jan Laarhuis" },
-      { name: "Ozlem Durmaz Incel" }
+      { name: "Ozlem Durmaz Incel", url: "https://ozlemdurmazincel.github.io/" }
     ],
     affiliations: ["University of Twente, The Netherlands"],
 
