@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
+  <link rel="stylesheet" href="/Portfolio/css/basic.css?v=24">
+  <link rel="stylesheet" href="/Portfolio/projects/agent-dependent-gt/adgt.css?v=7">
+  <link rel="stylesheet" href="/Portfolio/projects/coopfaultbench/cfb.css?v=4">
+  <title>CoopFaultBench: fault injection and dual-reference evaluation for cooperative perception | Adarsh Nanjaiya Latha</title>
+  <meta name="description" content="CoopFaultBench v0.1.0: fault injectors for cooperative (V2X) perception and dual-reference (fixed vs union) evaluation, released with the WACV 2027 paper on agent-dependent ground truth.">
+  <meta name="author" content="Adarsh Nanjaiya Latha">
+  <meta property="og:title" content="CoopFaultBench: fault injection and dual-reference evaluation for cooperative perception">
+  <meta property="og:description" content="Fault injectors and fixed-vs-union dual-reference scoring for cooperative (V2X) perception. Code release v0.1.0, accompanying the WACV 2027 paper.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adarsh-nl.github.io/Portfolio/projects/coopfaultbench/">
+  <link rel="canonical" href="https://adarsh-nl.github.io/Portfolio/projects/coopfaultbench/">
+  <link rel="icon" type="image/png" href="/Portfolio/assets/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/Portfolio/assets/apple-touch-icon.png?v=2">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CoopFaultBench: fault injection and dual-reference evaluation for cooperative perception">
+  <meta name="twitter:description" content="Fault injectors and fixed-vs-union dual-reference scoring for cooperative (V2X) perception. Code release v0.1.0, accompanying the WACV 2027 paper.">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://adarsh-nl.github.io/Portfolio/projects/coopfaultbench/",
+  "url": "https://adarsh-nl.github.io/Portfolio/projects/coopfaultbench/",
+  "name": "CoopFaultBench, fault injection and dual-reference evaluation for cooperative perception",
+  "isPartOf": { "@id": "https://adarsh-nl.github.io/Portfolio/#website" },
+  "author": { "@type": "Person", "@id": "https://adarsh-nl.github.io/Portfolio/#person", "name": "Adarsh Nanjaiya Latha", "url": "https://adarsh-nl.github.io/Portfolio/" },
+  "about": {
+    "@type": "SoftwareSourceCode",
+    "name": "CoopFaultBench",
+    "version": "0.1.0",
+    "codeRepository": "https://github.com/adarsh-nl/CoopFaultBench",
+    "programmingLanguage": "Python",
+    "keywords": ["collaborative perception", "cooperative perception", "V2X", "fault injection", "robustness evaluation", "LiDAR"]
+  }
+}
+  </script>
+  <!-- Dark first, like the paper page: dark unless the visitor chose light. -->
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light")document.documentElement.setAttribute("data-theme","dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="blog-name"><a href="/Portfolio/">Adarsh Nanjaiya Latha</a></div>
+    <nav>
+      <ul id="site-nav">
+        <li><a href="/Portfolio/">Home</a></li>
+        <li><a href="/Portfolio/cv/">Research</a></li>
+        <li><a href="/Portfolio/teaching/">Teaching</a></li>
+        <li><a href="/Portfolio/assets/Adarsh_Nanjaiya_Latha_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        <li><a href="/Portfolio/otium/" lang="ta">ஓய்வு</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+      <button id="menu-icon" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><img src="/Portfolio/assets/hamburger.svg" alt=""></button>
+    </nav>
+  </header>
+
+  <main class="franklin-content ag cfb" id="main" tabindex="-1">
+
+    <section class="ag-hero" id="top">
+      <p class="ag-venue"><b>Code release</b><span class="ag-dot">·</span>v0.1.0<span class="ag-dot">·</span>WACV 2027</p>
+      <h1 class="ag-title">CoopFaultBench</h1>
+      <p class="ag-thesis">Fault injection and dual-reference (fixed vs union) evaluation for cooperative (multi-agent) 3D perception.</p>
+      <div class="ag-actions">
+        <a class="ag-btn ag-btn-primary" href="https://github.com/adarsh-nl/CoopFaultBench">GitHub repository</a>
+        <a class="ag-btn" href="https://github.com/adarsh-nl/CoopFaultBench/releases/tag/v0.1.0">Release v0.1.0</a>
+        <a class="ag-btn" href="/Portfolio/projects/fault-injectors/">Interactive walkthrough</a>
+        <a class="ag-btn" href="/Portfolio/projects/agent-dependent-gt/">Paper page</a>
+      </div>
+    </section>
+
+    <section id="concept" class="ag-section cfb-concept">
+      <p class="ag-kicker">The idea</p>
+      <h2 class="ag-h2">Break the collaboration, then score it honestly</h2>
+      <p>Cooperative perception lets vehicles fuse what their sensors see, and its robustness is studied by injecting faults and reading off the change in Average Precision. But the ground truth that AP is scored against is assembled as the union of what the participating agents see. When a fault removes an agent, that reference shrinks with it, so recall is inflated and losing a collaborator looks less damaging than it is.</p>
+      <figure class="cfb-fig">
+        <img src="/Portfolio/projects/coopfaultbench/media/agent-drop.jpg" width="1400" height="264" loading="lazy" alt="Four bird's-eye views of the same real cooperative LiDAR frame. Clean: the ego's points in blue and two collaborators' points in orange and red. As agent drop gets stronger, the collaborators' points vanish until only the ego's blue cloud remains.">
+        <div class="cfb-fig-tiers" aria-hidden="true"><span>clean</span><span>p = 0.25</span><span>p = 0.50</span><span>p = 0.75</span></div>
+        <figcaption>Agent drop on one real cooperative LiDAR frame, one random draw per tier. Ego in blue. Every collaborator that drops out takes the objects only it could see out of the union reference.</figcaption>
+      </figure>
+
+      <p>CoopFaultBench does two things about that.</p>
+
+      <div class="cfb-refs">
+        <div>
+          <span class="ag-contrib-n">1 · Inject</span>
+          <h3>Faults inside the real pipeline</h3>
+          <p>Seven fault conditions, each at a mild, moderate and severe tier, run inside OpenCOOD's own, unmodified inference. Every draw is seeded per frame and agent, so a result does not depend on loading order.</p>
+          <p class="cfb-faults"><span>Collaborators only</span> pose error · latency · agent drop · missing LiDAR</p>
+          <p class="cfb-faults cfb-faults-all"><span>All agents, incl. the ego</span> point reduction · LiDAR fog · LiDAR snow</p>
+        </div>
+        <div>
+          <span class="ag-contrib-n">2 · Score twice</span>
+          <h3>Union and fixed reference</h3>
+          <p>The same detections are scored against the usual <b>union reference</b> and against a <b>fixed reference</b>, the union over the frame's full roster, and both are reported. The gap between them is how much of a measured degradation is the reference moving rather than the model losing information.</p>
+        </div>
+      </div>
+
+      <p>The repository also ships the paper's result payloads, with scripts that rebuild every table and figure on a CPU. No dataset content and no model weights are distributed.</p>
+    </section>
+
+    <section id="explore" class="ag-section">
+      <p class="ag-kicker">In detail</p>
+      <h2 class="ag-h2">See each fault at work</h2>
+      <p>The <a href="/Portfolio/projects/fault-injectors/">interactive walkthrough</a> puts every LiDAR-family injector in a live synthetic scene you can break yourself, tier by tier. The <a href="/Portfolio/projects/agent-dependent-gt/">paper page</a> explains why the reference moves and what fixing it changes. Installation, the quickstart and the full fault grid are in the <a href="https://github.com/adarsh-nl/CoopFaultBench">README</a>.</p>
+      <p class="ag-note"><b>Licence.</b> MIT, except the LiDAR fog and snow simulation code (CC BY-NC 4.0, non-commercial use only) and the camera-corruption backend (Apache-2.0); results are CC BY 4.0. See <a href="https://github.com/adarsh-nl/CoopFaultBench/blob/v0.1.0/NOTICE">NOTICE</a>. Builds on <a href="https://github.com/DerrickXuNu/OpenCOOD">OpenCOOD</a>, <a href="https://github.com/ika-rwth-aachen/MultiCorrupt">MultiCorrupt</a>, Hahner et al.'s <a href="https://github.com/MartinHahner/LiDAR_fog_sim">LiDAR fog</a> and <a href="https://github.com/SysCV/LiDAR_snow_sim">snowfall</a> simulations, and <a href="https://github.com/bethgelab/imagecorruptions">imagecorruptions</a>.</p>
+    </section>
+
+    <section id="cite" class="ag-section">
+      <p class="ag-kicker">Citation</p>
+      <h2 class="ag-h2">Cite the paper</h2>
+      <div class="ag-bib">
+        <pre id="bibtex" aria-label="BibTeX citation">@inproceedings{nanjaiyalatha2027agentgt,
+  title     = {Agent-Dependent Ground Truth Biases Robustness Evaluation
+               in Collaborative Perception},
+  author    = {Nanjaiya Latha, Adarsh and Chiumento, Alessandro and
+               Laarhuis, Jan and Durmaz Incel, Ozlem},
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on
+               Applications of Computer Vision (WACV)},
+  year      = {2027}
+}</pre>
+        <button type="button" class="ag-btn ag-copy" id="bib-copy">Copy BibTeX</button>
+        <p class="visually-hidden" id="bib-status" aria-live="polite"></p>
+      </div>
+
+      <nav class="ag-neighbors" aria-label="More projects">
+        <a href="/Portfolio/projects/agent-dependent-gt/">← The paper (WACV 2027)</a>
+        <a href="/Portfolio/projects/fault-injectors/">Interactive walkthrough →</a>
+      </nav>
+    </section>
+
+    <div class="page-foot"></div>
+  </main>
+
+  <!-- Site footer: a small horizon of Salem, Chennai and Enschede standing
+       on the ground line. One inline SVG; the hills and land beyond its
+       viewBox show on wide screens and are clipped at the screen edge.
+       Layers: hz-far (distant), hz-mid, hz-near (landmarks), hz-line
+       (1px linework). hz-detail is hidden on small screens. -->
+  <footer class="site-foot">
+    <svg class="horizon-svg" viewBox="0 0 460 72" role="img" aria-label="Three places that shaped me: the hills of Salem, the coast and gopuram of Chennai, and the church tower of Enschede" focusable="false">
+
+    <g class="city city--salem">
+      <g class="salem-hills">
+        <!-- Shevaroy / Yercaud plateau: a broad, rounded range -->
+        <path class="hz-far" d="M-300,72 C-240,70 -190,66 -150,60 C-110,54 -80,50 -50,48 C-30,46 -14,44 0,38 C14,32 26,24 44,23 C60,22 68,28 82,27 C98,26 108,20 124,24 C138,28 146,38 158,46 C168,53 178,62 190,72 Z"/>
+        <!-- foothills in front of the town -->
+        <path class="hz-far hz-far2" d="M-140,72 C-100,70 -60,66 -30,62 C-20,60 -10,58 0,54 C12,49 24,45 40,47 C56,49 64,55 80,56 C96,57 104,52 118,56 C130,60 140,66 152,72 Z"/>
+      </g>
+      <g class="salem-town">
+        <!-- a scattered low-rise town in the foothills -->
+        <path class="hz-mid" d="M70,65 h14 v7 h-14 Z M88,62 h8 v10 h-8 Z M136,64 h12 v8 h-12 Z"/>
+        <!-- small vimana: a quiet South Indian cue -->
+        <path class="hz-near" d="M109,72 L111,58 H121 L123,72 Z"/>
+        <path class="hz-near" d="M112,58 C112,53.5 120,53.5 120,58 Z"/>
+        <path class="hz-line" d="M116,53.5 v-2.5"/>
+      </g>
+      <g class="salem-trees">
+        <ellipse class="hz-mid" cx="-112" cy="68" rx="5" ry="3"/>
+        <ellipse class="hz-mid" cx="-62" cy="67" rx="6" ry="3.5"/>
+        <ellipse class="hz-mid" cx="-26" cy="67.5" rx="5.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="12" cy="67.5" rx="6.5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="28" cy="66.5" rx="5" ry="3.5"/>
+        <ellipse class="hz-mid" cx="50" cy="66" rx="5.5" ry="4"/>
+        <ellipse class="hz-mid" cx="102" cy="66.5" rx="4.5" ry="3"/>
+        <ellipse class="hz-mid" cx="128" cy="67" rx="5" ry="3.5"/>
+        <path class="hz-line" d="M-112,72 v-3 M-62,72 v-3 M-26,72 v-3 M28,72 v-3 M50,72 v-3 M102,72 v-3 M128,72 v-3"/>
+      </g>
+    </g>
+
+    <g class="city city--chennai">
+      <g class="chennai-far">
+        <!-- one taller block in the distance -->
+        <path class="hz-far" d="M296,36 h11 v36 h-11 Z M291,50 h5 v22 h-5 Z"/>
+      </g>
+      <g class="chennai-coast">
+        <!-- the Marina: waves and coconut palms -->
+        <path class="hz-line hz-soft" d="M158,67 q4,-2.5 8,0 t8,0 t8,0 t8,0 M164,70 q4,-2.5 8,0 t8,0 t8,0"/>
+        <path class="hz-line" d="M176,72 C176,66 177,60 179,55"/>
+        <path class="hz-line" d="M179,55 c-5,-2 -8,-1 -10,3 M179,55 c-2,-5 -1,-8 3,-9 M179,55 c4,-3 7,-2 9,2 M179,55 c3,1 5,4 5,8 M179,55 c-4,1 -6,4 -6,7"/>
+        <path class="hz-line" d="M192,72 C192,67 191,62 189,58"/>
+        <path class="hz-line" d="M189,58 c-4,-2 -7,-1 -8,3 M189,58 c-1,-5 1,-7 4,-7 M189,58 c4,-2 6,0 7,3 M189,58 c3,2 4,4 3,7"/>
+      </g>
+      <g class="chennai-gopuram">
+        <!-- Kapaleeshwarar-style rajagopuram: tapering tiers, barrel cap, finials -->
+        <path class="hz-near" d="M221.0,72 L221.6,65.2 L222.2,65.2 L222.8,58.4 L223.3,58.4 L223.9,51.6 L224.4,51.6 L225.1,44.8 L225.6,44.8 L226.2,38.0 L226.8,38.0 L227.3,31.2 L227.9,31.2 L228.5,24.4 L243.5,24.4 L244.1,31.2 L244.7,31.2 L245.2,38.0 L245.8,38.0 L246.4,44.8 L246.9,44.8 L247.6,51.6 L248.1,51.6 L248.7,58.4 L249.2,58.4 L249.8,65.2 L250.4,65.2 L251.0,72 Z"/>
+        <path class="hz-near" d="M226.9,24.4 C226.9,17.9 245.1,17.9 245.1,24.4 Z"/>
+        <path class="hz-line" d="M230.0,19.4 v-3 M233.0,19.4 v-3 M236.0,19.4 v-3 M239.0,19.4 v-3 M242.0,19.4 v-3"/>
+        <path class="hz-line" d="M234,72 v-7 h4 v7"/>
+      </g>
+      <g class="chennai-colonial">
+        <!-- Indo-Saracenic dome -->
+        <path class="hz-mid" d="M266,72 V57 H292 V72 Z"/>
+        <path class="hz-mid" d="M272,57 C272,50 286,50 286,57 Z"/>
+        <path class="hz-line" d="M279,50.5 v-3"/>
+        <path class="hz-line" d="M262,72 C262,67 261,62 259,58"/>
+        <path class="hz-line" d="M259,58 c-4,-2 -7,-1 -8,3 M259,58 c-1,-5 1,-7 4,-7 M259,58 c4,-2 6,0 7,3 M259,58 c3,2 4,4 3,7"/>
+      </g>
+    </g>
+
+    <g class="city city--enschede">
+      <g class="enschede-houses">
+        <!-- compact brick houses with pitched roofs -->
+        <path class="hz-mid" d="M340,72 V60 L346,54 L352,60 V72 Z M352,72 V57 L359,50 L366,57 V72 Z M366,72 V62 L371,57 L376,62 V72 Z"/>
+        <path class="hz-line hz-detail" d="M349,57 v-3 M363,54 v-3.5"/>
+      </g>
+      <g class="enschede-kerk">
+        <!-- Grote Kerk: heavy square tower, pointed spire, nave -->
+        <path class="hz-near" d="M384,72 V34 L389,14 L394,34 V72 Z"/>
+        <path class="hz-near" d="M394,72 V58 L398,49 H414 L418,58 V72 Z"/>
+      </g>
+      <g class="enschede-toren">
+        <!-- Alphatoren: slim square tower, glass panorama floor at the top -->
+        <path class="hz-mid" d="M427,72 V21 H439 V72 Z"/>
+        <path class="hz-far" d="M427,21 V16 H439 V21 Z"/>
+        <path class="hz-far" d="M440,72 V62 H452 V72 Z"/>
+      </g>
+      <g class="enschede-trees">
+        <!-- flat, green Twente edge -->
+        <ellipse class="hz-mid" cx="323" cy="65" rx="3.8" ry="5"/>
+        <ellipse class="hz-mid" cx="333" cy="64.5" rx="3.4" ry="4.6"/>
+        <ellipse class="hz-mid" cx="380" cy="65.5" rx="3" ry="4.2"/>
+        <ellipse class="hz-mid" cx="447" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="456" cy="66" rx="3.2" ry="4.2"/>
+        <path class="hz-line" d="M323,72 v-3 M333,72 v-3 M380,72 v-3 M447,72 v-3 M456,72 v-3"/>
+      </g>
+      <g class="enschede-land">
+        <!-- beyond the viewBox: flat land, a distant wood, a few trees -->
+        <path class="hz-far" d="M474,72 C482,68 494,67 506,68 C518,69 528,66 542,67 C556,68 566,66 580,68 C592,70 602,69 614,70 C622,71 630,72 636,72 Z"/>
+        <ellipse class="hz-mid" cx="486" cy="65" rx="3.6" ry="4.8"/>
+        <ellipse class="hz-mid" cx="531" cy="65.5" rx="3.2" ry="4.4"/>
+        <ellipse class="hz-mid" cx="604" cy="65" rx="3.5" ry="4.6"/>
+        <path class="hz-line" d="M486,72 v-3 M531,72 v-3 M604,72 v-3"/>
+      </g>
+    </g>
+    </svg>
+  </footer>
+
+  <script src="/Portfolio/assets/site.js?v=5"></script>
+  <script defer src="/Portfolio/projects/coopfaultbench/cfb.js?v=2"></script>
+  <script data-goatcounter="https://adarsh-nl.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

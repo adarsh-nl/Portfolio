@@ -37,7 +37,7 @@
     /* Public links. null means "not public yet". */
     links: {
       paper: null,          /* camera-ready PDF or CVF open access page */
-      code: null,           /* fault-injection suite + scoring protocol */
+      code: "https://github.com/adarsh-nl/CoopFaultBench",  /* fault-injection suite + scoring protocol */
       supplementary: null,  /* fault grid, per-cell reference counts */
       companion: "/Portfolio/projects/fault-injectors/"
     },

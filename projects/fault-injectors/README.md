@@ -272,6 +272,15 @@ Section 10 of the page states all of this to the reader.
 
 ## Real data, dropped in later
 
+**Switched on (2026-10-17).** `<main>` now carries
+`data-real-manifest="real/manifest.json"`, with real frames for `pose`,
+`latency`, `drop` and `modality` (one image per injector under tier `"3"`,
+which the toggle falls back to). They are crops of the contact sheets and the
+300 ms GIF in `results/fault_injector_visualisation/` of the earlier public repo
+<https://github.com/adarsh-nl/Fault-Injectors>. Fog and snow are deliberately
+absent: those exports predate the fog intensity fix and disagree with this
+page's snow numbers.
+
 Publish `real/manifest.json` next to the page and switch it on by adding
 `data-real-manifest="real/manifest.json"` to the page's `<main>` element. Only
 then does the page fetch it; without the attribute nothing is requested, so a

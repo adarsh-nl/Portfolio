@@ -1,0 +1,34 @@
+{
+  "pose": {
+    "3": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/pose-error-tiers.jpg",
+      "alt": "Bird's-eye view of a real cooperative LiDAR frame under pose error at sigma 0.2, 0.4 and 0.6 m: the collaborators' clouds ghost against the ego's, more at each tier",
+      "caption": "A real cooperative LiDAR frame at the three PoseError tiers (σ = 0.2 / 0.4 / 0.6 m and degrees). Ego blue; the titles give the mean point displacement for this draw."
+    }
+  },
+  "latency": {
+    "3": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/comm-latency-300ms.gif",
+      "alt": "Animation of a real cooperative LiDAR sequence with 300 ms communication latency: the collaborators' stale clouds trail the live ego cloud",
+      "caption": "A real cooperative LiDAR sequence at the severe CommLatency tier, 300 ms: the collaborators' stale clouds trail the live ego. Shown for every tier selection."
+    }
+  },
+  "drop": {
+    "3": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/agent-drop-tiers.jpg",
+      "alt": "Bird's-eye view of a real cooperative LiDAR frame, clean and at agent-drop probability 0.25, 0.50 and 0.75: collaborators vanish until only the ego remains",
+      "caption": "A real cooperative LiDAR frame, clean and at p = 0.25 / 0.50 / 0.75, one random draw per tier. Dropped collaborators leave the scene entirely."
+    }
+  },
+  "modality": {
+    "3": {
+      "type": "image",
+      "src": "/Portfolio/projects/fault-injectors/real/missing-modality-tiers.jpg",
+      "alt": "Bird's-eye view of the same real frame, clean and at missing-LiDAR probability 0.25, 0.50 and 0.75: at the severe tier one collaborator stays present with 0 points",
+      "caption": "The same frame under MissingModality, clean and at p = 0.25 / 0.50 / 0.75, one random draw per tier. A collaborator that loses its LiDAR stays in the scene with 0 points, unlike AgentDrop."
+    }
+  }
+}

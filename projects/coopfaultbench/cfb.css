@@ -1,0 +1,28 @@
+/* ==================================================================
+   CoopFaultBench page: a thin layer over the paper page's adgt.css,
+   which supplies the tokens, hero, buttons and citation block.
+   Only what this page adds lives here (prefix cfb-).
+================================================================== */
+
+.cfb-concept .ag-h2 { margin-bottom: 0.6em; }
+
+/* inject | score twice, side by side */
+.cfb-refs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2em 2em; margin: 1.4em 0; }
+@media (max-width: 700px) { .cfb-refs { grid-template-columns: minmax(0, 1fr); } }
+.cfb-refs > div { border-top: 1px solid var(--ag-border); padding-top: 0.9em; }
+.cfb-refs h3 { font-size: 1.02em; margin: 0.1em 0 0.35em; }
+.cfb-refs p { font-size: 0.92em; margin: 0 0 0.6em; }
+
+/* fault families, grouped by which agents they touch */
+.cfb .cfb-faults { font-size: 0.86em; line-height: 1.5; margin: 0.35em 0 0; padding-left: 0.7em; border-left: 3px solid var(--ag-s1); }
+.cfb .cfb-faults-all { border-left-color: var(--ag-fn); }
+.cfb-faults span { display: block; font-size: 0.8em; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ag-muted); }
+
+/* real-frame figure: one image, tier labels aligned to its four panels */
+.cfb-fig { margin: 1.6em 0 1.4em; }
+.cfb-fig img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--ag-border); background: #0d0d0d; }
+.cfb-fig-tiers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0.35em; font-size: 0.78em; color: var(--ag-muted); text-align: center; font-variant-numeric: tabular-nums; }
+.cfb-fig figcaption { font-size: 0.82em; color: var(--ag-muted); line-height: 1.5; margin-top: 0.5em; }
+@media (min-width: 1100px) {
+  .cfb-fig { width: min(1060px, calc(100vw - 64px)); margin-left: calc((100% - min(1060px, calc(100vw - 64px))) / 2); }
+}
