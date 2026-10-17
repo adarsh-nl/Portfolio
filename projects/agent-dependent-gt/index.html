@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/Portfolio/css/franklin.css?v=20">
   <link rel="stylesheet" href="/Portfolio/css/basic.css?v=24">
   <link rel="stylesheet" href="/Portfolio/libs/katex/katex.min.css">
-  <link rel="stylesheet" href="/Portfolio/projects/agent-dependent-gt/adgt.css?v=6">
+  <link rel="stylesheet" href="/Portfolio/projects/agent-dependent-gt/adgt.css?v=7">
   <title>Agent-Dependent Ground Truth in Collaborative Perception (WACV 2027) | Adarsh Nanjaiya Latha</title>
   <meta name="description" content="WACV 2027 paper by Adarsh Nanjaiya Latha, Alessandro Chiumento, Jan Laarhuis and Ozlem Durmaz Incel. Collaborative perception is scored against a ground truth built from the agents under test, so dropping a collaborator also shrinks the answer key. Interactive explanation, measurements and a fixed-reference scoring protocol.">
   <meta name="author" content="Adarsh Nanjaiya Latha">
@@ -72,6 +72,7 @@
 
   <nav class="ag-toc" aria-label="On this page">
     <div class="ag-toc-inner">
+      <a href="#video">Video</a>
       <a href="#problem">Problem</a>
       <a href="#mechanism">Mechanism</a>
       <a href="#code">In the code</a>
@@ -141,6 +142,24 @@
           <span style="color:var(--ag-fp)">× detection matching nothing</span>
         </div>
         <p class="ag-note">Redrawn from the paper's Fig. 1, one V2XSet frame (scenario 2021_08_22_07_52_02, five CAVs; ego and one collaborator shown). Object positions are schematic; the reference sizes and TP / FP / FN counts are the paper's.</p>
+      </figure>
+    </section>
+
+    <!-- ================================================================
+         VIDEO
+    ================================================================= -->
+    <section id="video" class="ag-section ag-video-section">
+      <figure class="ag-fig ag-wide ag-video ag-reveal">
+        <div class="ag-fig-head">
+          <span class="ag-fig-title">The paper in under a minute</span>
+          <span class="ag-fig-sub">Overview video, 53 s, no sound.</span>
+        </div>
+        <video controls playsinline muted preload="none" width="1920" height="1080"
+               poster="/Portfolio/projects/agent-dependent-gt/media/overview-poster.jpg"
+               aria-label="Overview video of the paper Agent-Dependent Ground Truth Biases Robustness Evaluation in Collaborative Perception">
+          <source src="/Portfolio/projects/agent-dependent-gt/media/overview.mp4" type="video/mp4">
+          <a href="/Portfolio/projects/agent-dependent-gt/media/overview.mp4">Download the overview video (MP4, 4.9 MB)</a>
+        </video>
       </figure>
     </section>
 
@@ -532,6 +551,7 @@
         <li><span>Code and data</span><span data-res="code" data-label="Fault-injection suite, fault grid and scoring protocol"><span class="ag-pending">Fault-injection suite, fault grid, per-cell reference counts and scripts: link added at release.</span></span></li>
         <li><span>Datasets</span><span><a href="https://mobility-lab.seas.ucla.edu/opv2v/">OPV2V</a> (test split, 2,170 frames) and V2XSet (released with <a href="https://github.com/DerrickXuNu/v2x-vit">V2X-ViT</a>; test split, 2,834 frames)</span></li>
         <li><span>Toolchains read</span><span><a href="https://github.com/DerrickXuNu/OpenCOOD">OpenCOOD</a>, DSRC, <a href="https://github.com/yifanlu0227/HEAL">HEAL</a></span></li>
+        <li><span>Video</span><span><a href="#video">Overview video</a> (53 s) · <a href="/Portfolio/projects/agent-dependent-gt/media/overview.mp4" download>download MP4, 4.9 MB</a></span></li>
         <li><span>Companion page</span><span><a href="/Portfolio/projects/fault-injectors/">Collaborative perception under faults</a>: each LiDAR-family injector, live in a synthetic scene</span></li>
       </ul>
 

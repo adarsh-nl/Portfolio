@@ -919,3 +919,14 @@ html .ag .ag-bib pre { color: var(--ag-ink); }
   background: var(--ag-surface);
 }
 .ag-notice b { color: var(--ag-ink); }
+
+/* overview video */
+.ag-video-section { margin-top: 3em; }
+.ag-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #000;
+}
